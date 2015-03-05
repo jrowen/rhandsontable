@@ -6,8 +6,10 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
+    var hot = new Handsontable(el);
+
     return {
-      // TODO: add instance fields as required
+      hot: hot
     }
 
   },
@@ -37,13 +39,13 @@ HTMLWidgets.widget({
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
 
-    if (instance.rHandsontable) { // update existing instance
+    if (instance.hot) { // update existing instance
 
-      instance.rHandsontable.updateSettings(x);
+      instance.hot.updateSettings(x);
 
     } else {  // create new instance
 
-      instance.rHandsontable = new Handsontable(el, x);
+      instance.hot = new Handsontable(el, x);
 
     }
 
