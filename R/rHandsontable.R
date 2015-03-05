@@ -41,7 +41,7 @@ rHandsontable <- function(data, rownames = NULL, width = NULL, height = NULL) {
 #'
 #' @export
 #' @import htmlwidgets
-rHandsontableOutput <- function(outputId, width = '100%', height = '400px'){
+rHandsontableOutput <- function(outputId, width = '100%', height = '100px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'rHandsontable', width, height,
                                  package = 'rHandsontable')
 }
