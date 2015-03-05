@@ -1,9 +1,9 @@
 Package: rHandsontable
-Title: What the Package Does (one line, title case)
+Title: htmlwidgets implementation of handsontable.js
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
-License: What license is it under?
+Authors@R: person("Jonathan", "Owen", , "jonathanro@gmail.com", role = c("aut", "cre"))
+Description: This package borrows heavily from the shinyTable package.
+License: MIT
 Depends: R (>= 3.1.2)
 Imports:
   jsonlite,
