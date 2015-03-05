@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: 'rHandsontable',
+  name: 'rhandsontable',
 
   type: 'output',
 

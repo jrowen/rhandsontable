@@ -1,12 +1,12 @@
-#' <Add Title>
+#' rhandsontable
 #'
-#' <Add Description>
+#' htmlwidgets implementation of handsontable.js
 #'
 #' @import htmlwidgets
 #'
 #' @export
 #' @import jsonlite
-rHandsontable <- function(data, rownames = NULL, width = NULL, height = NULL) {
+rhandsontable <- function(data, rownames = NULL, width = NULL, height = NULL) {
 
   col_typs = get_col_types(data)
   cols = jsonlite::toJSON(data.frame(type = col_typs))
@@ -29,11 +29,11 @@ rHandsontable <- function(data, rownames = NULL, width = NULL, height = NULL) {
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'rHandsontable',
+    name = 'rhandsontable',
     x,
     width = width,
     height = height,
-    package = 'rHandsontable'
+    package = 'rhandsontable'
   )
 }
 
@@ -42,8 +42,8 @@ rHandsontable <- function(data, rownames = NULL, width = NULL, height = NULL) {
 #' @export
 #' @import htmlwidgets
 rHandsontableOutput <- function(outputId, width = '100%', height = '100px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'rHandsontable', width, height,
-                                 package = 'rHandsontable')
+  htmlwidgets::shinyWidgetOutput(outputId, 'rhandsontable', width, height,
+                                 package = 'rhandsontable')
 }
 
 #' Widget render function for use in Shiny

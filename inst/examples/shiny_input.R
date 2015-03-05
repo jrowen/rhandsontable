@@ -1,5 +1,5 @@
 library(shiny)
-library(rHandsontable)
+library(rhandsontable)
 library(lpSolve)
 library(quadprog)
 library(metricsgraphics)
@@ -94,14 +94,14 @@ server = function(input, output) {
 
   output$hot_retvol = renderRHandsontable({
     if (!is.null(values[["vol"]]) && !is.null(values[["ret"]]))
-      rHandsontable(data.frame(Return = values[["ret"]],
+      rhandsontable(data.frame(Return = values[["ret"]],
                                Vol = values[["vol"]]),
                     rownames = names(values[["ret"]]))
   })
 
   output$hot_corr = renderRHandsontable({
     if (!is.null(values[["corr"]]))
-      rHandsontable(as.data.frame(values[["corr"]]),
+      rhandsontable(as.data.frame(values[["corr"]]),
                     rownames = colnames(values[["corr"]]))
   })
 
