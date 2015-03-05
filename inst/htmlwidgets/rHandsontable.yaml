@@ -1,0 +1,16 @@
+# (uncomment to add a dependency)
+dependencies:
+ - name: handsontable
+   version: 0.12.6
+   src: "htmlwidgets/lib/handsontable"
+   script: handsontable.full.js
+   stylesheet: handsontable.full.css
+ - name: moment
+   version: 2.9.0
+   src: "htmlwidgets/lib/moment"
+   script: moment.js
+ - name: pikaday
+   version: 1.3.0
+   src: "htmlwidgets/lib/pikaday"
+   script: pikaday.js
+   stylesheet: pikaday.css
