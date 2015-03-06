@@ -29,7 +29,8 @@ server = function(input, output) {
 
   output$hot = renderRHandsontable({
     if (!is.null(load()) && !is.null(values[["hot"]]))
-      rhandsontable(values[["hot"]])
+      rhandsontable(values[["hot"]]) %>%
+        hot_table(highlightCol = TRUE, highlightRow = TRUE)
   })
 }
 
