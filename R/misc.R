@@ -1,6 +1,7 @@
+#' Map R classes to handsontable.js types
 get_col_types = function(data) {
   if (is.matrix(data))  {
-    types = typeof(data)
+    types = rep(typeof(data), ncol(data))
   } else if (is.data.frame(data)){
     types = as.character(lapply(data, class))
   } else{
