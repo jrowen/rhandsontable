@@ -8,6 +8,8 @@ HTMLWidgets.widget({
 
     var hot = new Handsontable(el);
 
+    Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
+
     return {
       hot: hot
     }
@@ -35,6 +37,12 @@ HTMLWidgets.widget({
     x.data = toArray(JSON.parse(x.data));
 
     x.columns = JSON.parse(x.columns)
+
+    if (x.isheatmap) {
+      instance.heatmapScale  = chroma.scale(x.chromaScale);
+
+
+    }
 
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
@@ -66,6 +74,7 @@ HTMLWidgets.widget({
       if (prevAfterChange)
         prevAfterChange(changes, source);
 
+      // not implemented
     };
   },
 
@@ -84,8 +93,60 @@ HTMLWidgets.widget({
         if (prev)
           prev(ind, ct);
 
+        // not implemented
       };
     }
+  },
+
+  // see http://handsontable.com/demo/heatmaps.html
+  heatmap: [],
+
+  updateHeatmap: function(change, source) {
+
+    if (change) {
+      this.heatmap[change[0][1]] = generateHeatmapData.call(this, change[0][1]);
+    } else {
+      this.heatmap = [];
+
+      for(var i = 1, colCount = this.countCols(); i < colCount ; i++) {
+        this.heatmap[i] = generateHeatmapData.call(this, i);
+      }
+    }
+  },
+
+  heatmapRenderer: function(instance, td, row, col, prop, value, cellProperties) {
+
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+
+    if (this.heatmap[col]) {
+      td.style.backgroundColor = instance.heatmapScale(point(this.heatmap[col].min, this.heatmap[col].max, parseInt(value, 10))).hex();
+      td.style.textAlign = 'right';
+      td.style.fontWeight = 'bold';
+    }
+  },
+
+  generateHeatmapData: function(colId) {
+
+    var values = this.getDataAtCol(colId);
+
+    return {
+      min: Math.min.apply(null, values),
+      max: Math.max.apply(null, values)
+    };
+  },
+
+  condformatRenderer: function(instance, td, row, col, prop, value, cellProperties) {
+
+    // not implemented
+
+    //Handsontable.renderers.TextRenderer.apply(this, arguments);
+    //instance.hot.condformat.vals
+    //instance.hot.condformat.styles
+
   }
 
 });
+
+function point(min, max, value) {
+  return (value - min) / (max - min);
+}
