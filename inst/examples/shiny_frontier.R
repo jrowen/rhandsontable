@@ -34,8 +34,8 @@ server = function(input, output) {
     names(ret) <- names(vol) <- colnames(corr) <-
       rownames(corr) <- c(LETTERS[1:3])
 
-    values[["ret"]] = ret
-    values[["vol"]] = vol
+    values[["ret_vol"]] = data.frame(Return = ret,
+                                     Vol = vol)
     values[["corr"]] = corr
 
     cov = diag(vol) %*% corr %*% diag(vol)
@@ -93,9 +93,8 @@ server = function(input, output) {
   })
 
   output$hot_retvol = renderRHandsontable({
-    if (!is.null(values[["vol"]]) && !is.null(values[["ret"]]))
-      rhandsontable(data.frame(Return = values[["ret"]],
-                               Vol = values[["vol"]]),
+    if (!is.null(values[["ret_vol"]]))
+      rhandsontable(values[["ret_vol"]],
                     rownames = names(values[["ret"]]))
   })
 
