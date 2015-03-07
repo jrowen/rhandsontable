@@ -39,9 +39,8 @@ HTMLWidgets.widget({
     x.columns = JSON.parse(x.columns)
 
     if (x.isheatmap) {
-      instance.heatmapScale  = chroma.scale(x.chromaScale);
-
-
+      x.afterLoadData = this.updateHeatmap
+      x.beforeChangeRender = this.updateHeatmap
     }
 
     this.afterChangeCallback(x);
@@ -99,8 +98,8 @@ HTMLWidgets.widget({
   },
 
   // see http://handsontable.com/demo/heatmaps.html
-  heatmap: [],
-
+  //heatmap: [],
+  //heatmapScale: [],
   updateHeatmap: function(change, source) {
 
     if (change) {
@@ -108,7 +107,7 @@ HTMLWidgets.widget({
     } else {
       this.heatmap = [];
 
-      for(var i = 1, colCount = this.countCols(); i < colCount ; i++) {
+      for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
         this.heatmap[i] = generateHeatmapData.call(this, i);
       }
     }
@@ -117,22 +116,13 @@ HTMLWidgets.widget({
   heatmapRenderer: function(instance, td, row, col, prop, value, cellProperties) {
 
     Handsontable.renderers.TextRenderer.apply(this, arguments);
+    heatmapScale  = chroma.scale(['#17F556', '#ED6D47']);
 
-    if (this.heatmap[col]) {
-      td.style.backgroundColor = instance.heatmapScale(point(this.heatmap[col].min, this.heatmap[col].max, parseInt(value, 10))).hex();
+    if (instance.heatmap[col]) {
+      td.style.backgroundColor = heatmapScale(point(instance.heatmap[col].min, instance.heatmap[col].max, parseInt(value, 10))).hex();
       td.style.textAlign = 'right';
       td.style.fontWeight = 'bold';
     }
-  },
-
-  generateHeatmapData: function(colId) {
-
-    var values = this.getDataAtCol(colId);
-
-    return {
-      min: Math.min.apply(null, values),
-      max: Math.max.apply(null, values)
-    };
   },
 
   condformatRenderer: function(instance, td, row, col, prop, value, cellProperties) {
@@ -149,4 +139,14 @@ HTMLWidgets.widget({
 
 function point(min, max, value) {
   return (value - min) / (max - min);
+}
+
+function generateHeatmapData(colId) {
+
+  var values = this.getDataAtCol(colId);
+
+  return {
+    min: Math.min.apply(null, values),
+    max: Math.max.apply(null, values)
+  };
 }

@@ -181,7 +181,7 @@ hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
 #' @param col
 #' @param color_scale
 #' @export
-hot_heatmap = function(hot, col, color_scale = c("#17F556", "#ED6D47")) {
+hot_heatmap = function(hot, col) {
   cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
@@ -191,10 +191,6 @@ hot_heatmap = function(hot, col, color_scale = c("#17F556", "#ED6D47")) {
   }
 
   hot$x$isheatmap = TRUE
-  hot$x$chromaScale = color_scale
-
-  hot$x$afterLoadData = "updateHeatmap"
-  hot$x$beforeChangeRender = "updateHeatmap"
 
   hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE)
   hot
