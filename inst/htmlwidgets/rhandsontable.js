@@ -33,6 +33,12 @@ HTMLWidgets.widget({
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
 
+    // class names set in constructor so always reload if highlighting
+    if (x.ishighlight) {
+      instance.hot.destroy();
+      instance.hot = undefined;
+    }
+
     if (instance.hot) { // update existing instance
 
       instance.hot.updateSettings(x);

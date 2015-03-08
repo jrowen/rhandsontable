@@ -160,13 +160,16 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
 #' @param highlightRow
 #' @param highlightCol
+#' @param wordWrap
 #' @export
 hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
                      groups = NULL, highlightRow = FALSE,
-                     highlightCol = FALSE) {
+                     highlightCol = FALSE, wordWrap = TRUE) {
   hot$x$customBorders = customBorders
   hot$x$contextMenu = contextMenu
+  hot$x$wordWrap = wordWrap
 
+  if (highlightRow || highlightCol) hot$x$ishighlight = TRUE
   if (highlightRow) hot$x$currentRowClassName = "currentRow"
   if (highlightCol) hot$x$currentColClassName = "currentCol"
 

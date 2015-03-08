@@ -17,14 +17,11 @@ rhandsontable(DF) %>%
   hot_cols(columnSorting = TRUE, fixedColumnsLeft = 1) %>%
   hot_rows(fixedRowsTop = 1)
 
+rhandsontable(DF) %>%
+  hot_table(highlightCol = TRUE, highlightRow = TRUE)
+
 MAT = matrix(rnorm(50), nrow = 10)
 
 rhandsontable(MAT) %>%
   hot_heatmap(col = seq_len(ncol(MAT)),
               color_scale = c("#ED6D47", "#17F556"))
-
-# Not working
-
-#rhandsontable(DF) %>%
-#  hot_table(highlightCol = TRUE, highlightRow = TRUE)
-
