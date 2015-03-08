@@ -181,7 +181,7 @@ hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
 #' @param col
 #' @param color_scale
 #' @export
-hot_heatmap = function(hot, col) {
+hot_heatmap = function(hot, col, color_scale) {
   cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
@@ -191,6 +191,7 @@ hot_heatmap = function(hot, col) {
   }
 
   hot$x$isheatmap = TRUE
+  hot$x$color_scale = color_scale
 
   hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE)
   hot
@@ -209,7 +210,7 @@ hot_condformat = function(hot, col, vals, styles) {
   hot$x$condformat$vals = vals
   hot$x$condformat$styles = styles
 
-  hot_col(hot = hot, col = col, renderer = JS(condformatRenderer))
+  hot_col(hot = hot, col = col, renderer = "condformatRenderer")
 }
 
 #' Widget output function for use in Shiny

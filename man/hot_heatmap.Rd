@@ -6,7 +6,7 @@
 \href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
 for details.}
 \usage{
-hot_heatmap(hot, col)
+hot_heatmap(hot, col, color_scale)
 }
 \arguments{
 \item{hot}{rhandsontable object}
