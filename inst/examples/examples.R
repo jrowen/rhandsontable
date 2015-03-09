@@ -10,7 +10,7 @@ rhandsontable(DF) %>%
   hot_col(col = "small", type = "autocomplete", source = letters,
           strict = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, readOnly = TRUE) %>%
   hot_col("small", "password")
 
 rhandsontable(DF) %>%
