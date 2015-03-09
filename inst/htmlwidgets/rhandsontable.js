@@ -7,7 +7,8 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     var hot = new Handsontable(el, { width: width,
-                                     height: height
+                                     height: height,
+                                     columnSorting: true
     });
 
     Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
@@ -34,6 +35,11 @@ HTMLWidgets.widget({
 
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
+
+    // set in constructor, disable as default
+    if (!x.columnSorting) {
+      x.columnSorting = false
+    }
 
     // class names set in constructor so always reload if highlighting
     if (x.ishighlight) {
