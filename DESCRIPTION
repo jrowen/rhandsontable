@@ -9,3 +9,9 @@ Imports:
   jsonlite,
   htmlwidgets,
   magrittr
+Suggests:
+  data.table,
+  lpSolve,
+  quadprog,
+  metricsgraphics
+
