@@ -12,6 +12,4 @@ Imports:
 Suggests:
   data.table,
   lpSolve,
-  quadprog,
-  metricsgraphics
-
+  quadprog
