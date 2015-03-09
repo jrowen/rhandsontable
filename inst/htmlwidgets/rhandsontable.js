@@ -6,22 +6,18 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    var hot = new Handsontable(el, { width: width,
-                                     height: height
-    });
-
     Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
 
     return {
-      hot: hot
+
     }
 
   },
 
   renderValue: function(el, x, instance) {
 
-    // used to pass color to heatmap -- better way???
-    instance.hot.params = x;
+    // used to pass color to heatmap
+    hotParams = x;
 
     // convert json to array
     x.data = toArray(JSON.parse(x.data));
@@ -35,18 +31,6 @@ HTMLWidgets.widget({
 
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
-
-    // set in constructor, disable as default
-    if (!x.columnSorting) {
-      x.columnSorting = false
-    }
-
-    // reload if not heatmap to set params in constructor
-    // not all params settable via updateSettings()
-    if (!x.isheatmap) {
-      instance.hot.destroy();
-      instance.hot = undefined;
-    }
 
     if (instance.hot) { // update existing instance
 
@@ -119,7 +103,7 @@ HTMLWidgets.widget({
   heatmapRenderer: function(instance, td, row, col, prop, value, cellProperties) {
 
     Handsontable.renderers.TextRenderer.apply(this, arguments);
-    heatmapScale  = chroma.scale(instance.params.color_scale);
+    heatmapScale  = chroma.scale(hotParams.color_scale);
 
     if (instance.heatmap[col]) {
       td.style.backgroundColor = heatmapScale(point(instance.heatmap[col].min, instance.heatmap[col].max, parseInt(value, 10))).hex();
@@ -139,6 +123,8 @@ HTMLWidgets.widget({
   }
 
 });
+
+var hotParams = {};
 
 function point(min, max, value) {
   return (value - min) / (max - min);
