@@ -1,14 +1,17 @@
 #' See \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param data
-#' @param rownames
+#' @param colHeaders
+#' @param rowHeaders
 #' @param contextMenu
+#' @param readOnly
 #' @param width
 #' @param height
-#'
 #' @export
-rhandsontable <- function(data, rownames = NULL, contextMenu = TRUE,
-                          readOnly = FALSE, width = NULL, height = NULL) {
+rhandsontable <- function(data, colHeaders = colnames(data),
+                          rowHeaders = rownames(data),
+                          contextMenu = TRUE, readOnly = FALSE,
+                          width = NULL, height = NULL) {
 
   # get column data types
   col_typs = get_col_types(data)
@@ -25,8 +28,8 @@ rhandsontable <- function(data, rownames = NULL, contextMenu = TRUE,
   # forward options using x
   x = list(
     data = jsonlite::toJSON(data),
-    colHeaders = names(data),
-    rowHeaders = rownames,
+    colHeaders = colHeaders,
+    rowHeaders = rowHeaders,
     contextMenu = contextMenu,
     columns = cols
   )

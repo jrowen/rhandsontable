@@ -7,15 +7,20 @@
 \title{An \code{htmlwidget} interface to the
 \href{http://http://handsontable.com//}{Handsontable.js} library}
 \usage{
-rhandsontable(data, rownames = NULL, contextMenu = TRUE, readOnly = FALSE,
+rhandsontable(data, colHeaders = colnames(data),
+  rowHeaders = rownames(data), contextMenu = TRUE, readOnly = FALSE,
   width = NULL, height = NULL)
 }
 \arguments{
 \item{data}{}
 
-\item{rownames}{}
+\item{colHeaders}{}
+
+\item{rowHeaders}{}
 
 \item{contextMenu}{}
+
+\item{readOnly}{}
 
 \item{width}{}
 
