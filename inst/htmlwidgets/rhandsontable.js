@@ -6,7 +6,9 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    var hot = new Handsontable(el);
+    var hot = new Handsontable(el, { width: width,
+                                     height: height
+    });
 
     Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
 
@@ -53,6 +55,9 @@ HTMLWidgets.widget({
 
   resize: function(el, width, height, instance) {
 
+    instance.hot.updateSettings({ width: width,
+                                  height: height
+    });
   },
 
   afterChangeCallback: function(x) {

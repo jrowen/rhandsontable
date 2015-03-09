@@ -37,7 +37,12 @@ rhandsontable <- function(data, rownames = NULL, contextMenu = TRUE,
     x,
     width = width,
     height = height,
-    package = 'rhandsontable'
+    package = 'rhandsontable',
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      padding = 5,
+      defaultHeight = 0,
+      defaultWidth = 0
+    )
   )
 }
 
