@@ -7,8 +7,7 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     var hot = new Handsontable(el, { width: width,
-                                     height: height,
-                                     columnSorting: true
+                                     height: height
     });
 
     Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
@@ -21,6 +20,7 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, instance) {
 
+    // used to pass color to heatmap -- better way???
     instance.hot.params = x;
 
     // convert json to array
@@ -41,8 +41,9 @@ HTMLWidgets.widget({
       x.columnSorting = false
     }
 
-    // class names set in constructor so always reload if highlighting
-    if (x.ishighlight) {
+    // reload if not heatmap to set params in constructor
+    // not all params settable via updateSettings()
+    if (!x.isheatmap) {
       instance.hot.destroy();
       instance.hot = undefined;
     }
