@@ -6,7 +6,7 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
+    //Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
 
     return {
 
@@ -24,9 +24,21 @@ HTMLWidgets.widget({
 
     x.columns = JSON.parse(x.columns)
 
-    if (x.isheatmap) {
+    if (x.customBorders) {
+      x.customBorders = JSON.parse(x.customBorders)
+    }
+
+    if (x.groups) {
+      x.groups = JSON.parse(x.groups)
+    }
+
+    if (x.heatmapCols) {
       x.afterLoadData = this.updateHeatmap
       x.beforeChangeRender = this.updateHeatmap
+
+      for (var i = 0; i < x.heatmapCols.length; i++) {
+        x.columns[x.heatmapCols[i]].renderer = x.heatmapRenderer
+      }
     }
 
     this.afterChangeCallback(x);
@@ -100,18 +112,6 @@ HTMLWidgets.widget({
     }
   },
 
-  heatmapRenderer: function(instance, td, row, col, prop, value, cellProperties) {
-
-    Handsontable.renderers.TextRenderer.apply(this, arguments);
-    heatmapScale  = chroma.scale(hotParams.color_scale);
-
-    if (instance.heatmap[col]) {
-      td.style.backgroundColor = heatmapScale(point(instance.heatmap[col].min, instance.heatmap[col].max, parseInt(value, 10))).hex();
-      //td.style.textAlign = 'right';
-      //td.style.fontWeight = 'bold';
-    }
-  },
-
   condformatRenderer: function(instance, td, row, col, prop, value, cellProperties) {
 
     // not implemented
@@ -125,6 +125,18 @@ HTMLWidgets.widget({
 });
 
 var hotParams = {};
+
+function heatmapRenderer(instance, td, row, col, prop, value, cellProperties) {
+
+  Handsontable.renderers.TextRenderer.apply(this, arguments);
+  heatmapScale  = chroma.scale(hotParams.color_scale);
+
+  if (instance.heatmap[col]) {
+    td.style.backgroundColor = heatmapScale(point(instance.heatmap[col].min, instance.heatmap[col].max, parseInt(value, 10))).hex();
+    //td.style.textAlign = 'right';
+    //td.style.fontWeight = 'bold';
+  }
+}
 
 function point(min, max, value) {
   return (value - min) / (max - min);

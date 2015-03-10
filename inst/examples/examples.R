@@ -23,7 +23,7 @@ MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
 rhandsontable(MAT) %>%
-  hot_heatmap(col = seq_len(ncol(MAT)),
+  hot_heatmap(cols = seq_len(ncol(MAT)),
               color_scale = c("#ED6D47", "#17F556"))
 
 rhandsontable(MAT, width = 300, height = 150) %>%
@@ -33,16 +33,15 @@ rhandsontable(MAT, width = 300, height = 150) %>%
 rhandsontable(MAT) %>%
   hot_table(customBorders = TRUE)
 
-# not working
+rhandsontable(MAT) %>%
+  hot_table(groups = jsonlite::toJSON(list(list(cols = c(0, 1)),
+                                           list(rows = c(0, 1)))))
 
 rhandsontable(MAT) %>%
-  hot_table(groups = "[{cols: [0, 1]}]")
-
-rhandsontable(MAT) %>%
-  hot_table(customBorders = jsonlite::toJSON(list(
+  hot_table(customBorders = jsonlite::toJSON(list(list(
     range = list(from = list(row = 1, col = 1),
                  to = list(row = 2, col = 2)),
     top = list(width = 2, color = "red"),
     left = list(width = 2, color = "red"),
     bottom = list(width = 2, color = "red"),
-    right = list(width = 2, color = "red")), auto_unbox = TRUE))
+    right = list(width = 2, color = "red"))), auto_unbox = TRUE))

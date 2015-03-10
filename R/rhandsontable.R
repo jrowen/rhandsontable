@@ -31,7 +31,9 @@ rhandsontable <- function(data, colHeaders = colnames(data),
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
     contextMenu = contextMenu,
-    columns = cols
+    columns = cols,
+    width = width,
+    height = height
   )
 
   # create widget
@@ -176,6 +178,7 @@ hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
   hot$x$customBorders = customBorders
   hot$x$contextMenu = contextMenu
   hot$x$wordWrap = wordWrap
+  hot$x$groups = groups
 
   if (highlightRow || highlightCol) hot$x$ishighlight = TRUE
   if (highlightRow) hot$x$currentRowClassName = "currentRow"
@@ -189,22 +192,16 @@ hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
 #' for details.
 #'
 #' @param hot rhandsontable object
-#' @param col
+#' @param cols
 #' @param color_scale
+#' @param renderer
 #' @export
-hot_heatmap = function(hot, col, color_scale) {
-  cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
-
-  if (is.character(col)) col = which(hot$x$colHeaders == col)
-
-  for (id in col) {
-    cols[[id]]$renderer = "heatmapRenderer"
-  }
-
-  hot$x$isheatmap = TRUE
+hot_heatmap = function(hot, cols, color_scale,
+                       renderer = "heatmapRenderer") {
+  hot$x$heatmapCols = cols - 1
+  hot$x$heatmapRenderer = JS(renderer)
   hot$x$color_scale = color_scale
 
-  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE)
   hot
 }
 
