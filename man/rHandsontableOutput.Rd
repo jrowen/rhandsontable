@@ -4,7 +4,7 @@
 \alias{rHandsontableOutput}
 \title{Widget output function for use in Shiny}
 \usage{
-rHandsontableOutput(outputId, width = "100\%", height = "100px")
+rHandsontableOutput(outputId, width = NA, height = NA)
 }
 \description{
 Widget output function for use in Shiny

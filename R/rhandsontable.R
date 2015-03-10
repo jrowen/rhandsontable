@@ -3,31 +3,48 @@
 #' @param data
 #' @param colHeaders
 #' @param rowHeaders
+#' @param useTypes
 #' @param contextMenu
 #' @param readOnly
 #' @param width
 #' @param height
 #' @export
 rhandsontable <- function(data, colHeaders = colnames(data),
-                          rowHeaders = rownames(data),
-                          contextMenu = TRUE, readOnly = FALSE,
+                          rowHeaders = rownames(data), useTypes = TRUE,
+                          contextMenu = TRUE, readOnly = NULL,
                           width = NULL, height = NULL) {
-
-  # get column data types
-  col_typs = get_col_types(data)
-  cols = jsonlite::toJSON(data.frame(type = col_typs,
-                                     readOnly = readOnly))
-
-  # format date for display
-  dt_inds = which(col_typs == "date")
-  if (length(dt_inds) > 0L) {
-    for (i in dt_inds)
-      data[, i] = as.character(data[, i], format = "%m/%d/%Y")
+  if (!useTypes) {
+    data = as.matrix(data, rownames.force = TRUE)
+    cols = NULL
   }
 
-  # forward options using x
+  rClass = class(data)
+  if (rClass == "matrix") {
+    rColClasses = class(data[1, 1])
+  } else {
+    rColClasses = sapply(data, class)
+  }
+
+  if(useTypes) {
+    # get column data types
+    col_typs = get_col_types(data)
+    cols = list(type = col_typs)
+    cols$readOnly = readOnly
+
+    # format date for display
+    dt_inds = which(col_typs == "date")
+    if (length(dt_inds) > 0L) {
+      for (i in dt_inds)
+        data[, i] = as.character(data[, i], format = DATE_FORMAT)
+    }
+
+    cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
+  }
+
   x = list(
-    data = jsonlite::toJSON(data),
+    data = jsonlite::toJSON(data, na = "string"),
+    rClass = rClass,
+    rColClasses = rColClasses,
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
     contextMenu = contextMenu,
@@ -226,7 +243,7 @@ hot_condformat = function(hot, col, vals, styles) {
 #' @import htmlwidgets
 #'
 #' @export
-rHandsontableOutput <- function(outputId, width = '100%', height = '100px'){
+rHandsontableOutput <- function(outputId, width = NA, height = NA){
   htmlwidgets::shinyWidgetOutput(outputId, 'rhandsontable', width, height,
                                  package = 'rhandsontable')
 }
@@ -239,4 +256,13 @@ rHandsontableOutput <- function(outputId, width = '100%', height = '100px'){
 renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, rHandsontableOutput, env, quoted = TRUE)
+}
+
+#' Convert handsontable data to R object
+#'
+#' @param ...
+#'
+#' @export
+hot_to_r = function(...) {
+  do.call(toR, ...)
 }

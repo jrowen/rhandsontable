@@ -7,7 +7,9 @@ ui = shinyUI(fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-      helpText("Handsontable demo output.")
+      helpText("Handsontable demo output. Column add/delete does work ",
+               "for tables with defined column properties, including type."),
+      radioButtons("useType", "Use Data Types", c("TRUE", "FALSE"))
     ),
     mainPanel(
       rHandsontableOutput("hot")
@@ -17,10 +19,14 @@ ui = shinyUI(fluidPage(
 
 server = function(input, output) {
   output$hot <- renderRHandsontable({
-    DF = data.frame(val = 1:10, bool = TRUE, nm = LETTERS[1:10],
-                    dt = seq(from = Sys.Date(), by = "days", length.out = 10),
-                    stringsAsFactors = F)
-    rhandsontable(DF)
+    if (is.null(input$hot)) {
+      DF = data.frame(val = 1:10, bool = TRUE, nm = LETTERS[1:10],
+                      dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                      stringsAsFactors = F)
+    } else {
+      DF = hot_to_r(input$hot)
+    }
+    rhandsontable(DF, useTypes = as.logical(input$useType))
   })
 }
 

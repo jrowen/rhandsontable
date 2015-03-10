@@ -65,37 +65,61 @@ HTMLWidgets.widget({
 
   afterChangeCallback: function(x) {
 
-    // check for an existing
-    var prevAfterChange = x["afterChange"];
-
     x.afterChange = function(changes, source) {
 
-      // call existing
-      if (prevAfterChange)
-        prevAfterChange(changes, source);
+      if (HTMLWidgets.shinyMode && changes) {
+        Shiny.onInputChange(this.rootElement.id, {
+          data: JSON.stringify(this.getData()),
+          changes: { event: "afterChange", changes: changes },
+          params: hotParams
+        });
+      }
 
-      // not implemented
     };
   },
 
   afterRowAndColChange: function(x) {
 
-    funcs = ["afterCreateRow", "afterRemoveRow",
-             "afterCreateCol", "afterRemoveCol"];
+    x.afterCreateRow = function(ind, ct) {
 
-    for (var i = 0; i < funcs.length; i++) {
-      // check for an existing
-      var prev = x[funcs[i]];
+      if (HTMLWidgets.shinyMode)
+        Shiny.onInputChange(this.rootElement.id, {
+          data: JSON.stringify(this.getData()),
+          changes: { event: "afterCreateRow", ind: ind, ct: ct },
+          params: hotParams
+        });
+    };
 
-      x[funcs[i]] = function(ind, ct) {
+    x.afterRemoveRow = function(ind, ct) {
 
-        // call existing
-        if (prev)
-          prev(ind, ct);
+      if (HTMLWidgets.shinyMode)
+        Shiny.onInputChange(this.rootElement.id, {
+          data: JSON.stringify(this.getData()),
+          changes: { event: "afterRemoveRow", ind: ind, ct: ct },
+          params: hotParams
+        });
+    };
 
-        // not implemented
-      };
-    }
+    x.afterCreateCol = function(ind, ct) {
+
+      if (HTMLWidgets.shinyMode)
+        Shiny.onInputChange(this.rootElement.id, {
+          data: JSON.stringify(this.getData()),
+          changes: { event: "afterCreateCol", ind: ind, ct: ct },
+          params: hotParams
+        });
+    };
+
+    x.afterRemoveCol = function(ind, ct) {
+
+      if (HTMLWidgets.shinyMode)
+        Shiny.onInputChange(this.rootElement.id, {
+          data: JSON.stringify(this.getData()),
+          changes: { event: "afterRemoveCol", ind: ind, ct: ct },
+          params: hotParams
+        });
+    };
+
   },
 
   // see http://handsontable.com/demo/heatmaps.html
