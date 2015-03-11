@@ -5,9 +5,9 @@
 \title{Configure single column.  See
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
-hot_col(hot, col, type, format = NULL, source = NULL, strict = NULL,
-  allowInvalcol = NULL, readOnly = FALSE, validator = NULL,
-  halign = NULL, valign = NULL, renderer = NULL)
+hot_col(hot, col, type = NULL, format = NULL, source = NULL,
+  strict = NULL, allowInvalcol = NULL, readOnly = FALSE,
+  validator = NULL, halign = NULL, valign = NULL, renderer = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}

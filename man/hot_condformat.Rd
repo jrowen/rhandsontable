@@ -6,16 +6,14 @@
 \href{http://handsontable.com/demo/conditional.html}{Conditional formatting}
 for details.}
 \usage{
-hot_condformat(hot, col, vals, styles)
+hot_condformat(hot, col, renderer)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
 \item{col}{}
 
-\item{vals}{}
-
-\item{styles}{}
+\item{renderer}{}
 }
 \description{
 Add conditional formatting to column.  See

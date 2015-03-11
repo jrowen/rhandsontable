@@ -129,7 +129,7 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' @param valign htTop, htMiddle, htBottom
 #' @param renderer
 #' @export
-hot_col = function(hot, col, type, format = NULL, source = NULL,
+hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL, allowInvalcol = NULL,
                    readOnly = FALSE, validator = NULL,
                    halign = NULL, valign = NULL,
@@ -138,7 +138,7 @@ hot_col = function(hot, col, type, format = NULL, source = NULL,
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
 
-  cols[[col]]$type = type
+  if (!is.null(type)) cols[[col]]$type = type
   cols[[col]]$format = format
   cols[[col]]$source = source
   cols[[col]]$strict = strict
@@ -235,14 +235,10 @@ hot_heatmap = function(hot, cols, color_scale,
 #'
 #' @param hot rhandsontable object
 #' @param col
-#' @param vals
-#' @param styles
+#' @param renderer
 #' @export
-hot_condformat = function(hot, col, vals, styles) {
-  hot$x$condformat$vals = vals
-  hot$x$condformat$styles = styles
-
-  hot_col(hot = hot, col = col, renderer = "condformatRenderer")
+hot_condformat = function(hot, col, renderer) {
+  hot_col(hot = hot, col = col, renderer = JS(renderer))
 }
 
 #' Widget output function for use in Shiny

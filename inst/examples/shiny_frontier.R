@@ -95,7 +95,6 @@ server = function(input, output) {
     if (!is.null(input$hot_retvol)) {
       DF = hot_to_r(input$hot_retvol)
       values[["hot_retvol"]] = DF
-      print(DF)
       rhandsontable(DF)
     } else if (!is.null(values[["hot_retvol"]])) {
       DF = values[["hot_retvol"]]
