@@ -7,9 +7,8 @@
 \title{An \code{htmlwidget} interface to the
 \href{http://http://handsontable.com//}{Handsontable.js} library}
 \usage{
-rhandsontable(data, colHeaders = colnames(data),
-  rowHeaders = rownames(data), contextMenu = TRUE, readOnly = FALSE,
-  width = NULL, height = NULL)
+rhandsontable(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
+  contextMenu = TRUE, readOnly = NULL, width = NULL, height = NULL)
 }
 \arguments{
 \item{data}{}
@@ -17,6 +16,8 @@ rhandsontable(data, colHeaders = colnames(data),
 \item{colHeaders}{}
 
 \item{rowHeaders}{}
+
+\item{useTypes}{}
 
 \item{contextMenu}{}
 

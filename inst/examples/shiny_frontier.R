@@ -2,7 +2,7 @@ library(shiny)
 library(rhandsontable)
 library(lpSolve)
 library(quadprog)
-library(metricsgraphics)
+library(ggplot2)
 
 ui = shinyUI(fluidPage(
 
@@ -18,28 +18,27 @@ ui = shinyUI(fluidPage(
   ),
   fluidRow(
     column(6,
-           metricsgraphicsOutput("plot")
+           plotOutput("plot")
     )
   )
 ))
 
 server = function(input, output) {
-  values = reactiveValues()
+  values = reactiveValues(
+    hot_corr = matrix(
+      c(1, 0.1, 0.3, 0.1, 1, 0.5, 0.3, 0.5, 1), nrow = 3,
+      dimnames = list(LETTERS[1:3], LETTERS[1:3])),
+    hot_retvol = data.frame(Return = c(0.05, 0.07, 0.03),
+                            Vol = c(0.1, 0.15, 0.07),
+                            row.names = LETTERS[1:3]))
 
   calc = reactive({
     # load initial values
-    vol = c(0.1, 0.15, 0.07)
-    ret = c(0.05, 0.07, 0.03)
-    corr = matrix(c(1, 0.1, 0.3, 0.1, 1, 0.5, 0.3, 0.5, 1), nrow = 3)
-    names(ret) <- names(vol) <- colnames(corr) <-
-      rownames(corr) <- c(LETTERS[1:3])
-
-    values[["ret_vol"]] = data.frame(Return = ret,
-                                     Vol = vol)
-    values[["corr"]] = corr
+    vol = values[["hot_retvol"]]$Vol
+    ret = values[["hot_retvol"]]$Return
+    corr = values[["hot_corr"]]
 
     cov = diag(vol) %*% corr %*% diag(vol)
-    colnames(cov) <- rownames(cov) <- colnames(corr)
 
     # min wt
     n = length(ret)
@@ -93,22 +92,39 @@ server = function(input, output) {
   })
 
   output$hot_retvol = renderRHandsontable({
-    if (!is.null(values[["ret_vol"]]))
-      rhandsontable(values[["ret_vol"]],
-                    rownames = names(values[["ret"]]))
+    if (!is.null(input$hot_retvol)) {
+      DF = hot_to_r(input$hot_retvol)
+      values[["hot_retvol"]] = DF
+      print(DF)
+      rhandsontable(DF)
+    } else if (!is.null(values[["hot_retvol"]])) {
+      DF = values[["hot_retvol"]]
+      rhandsontable(DF)
+    }
   })
 
   output$hot_corr = renderRHandsontable({
-    if (!is.null(values[["corr"]]))
-      rhandsontable(as.data.frame(values[["corr"]]),
-                    rownames = colnames(values[["corr"]]))
+    if (!is.null(input$hot_corr)) {
+      DF = hot_to_r(input$hot_corr)
+      DF[upper.tri(DF)] = DF[lower.tri(DF)]
+      values[["hot_corr"]] = DF
+      DF[upper.tri(DF)] = NA
+      rhandsontable(DF)
+    } else if (!is.null(values[["hot_corr"]])) {
+      DF = values[["hot_corr"]]
+      DF[upper.tri(DF)] = NA
+      rhandsontable(DF)
+    }
   })
 
-  output$plot = renderMetricsgraphics({
+  output$plot = renderPlot({
     if (!is.null(calc())) {
-      calc()$Frontier %>%
-        mjs_plot(x = Risk, y = Return) %>%
-        mjs_labs(x = "Risk", y = "Return")
+      DF = calc()$Frontier
+      DF$Sharpe = DF$Return / DF$Risk
+      ggplot(calc()$Frontier) +
+        geom_line(aes(x = Risk, y = Return)) +
+        geom_point(data = DF[which.max(DF$Sharpe),],
+                   aes(x = Risk, y = Return), color = "red", size = 4)
     }
   })
 }

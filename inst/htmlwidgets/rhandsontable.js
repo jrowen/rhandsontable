@@ -17,7 +17,7 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
 
     // used to pass color to heatmap
-    hotParams = x;
+    hotParams[el.id] = x;
 
     // convert json to array
     x.data = toArray(JSON.parse(x.data));
@@ -71,7 +71,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: JSON.stringify(this.getData()),
           changes: { event: "afterChange", changes: changes },
-          params: hotParams
+          params: hotParams[this.rootElement.id]
         });
       }
 
@@ -86,7 +86,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: JSON.stringify(this.getData()),
           changes: { event: "afterCreateRow", ind: ind, ct: ct },
-          params: hotParams
+          params: hotParams[this.rootElement.id]
         });
     };
 
@@ -96,7 +96,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: JSON.stringify(this.getData()),
           changes: { event: "afterRemoveRow", ind: ind, ct: ct },
-          params: hotParams
+          params: hotParams[this.rootElement.id]
         });
     };
 
@@ -106,7 +106,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: JSON.stringify(this.getData()),
           changes: { event: "afterCreateCol", ind: ind, ct: ct },
-          params: hotParams
+          params: hotParams[this.rootElement.id]
         });
     };
 
@@ -116,7 +116,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: JSON.stringify(this.getData()),
           changes: { event: "afterRemoveCol", ind: ind, ct: ct },
-          params: hotParams
+          params: hotParams[this.rootElement.id]
         });
     };
 
@@ -148,12 +148,12 @@ HTMLWidgets.widget({
 
 });
 
-var hotParams = {};
+var hotParams = [];
 
 function heatmapRenderer(instance, td, row, col, prop, value, cellProperties) {
 
   Handsontable.renderers.TextRenderer.apply(this, arguments);
-  heatmapScale  = chroma.scale(hotParams.color_scale);
+  heatmapScale  = chroma.scale(hotParams[instance.rootElement.id].color_scale);
 
   if (instance.heatmap[col]) {
     td.style.backgroundColor = heatmapScale(point(instance.heatmap[col].min, instance.heatmap[col].max, parseInt(value, 10))).hex();

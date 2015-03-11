@@ -9,10 +9,14 @@
 #' @param width
 #' @param height
 #' @export
-rhandsontable <- function(data, colHeaders = colnames(data),
-                          rowHeaders = rownames(data), useTypes = TRUE,
+rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
                           contextMenu = TRUE, readOnly = NULL,
                           width = NULL, height = NULL) {
+  if (is.null(colHeaders))
+    colHeaders = colnames(data)
+  if (is.null(rowHeaders))
+    rowHeaders = rownames(data)
+
   if (!useTypes) {
     data = as.matrix(data, rownames.force = TRUE)
     cols = NULL
@@ -40,6 +44,9 @@ rhandsontable <- function(data, colHeaders = colnames(data),
 
     cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
   }
+
+  # removes _row from jsonlite::toJSON
+  rownames(data) = NULL
 
   x = list(
     data = jsonlite::toJSON(data, na = "string"),
