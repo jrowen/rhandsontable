@@ -134,16 +134,6 @@ HTMLWidgets.widget({
         this.heatmap[i] = generateHeatmapData.call(this, i);
       }
     }
-  },
-
-  condformatRenderer: function(instance, td, row, col, prop, value, cellProperties) {
-
-    // not implemented
-
-    //Handsontable.renderers.TextRenderer.apply(this, arguments);
-    //instance.hot.condformat.vals
-    //instance.hot.condformat.styles
-
   }
 
 });

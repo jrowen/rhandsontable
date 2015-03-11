@@ -4,14 +4,12 @@
 #' @param colHeaders
 #' @param rowHeaders
 #' @param useTypes
-#' @param contextMenu
 #' @param readOnly
 #' @param width
 #' @param height
 #' @export
 rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
-                          contextMenu = TRUE, readOnly = NULL,
-                          width = NULL, height = NULL) {
+                          readOnly = NULL, width = NULL, height = NULL) {
   if (is.null(colHeaders))
     colHeaders = colnames(data)
   if (is.null(rowHeaders))
@@ -144,7 +142,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   cols[[col]]$strict = strict
   cols[[col]]$allowInvalcol = allowInvalcol
   cols[[col]]$readOnly = readOnly
-  cols[[col]]$validator = validator
+  if (!is.null(validator)) cols[[col]]$validator = JS(validator)
 
   className = c(halign, valign)
   if (!is.null(className)) {
@@ -195,6 +193,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param highlightRow
 #' @param highlightCol
 #' @param wordWrap
+#' @param contextMenu
 #' @export
 hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
                      groups = NULL, highlightRow = FALSE,
@@ -227,18 +226,6 @@ hot_heatmap = function(hot, cols, color_scale,
   hot$x$color_scale = color_scale
 
   hot
-}
-
-#' Add conditional formatting to column.  See
-#' \href{http://handsontable.com/demo/conditional.html}{Conditional formatting}
-#' for details.
-#'
-#' @param hot rhandsontable object
-#' @param col
-#' @param renderer
-#' @export
-hot_condformat = function(hot, col, renderer) {
-  hot_col(hot = hot, col = col, renderer = JS(renderer))
 }
 
 #' Widget output function for use in Shiny

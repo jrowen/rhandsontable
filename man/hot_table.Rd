@@ -24,6 +24,8 @@ hot_table(hot, customBorders = NULL, contextMenu = TRUE, groups = NULL,
 \item{highlightCol}{}
 
 \item{wordWrap}{}
+
+\item{contextMenu}{}
 }
 \description{
 Configure table.  See
