@@ -46,19 +46,6 @@ rhandsontable(MAT) %>%
     bottom = list(width = 2, color = "red"),
     right = list(width = 2, color = "red"))), auto_unbox = TRUE))
 
-# conditional formatting
-rhandsontable(MAT) %>%
-  hot_cols(renderer = gsub("\n", "", "
-    function (instance, td, row, col, prop, value, cellProperties) {
-      Handsontable.renderers.TextRenderer.apply(this, arguments);
-
-      if (value < -1) {
-        td.style.background = 'red';
-      } else if (value > 1) {
-        td.style.background = 'green';
-      }
-    }"))
-
 # try to update any cell to 0
 rhandsontable(MAT * 10) %>%
   hot_cols(validator = gsub("\n", "", "
@@ -73,3 +60,24 @@ rhandsontable(MAT * 10) %>%
       }, 1000)
     }"),
            allowInvalid = FALSE)
+
+# add conditional formatting to a correlation matrix
+MAT = matrix(runif(100, -1, 1), nrow = 10, 
+             dimnames = list(LETTERS[1:10], LETTERS[1:10]))
+diag(MAT) = 1
+MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
+rhandsontable(MAT) %>%
+  hot_cols(renderer = gsub("\n", "", "
+    function (instance, td, row, col, prop, value, cellProperties) {
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
+      if (row == col) {
+        td.style.background = 'grey';
+      } else if (col > row) {
+        td.style.background = 'grey';
+        td.style.color = 'grey';
+      } else if (value < -0.75) {
+        td.style.background = 'red';
+      } else if (value > 0.75) {
+        td.style.background = 'green';
+      }
+    }"))
