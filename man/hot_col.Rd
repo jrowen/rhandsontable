@@ -7,7 +7,8 @@
 \usage{
 hot_col(hot, col, type = NULL, format = NULL, source = NULL,
   strict = NULL, allowInvalcol = NULL, readOnly = FALSE,
-  validator = NULL, halign = NULL, valign = NULL, renderer = NULL)
+  validator = NULL, allowInvalid = NULL, halign = NULL, valign = NULL,
+  renderer = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -26,7 +27,9 @@ hot_col(hot, col, type = NULL, format = NULL, source = NULL,
 
 \item{readOnly}{}
 
-\item{validator}{regex expression or JS()}
+\item{validator}{}
+
+\item{allowInvalid}{}
 
 \item{halign}{htLeft, htCenter, htRight, htJustify}
 

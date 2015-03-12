@@ -58,3 +58,18 @@ rhandsontable(MAT) %>%
         td.style.background = 'green';
       }
     }"))
+
+# try to update any cell to 0
+rhandsontable(MAT * 10) %>%
+  hot_cols(validator = gsub("\n", "", "
+    function (value, callback) {
+      setTimeout(function(){
+        if (value != 0) {
+          callback(true);
+        }
+        else {
+          callback(false);
+        }
+      }, 1000)
+    }"),
+           allowInvalid = FALSE)

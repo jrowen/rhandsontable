@@ -125,14 +125,15 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' @param strict
 #' @param allowInvalcol
 #' @param readOnly
-#' @param validator regex expression or JS()
+#' @param validator
+#' @param allowInvalid
 #' @param halign htLeft, htCenter, htRight, htJustify
 #' @param valign htTop, htMiddle, htBottom
 #' @param renderer
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL, allowInvalcol = NULL,
-                   readOnly = FALSE, validator = NULL,
+                   readOnly = FALSE, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
   cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
@@ -149,6 +150,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   # jsonlite::toJSON doesn't currently handle JS
   if (!is.null(validator))
     hot$x$colValidator[[as.character(col - 1)]] = JS(validator)
+  hot$x$allowInvalid = allowInvalid
   if (!is.null(renderer))
     hot$x$colRenderer[[as.character(col - 1)]] = JS(renderer)
   # if (!is.null(validator)) cols[[col]] = JS(validator)
