@@ -46,6 +46,7 @@ rhandsontable(MAT) %>%
     bottom = list(width = 2, color = "red"),
     right = list(width = 2, color = "red"))), auto_unbox = TRUE))
 
+# conditional formatting
 rhandsontable(MAT) %>%
   hot_cols(renderer = gsub("\n", "", "
     function (instance, td, row, col, prop, value, cellProperties) {

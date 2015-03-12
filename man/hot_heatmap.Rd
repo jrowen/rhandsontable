@@ -6,7 +6,7 @@
 \href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
 for details.}
 \usage{
-hot_heatmap(hot, cols, color_scale, renderer = "heatmapRenderer")
+hot_heatmap(hot, cols, color_scale, renderer = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -15,7 +15,7 @@ hot_heatmap(hot, cols, color_scale, renderer = "heatmapRenderer")
 
 \item{color_scale}{}
 
-\item{renderer}{}
+\item{render}{}
 }
 \description{
 Add heatmap to table.  See

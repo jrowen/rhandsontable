@@ -227,13 +227,31 @@ hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
 #' @param hot rhandsontable object
 #' @param cols
 #' @param color_scale
-#' @param renderer
+#' @param render
 #' @export
-hot_heatmap = function(hot, cols, color_scale,
-                       renderer = "heatmapRenderer") {
-  hot$x$heatmapCols = cols - 1
-  hot$x$heatmapRenderer = JS(renderer)
-  hot$x$color_scale = color_scale
+hot_heatmap = function(hot, cols, color_scale, renderer = NULL) {
+  if (is.null(renderer)) {
+    renderer = gsub("\n", "", "
+      function (instance, td, row, col, prop, value, cellProperties) {
+
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
+        heatmapScale  = chroma.scale(['%s1', '%s2']);
+
+        if (instance.heatmap[col]) {
+          mn = instance.heatmap[col].min;
+          mx = instance.heatmap[col].max;
+          pt = (parseInt(value, 10) - mn) / (mx - mn);
+
+          td.style.backgroundColor = heatmapScale(pt).hex();
+        }
+      }
+      ")
+    renderer = gsub("%s1", color_scale[1], renderer)
+    renderer = gsub("%s2", color_scale[2], renderer)
+  }
+
+  for (x in hot$x$colHeaders)
+    hot = hot %>% hot_col(x, renderer = renderer)
 
   hot
 }

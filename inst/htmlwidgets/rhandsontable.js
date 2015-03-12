@@ -6,8 +6,6 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    //Handsontable.renderers.registerRenderer('heatmapRenderer', this.heatmapRenderer);
-
     return {
 
     }
@@ -40,14 +38,8 @@ HTMLWidgets.widget({
       x.columns[parseInt(i)].validator = x.colValidator[i].parseFunction()
     }
 
-    if (x.heatmapCols) {
-      x.afterLoadData = this.updateHeatmap
-      x.beforeChangeRender = this.updateHeatmap
-
-      for (var i = 0; i < x.heatmapCols.length; i++) {
-        x.columns[x.heatmapCols[i]].renderer = x.heatmapRenderer
-      }
-    }
+    x.afterLoadData = this.updateHeatmap;
+    x.beforeChangeRender = this.updateHeatmap;
 
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
@@ -133,6 +125,16 @@ HTMLWidgets.widget({
   // see http://handsontable.com/demo/heatmaps.html
   updateHeatmap: function(change, source) {
 
+    function generateHeatmapData(colId) {
+
+      var values = this.getDataAtCol(colId);
+
+      return {
+        min: Math.min.apply(null, values),
+        max: Math.max.apply(null, values)
+      };
+    }
+
     if (change) {
       this.heatmap[change[0][1]] = generateHeatmapData.call(this, change[0][1]);
     } else {
@@ -147,32 +149,6 @@ HTMLWidgets.widget({
 });
 
 var hotParams = [];
-
-function heatmapRenderer(instance, td, row, col, prop, value, cellProperties) {
-
-  Handsontable.renderers.TextRenderer.apply(this, arguments);
-  heatmapScale  = chroma.scale(hotParams[instance.rootElement.id].color_scale);
-
-  if (instance.heatmap[col]) {
-    td.style.backgroundColor = heatmapScale(point(instance.heatmap[col].min, instance.heatmap[col].max, parseInt(value, 10))).hex();
-    //td.style.textAlign = 'right';
-    //td.style.fontWeight = 'bold';
-  }
-}
-
-function point(min, max, value) {
-  return (value - min) / (max - min);
-}
-
-function generateHeatmapData(colId) {
-
-  var values = this.getDataAtCol(colId);
-
-  return {
-    min: Math.min.apply(null, values),
-    max: Math.max.apply(null, values)
-  };
-}
 
 // http://stackoverflow.com/questions/11922383/access-process-nested-objects-arrays-or-json
 function toArray(obj) {
