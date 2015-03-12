@@ -76,8 +76,8 @@ rhandsontable(MAT) %>%
         td.style.background = 'grey';
         td.style.color = 'grey';
       } else if (value < -0.75) {
-        td.style.background = 'red';
+        td.style.background = 'pink';
       } else if (value > 0.75) {
-        td.style.background = 'green';
+        td.style.background = 'lightgreen';
       }
-    }"))
+    }"), readOnly = TRUE)
