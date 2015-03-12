@@ -32,6 +32,14 @@ HTMLWidgets.widget({
       x.groups = JSON.parse(x.groups)
     }
 
+    for (i in x.colRenderer) {
+      x.columns[parseInt(i)].renderer = x.colRenderer[i].parseFunction()
+    }
+
+    for (i in x.colValidator) {
+      x.columns[parseInt(i)].validator = x.colValidator[i].parseFunction()
+    }
+
     if (x.heatmapCols) {
       x.afterLoadData = this.updateHeatmap
       x.beforeChangeRender = this.updateHeatmap
@@ -180,3 +188,18 @@ function toArray(obj) {
   }
   return result;
 }
+
+// http://stackoverflow.com/questions/1271516/executing-anonymous-functions-created-using-javascript-eval
+if (typeof String.prototype.parseFunction != 'function') {
+    String.prototype.parseFunction = function () {
+        var funcReg = /function *\(([^()]*)\)[ \n\t]*{(.*)}/gmi;
+        var match = funcReg.exec(this.replace(/\n/g, ' '));
+
+        if(match) {
+            return new Function(match[1].split(','), match[2]);
+        }
+
+        return null;
+    };
+}
+

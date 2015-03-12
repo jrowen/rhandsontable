@@ -45,3 +45,15 @@ rhandsontable(MAT) %>%
     left = list(width = 2, color = "red"),
     bottom = list(width = 2, color = "red"),
     right = list(width = 2, color = "red"))), auto_unbox = TRUE))
+
+rhandsontable(MAT) %>%
+  hot_cols(renderer = gsub("\n", "", "
+    function (instance, td, row, col, prop, value, cellProperties) {
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
+
+      if (value < -1) {
+        td.style.background = 'red';
+      } else if (value > 1) {
+        td.style.background = 'green';
+      }
+    }"))

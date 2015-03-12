@@ -52,7 +52,6 @@ rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes =
     rColClasses = rColClasses,
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
-    contextMenu = contextMenu,
     columns = cols,
     width = width,
     height = height
@@ -85,11 +84,12 @@ rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes =
 #' @param fixedColumnsLeft
 #' @param halign htLeft, htCenter, htRight, htJustify
 #' @param valign htTop, htMiddle, htBottom
+#' @param ... passed to hot_col
 #' @export
 hot_cols = function(hot, columns = NULL, colWidths = NULL,
                     columnSorting = FALSE, manualColumnMove = FALSE,
                     manualColumnResize = FALSE, fixedColumnsLeft = NULL,
-                    halign = NULL, valign = NULL) {
+                    halign = NULL, valign = NULL, ...) {
   # overwrite original settings
   if (!is.null(columns)) hot$x$columns = columns
 
@@ -107,6 +107,9 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
     cols$className = className
     hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE)
   }
+
+  for (x in hot$x$colHeaders)
+    hot = hot %>% hot_col(x, ...)
 
   hot
 }
@@ -142,7 +145,14 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   cols[[col]]$strict = strict
   cols[[col]]$allowInvalcol = allowInvalcol
   cols[[col]]$readOnly = readOnly
-  if (!is.null(validator)) cols[[col]]$validator = JS(validator)
+
+  # jsonlite::toJSON doesn't currently handle JS
+  if (!is.null(validator))
+    hot$x$colValidator[[as.character(col - 1)]] = JS(validator)
+  if (!is.null(renderer))
+    hot$x$colRenderer[[as.character(col - 1)]] = JS(renderer)
+  # if (!is.null(validator)) cols[[col]] = JS(validator)
+  # if (!is.null(renderer)) cols[[col]] = JS(renderer)
 
   className = c(halign, valign)
   if (!is.null(className)) {
