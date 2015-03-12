@@ -71,7 +71,7 @@ rhandsontable(MAT) %>%
     function (instance, td, row, col, prop, value, cellProperties) {
       Handsontable.renderers.TextRenderer.apply(this, arguments);
       if (row == col) {
-        td.style.background = 'grey';
+        td.style.background = 'lightgrey';
       } else if (col > row) {
         td.style.background = 'grey';
         td.style.color = 'grey';
