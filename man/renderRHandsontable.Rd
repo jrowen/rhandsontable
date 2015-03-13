@@ -6,6 +6,13 @@
 \usage{
 renderRHandsontable(expr, env = parent.frame(), quoted = FALSE)
 }
+\arguments{
+\item{expr}{}
+
+\item{env}{}
+
+\item{quoted}{}
+}
 \description{
 Widget render function for use in Shiny
 }

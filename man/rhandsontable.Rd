@@ -8,7 +8,7 @@
 \href{http://http://handsontable.com//}{Handsontable.js} library}
 \usage{
 rhandsontable(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
-  readOnly = NULL, width = NULL, height = NULL)
+  readOnly = NULL, contextMenu = TRUE, width = NULL, height = NULL)
 }
 \arguments{
 \item{data}{}
@@ -20,6 +20,8 @@ rhandsontable(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
 \item{useTypes}{}
 
 \item{readOnly}{}
+
+\item{contextMenu}{}
 
 \item{width}{}
 

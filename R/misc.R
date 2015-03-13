@@ -1,6 +1,6 @@
 DATE_FORMAT = "%m/%d/%Y"
 
-#' Map R classes to handsontable.js types
+# Map R classes to handsontable.js types
 get_col_types = function(data) {
   if (is.matrix(data))  {
     types = rep(typeof(data), ncol(data))

@@ -6,7 +6,7 @@
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
 hot_col(hot, col, type = NULL, format = NULL, source = NULL,
-  strict = NULL, allowInvalcol = NULL, readOnly = FALSE,
+  strict = NULL, allowInvalcol = NULL, readOnly = NULL,
   validator = NULL, allowInvalid = NULL, halign = NULL, valign = NULL,
   renderer = NULL)
 }

@@ -11,7 +11,8 @@ rhandsontable(DF, rowHeaders = NULL) %>%
           strict = FALSE)
 
 rhandsontable(DF, readOnly = TRUE) %>%
-  hot_col("small", "password")
+  hot_col("small", "password") %>%
+  hot_cell(1, 1, "Test comment")
 
 rhandsontable(DF) %>%
   hot_cols(columnSorting = TRUE)
@@ -62,11 +63,11 @@ rhandsontable(MAT * 10) %>%
            allowInvalid = FALSE)
 
 # add conditional formatting to a correlation matrix
-MAT = matrix(runif(100, -1, 1), nrow = 10, 
+MAT = matrix(runif(100, -1, 1), nrow = 10,
              dimnames = list(LETTERS[1:10], LETTERS[1:10]))
 diag(MAT) = 1
 MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
-rhandsontable(MAT) %>%
+rhandsontable(MAT, readOnly = TRUE) %>%
   hot_cols(renderer = gsub("\n", "", "
     function (instance, td, row, col, prop, value, cellProperties) {
       Handsontable.renderers.TextRenderer.apply(this, arguments);
@@ -80,4 +81,4 @@ rhandsontable(MAT) %>%
       } else if (value > 0.75) {
         td.style.background = 'lightgreen';
       }
-    }"), readOnly = TRUE)
+    }"))

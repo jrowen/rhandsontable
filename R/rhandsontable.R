@@ -5,11 +5,13 @@
 #' @param rowHeaders
 #' @param useTypes
 #' @param readOnly
+#' @param contextMenu
 #' @param width
 #' @param height
 #' @export
 rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
-                          readOnly = NULL, width = NULL, height = NULL) {
+                          readOnly = NULL, contextMenu = TRUE,
+                          width = NULL, height = NULL) {
   if (is.null(colHeaders))
     colHeaders = colnames(data)
   if (is.null(rowHeaders))
@@ -58,7 +60,7 @@ rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes =
   )
 
   # create widget
-  htmlwidgets::createWidget(
+  hot = htmlwidgets::createWidget(
     name = 'rhandsontable',
     x,
     width = width,
@@ -70,6 +72,16 @@ rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes =
       defaultWidth = 0
     )
   )
+
+  if (!is.null(readOnly)) {
+    for (x in hot$x$colHeaders)
+      hot = hot %>% hot_col(x, readOnly = readOnly)
+  }
+
+  if (!is.null(contextMenu))
+    hot = hot %>% hot_table(contextMenu = contextMenu)
+
+  hot
 }
 
 #' Configure column parameters.  See
@@ -87,19 +99,19 @@ rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes =
 #' @param ... passed to hot_col
 #' @export
 hot_cols = function(hot, columns = NULL, colWidths = NULL,
-                    columnSorting = FALSE, manualColumnMove = FALSE,
-                    manualColumnResize = FALSE, fixedColumnsLeft = NULL,
+                    columnSorting = NULL, manualColumnMove = NULL,
+                    manualColumnResize = NULL, fixedColumnsLeft = NULL,
                     halign = NULL, valign = NULL, ...) {
   # overwrite original settings
   if (!is.null(columns)) hot$x$columns = columns
 
-  hot$x$colWidths = colWidths
+  if (!is.null(colWidths)) hot$x$colWidths = colWidths
 
-  hot$x$columnSorting = columnSorting
-  hot$x$manualColumnMove = manualColumnMove
-  hot$x$manualColumnResize = manualColumnResize
+  if (!is.null(columnSorting)) hot$x$columnSorting = columnSorting
+  if (!is.null(manualColumnMove)) hot$x$manualColumnMove = manualColumnMove
+  if (!is.null(manualColumnResize)) hot$x$manualColumnResize = manualColumnResize
 
-  hot$x$fixedColumnsLeft = fixedColumnsLeft
+  if (!is.null(fixedColumnsLeft)) hot$x$fixedColumnsLeft = fixedColumnsLeft
 
   className = c(halign, valign)
   if (!is.null(className)) {
@@ -133,7 +145,7 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL, allowInvalcol = NULL,
-                   readOnly = FALSE, validator = NULL, allowInvalid = NULL,
+                   readOnly = NULL, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
   cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
@@ -141,11 +153,11 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   if (is.character(col)) col = which(hot$x$colHeaders == col)
 
   if (!is.null(type)) cols[[col]]$type = type
-  cols[[col]]$format = format
-  cols[[col]]$source = source
-  cols[[col]]$strict = strict
-  cols[[col]]$allowInvalcol = allowInvalcol
-  cols[[col]]$readOnly = readOnly
+  if (!is.null(format)) cols[[col]]$format = format
+  if (!is.null(source)) cols[[col]]$source = source
+  if (!is.null(strict)) cols[[col]]$strict = strict
+  if (!is.null(allowInvalcol)) cols[[col]]$allowInvalcol = allowInvalcol
+  if (!is.null(readOnly)) cols[[col]]$readOnly = readOnly
 
   # jsonlite::toJSON doesn't currently handle JS
   if (!is.null(validator))
@@ -173,8 +185,8 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' @param fixedRowsTop
 #' @export
 hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
-  hot$x$rowHeights = rowHeights
-  hot$x$fixedRowsTop = fixedRowsTop
+  if (!is.null(rowHeights)) hot$x$rowHeights = rowHeights
+  if (!is.null(fixedRowsTop)) hot$x$fixedRowsTop = fixedRowsTop
   hot
 }
 
@@ -187,9 +199,14 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' @param comment
 #' @export
 hot_cell = function(hot, row, col, comment = NULL) {
-  hot$x$cell = jsonlite::toJSON(data.frame(row = row, col = col,
-                                           comment = comment),
+  cell = list(row = row, col = col, comment = comment)
+
+  hot$x$cell = jsonlite::toJSON(c(hot$x$cell, list(cell)),
                                 auto_unbox = TRUE)
+
+  if (is.null(hot$x$comments))
+    hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)
+
   hot
 }
 
@@ -205,19 +222,23 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param highlightRow
 #' @param highlightCol
 #' @param wordWrap
-#' @param contextMenu
+#' @param comments
 #' @export
-hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
-                     groups = NULL, highlightRow = FALSE,
-                     highlightCol = FALSE, wordWrap = TRUE) {
-  hot$x$customBorders = customBorders
-  hot$x$contextMenu = contextMenu
-  hot$x$wordWrap = wordWrap
-  hot$x$groups = groups
+hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
+                     groups = NULL, highlightRow = NULL,
+                     highlightCol = NULL, wordWrap = NULL,
+                     comments = NULL) {
+  if (!is.null(customBorders)) hot$x$customBorders = customBorders
+  if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
+  if (!is.null(wordWrap)) hot$x$wordWrap = wordWrap
+  if (!is.null(groups)) hot$x$groups = groups
+  if (!is.null(comments)) hot$x$comments = comments
 
-  if (highlightRow || highlightCol) hot$x$ishighlight = TRUE
-  if (highlightRow) hot$x$currentRowClassName = "currentRow"
-  if (highlightCol) hot$x$currentColClassName = "currentCol"
+  if ((!is.null(highlightRow) && highlightRow) ||
+        (!is.null(highlightCol) && highlightCol))
+    hot$x$ishighlight = TRUE
+  if (!is.null(highlightRow) && highlightRow) hot$x$currentRowClassName = "currentRow"
+  if (!is.null(highlightCol) && highlightCol) hot$x$currentColClassName = "currentCol"
 
   hot
 }
@@ -229,7 +250,7 @@ hot_table = function(hot, customBorders = NULL, contextMenu = TRUE,
 #' @param hot rhandsontable object
 #' @param cols
 #' @param color_scale
-#' @param render
+#' @param renderer
 #' @export
 hot_heatmap = function(hot, cols, color_scale, renderer = NULL) {
   if (is.null(renderer)) {
@@ -261,7 +282,9 @@ hot_heatmap = function(hot, cols, color_scale, renderer = NULL) {
 #' Widget output function for use in Shiny
 #'
 #' @import htmlwidgets
-#'
+#' @param outputId
+#' @param width
+#' @param height
 #' @export
 rHandsontableOutput <- function(outputId, width = NA, height = NA){
   htmlwidgets::shinyWidgetOutput(outputId, 'rhandsontable', width, height,
@@ -271,7 +294,9 @@ rHandsontableOutput <- function(outputId, width = NA, height = NA){
 #' Widget render function for use in Shiny
 #'
 #' @import htmlwidgets
-#'
+#' @param expr
+#' @param env
+#' @param quoted
 #' @export
 renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted

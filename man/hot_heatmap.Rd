@@ -15,7 +15,7 @@ hot_heatmap(hot, cols, color_scale, renderer = NULL)
 
 \item{color_scale}{}
 
-\item{render}{}
+\item{renderer}{}
 }
 \description{
 Add heatmap to table.  See

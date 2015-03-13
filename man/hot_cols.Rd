@@ -5,8 +5,8 @@
 \title{Configure column parameters.  See
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
-hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = FALSE,
-  manualColumnMove = FALSE, manualColumnResize = FALSE,
+hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = NULL,
+  manualColumnMove = NULL, manualColumnResize = NULL,
   fixedColumnsLeft = NULL, halign = NULL, valign = NULL, ...)
 }
 \arguments{

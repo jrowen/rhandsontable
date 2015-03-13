@@ -22,6 +22,10 @@ HTMLWidgets.widget({
 
     x.columns = JSON.parse(x.columns)
 
+    if (x.cell) {
+      x.cell = JSON.parse(x.cell)
+    }
+
     if (x.customBorders) {
       x.customBorders = JSON.parse(x.customBorders)
     }

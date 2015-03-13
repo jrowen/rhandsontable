@@ -5,8 +5,9 @@
 \title{Configure table.  See
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
-hot_table(hot, customBorders = NULL, contextMenu = TRUE, groups = NULL,
-  highlightRow = FALSE, highlightCol = FALSE, wordWrap = TRUE)
+hot_table(hot, customBorders = NULL, contextMenu = NULL, groups = NULL,
+  highlightRow = NULL, highlightCol = NULL, wordWrap = NULL,
+  comments = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -25,7 +26,7 @@ hot_table(hot, customBorders = NULL, contextMenu = TRUE, groups = NULL,
 
 \item{wordWrap}{}
 
-\item{contextMenu}{}
+\item{comments}{}
 }
 \description{
 Configure table.  See

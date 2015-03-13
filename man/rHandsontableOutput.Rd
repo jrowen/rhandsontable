@@ -6,6 +6,13 @@
 \usage{
 rHandsontableOutput(outputId, width = NA, height = NA)
 }
+\arguments{
+\item{outputId}{}
+
+\item{width}{}
+
+\item{height}{}
+}
 \description{
 Widget output function for use in Shiny
 }
