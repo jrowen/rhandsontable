@@ -47,6 +47,7 @@ HTMLWidgets.widget({
 
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
+    this.afterSelectCallback(x);
 
     if (instance.hot) { // update existing instance
 
@@ -75,6 +76,21 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: JSON.stringify(this.getData()),
           changes: { event: "afterChange", changes: changes },
+          params: hotParams[this.rootElement.id]
+        });
+      }
+
+    };
+  },
+
+  afterSelectCallback: function(x) {
+
+    x.afterSelectionEnd = function(r, c, r2, c2) {
+
+      if (HTMLWidgets.shinyMode) {
+        Shiny.onInputChange(this.rootElement.id + "_select", {
+          data: JSON.stringify(this.getData()),
+          select: { r: r, c: c, r2: r2, c2: c2},
           params: hotParams[this.rootElement.id]
         });
       }
