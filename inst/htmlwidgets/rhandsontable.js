@@ -34,12 +34,15 @@ HTMLWidgets.widget({
       x.groups = JSON.parse(x.groups)
     }
 
-    for (i in x.colRenderer) {
-      x.columns[parseInt(i)].renderer = x.colRenderer[i].parseFunction()
-    }
+    for (var c in x.columns) {
+      col = x.columns[c];
+      if (col.renderer) {
+        x.columns[c].renderer = col.renderer.parseFunction()
+      }
 
-    for (i in x.colValidator) {
-      x.columns[parseInt(i)].validator = x.colValidator[i].parseFunction()
+      if (col.validator) {
+        x.columns[c].validator = col.validator.parseFunction()
+      }
     }
 
     x.afterLoadData = this.updateHeatmap;

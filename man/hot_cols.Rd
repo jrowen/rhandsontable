@@ -7,7 +7,7 @@
 \usage{
 hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = NULL,
   manualColumnMove = NULL, manualColumnResize = NULL,
-  fixedColumnsLeft = NULL, halign = NULL, valign = NULL, ...)
+  fixedColumnsLeft = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -23,10 +23,6 @@ hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = NULL,
 \item{manualColumnResize}{}
 
 \item{fixedColumnsLeft}{}
-
-\item{halign}{htLeft, htCenter, htRight, htJustify}
-
-\item{valign}{htTop, htMiddle, htBottom}
 
 \item{...}{passed to hot_col}
 }

@@ -94,14 +94,11 @@ rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes =
 #' @param manualColumnMove
 #' @param manualColumnResize
 #' @param fixedColumnsLeft
-#' @param halign htLeft, htCenter, htRight, htJustify
-#' @param valign htTop, htMiddle, htBottom
 #' @param ... passed to hot_col
 #' @export
 hot_cols = function(hot, columns = NULL, colWidths = NULL,
                     columnSorting = NULL, manualColumnMove = NULL,
-                    manualColumnResize = NULL, fixedColumnsLeft = NULL,
-                    halign = NULL, valign = NULL, ...) {
+                    manualColumnResize = NULL, fixedColumnsLeft = NULL, ...) {
   # overwrite original settings
   if (!is.null(columns)) hot$x$columns = columns
 
@@ -112,13 +109,6 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
   if (!is.null(manualColumnResize)) hot$x$manualColumnResize = manualColumnResize
 
   if (!is.null(fixedColumnsLeft)) hot$x$fixedColumnsLeft = fixedColumnsLeft
-
-  className = c(halign, valign)
-  if (!is.null(className)) {
-    cols = jsonlite::fromJSON(hot$x$columns)
-    cols$className = className
-    hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE)
-  }
 
   for (x in hot$x$colHeaders)
     hot = hot %>% hot_col(x, ...)
@@ -135,7 +125,6 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' @param format
 #' @param source
 #' @param strict
-#' @param allowInvalcol
 #' @param readOnly
 #' @param validator
 #' @param allowInvalid
@@ -144,7 +133,7 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' @param renderer
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
-                   strict = NULL, allowInvalcol = NULL,
+                   strict = NULL,
                    readOnly = NULL, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
@@ -156,24 +145,19 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   if (!is.null(format)) cols[[col]]$format = format
   if (!is.null(source)) cols[[col]]$source = source
   if (!is.null(strict)) cols[[col]]$strict = strict
-  if (!is.null(allowInvalcol)) cols[[col]]$allowInvalcol = allowInvalcol
   if (!is.null(readOnly)) cols[[col]]$readOnly = readOnly
 
-  # jsonlite::toJSON doesn't currently handle JS
-  if (!is.null(validator))
-    hot$x$colValidator[[as.character(col - 1)]] = JS(validator)
-  hot$x$allowInvalid = allowInvalid
-  if (!is.null(renderer))
-    hot$x$colRenderer[[as.character(col - 1)]] = JS(renderer)
-  # if (!is.null(validator)) cols[[col]] = JS(validator)
-  # if (!is.null(renderer)) cols[[col]] = JS(renderer)
+  if (!is.null(validator)) cols[[col]]$validator = JS(validator)
+  if (!is.null(allowInvalid)) cols[[col]]$allowInvalid = allowInvalid
+  if (!is.null(renderer)) cols[[col]]$renderer = JS(renderer)
 
   className = c(halign, valign)
   if (!is.null(className)) {
     cols[[col]]$className = className
   }
 
-  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE)
+  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE,
+                                   force = TRUE)
   hot
 }
 
