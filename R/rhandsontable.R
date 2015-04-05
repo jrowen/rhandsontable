@@ -257,7 +257,9 @@ hot_heatmap = function(hot, cols, color_scale, renderer = NULL) {
     renderer = gsub("%s2", color_scale[2], renderer)
   }
 
-  for (x in hot$x$colHeaders)
+  if (missing(cols))
+    cols = seq_along(hot$x$colHeaders)
+  for (x in hot$x$colHeaders[cols])
     hot = hot %>% hot_col(x, renderer = renderer)
 
   hot
