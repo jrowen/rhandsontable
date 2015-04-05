@@ -9,12 +9,12 @@
 #' @param width
 #' @param height
 #' @export
-rhandsontable <- function(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
+rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
                           readOnly = NULL, contextMenu = TRUE,
                           width = NULL, height = NULL) {
-  if (is.null(colHeaders))
+  if (missing(colHeaders))
     colHeaders = colnames(data)
-  if (is.null(rowHeaders))
+  if (missing(rowHeaders))
     rowHeaders = rownames(data)
 
   if (!useTypes) {

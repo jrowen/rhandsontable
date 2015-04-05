@@ -7,7 +7,7 @@
 \title{An \code{htmlwidget} interface to the
 \href{http://http://handsontable.com//}{Handsontable.js} library}
 \usage{
-rhandsontable(data, colHeaders = NULL, rowHeaders = NULL, useTypes = TRUE,
+rhandsontable(data, colHeaders, rowHeaders, useTypes = TRUE,
   readOnly = NULL, contextMenu = TRUE, width = NULL, height = NULL)
 }
 \arguments{
