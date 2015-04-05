@@ -10,3 +10,5 @@ devtools::install_github("jrowen/rhandsontable")
 ```
 
 See [examples](https://github.com/jrowen/rhandsontable/tree/master/inst/examples) to learn more about using this library.
+
+Still a work-in-progress, especially documentation.  Feedback and pull requests welcome.
