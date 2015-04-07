@@ -1,8 +1,10 @@
 [![Build Status](https://travis-ci.org/jrowen/rhandsontable.svg?branch=master)](https://travis-ci.org/jrowen/rhandsontable)
 
-An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](http://http://handsontable.com/).  This library was inspired by the [`shinyTable`](https://github.com/trestletech/shinyTable) package.
+An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](http://http://handsontable.com/).  Per the website:
 
-Output binding working in all cases, and input binding works with `shiny`.
+*Handsontable is a minimalist Excel-like data grid editor for HTML & JavaScript*
+
+This library was inspired by the [`shinyTable`](https://github.com/trestletech/shinyTable) package.  Most of the original functionality was preserved, and the `htmlwidgets` framework made it possible to leverage even more of the Handsontable.js functionality.
 
 To install use
 ```
@@ -18,7 +20,6 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = F)
 
-# table with dropdowns
 rhandsontable(DF, rowHeaders = NULL) %>%
   hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
   hot_col(col = "small", type = "autocomplete", source = letters,
@@ -71,6 +72,6 @@ server = function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-See the [examples](https://github.com/jrowen/rhandsontable/tree/master/inst/examples) folder for a lot more options, including `shiny` apps.
+See the [examples](https://github.com/jrowen/rhandsontable/tree/master/inst/examples) folder for many more options, including `shiny` apps.
 
 Still a work-in-progress, especially documentation.  Feedback and pull requests welcome.
