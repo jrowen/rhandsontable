@@ -161,6 +161,86 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   hot
 }
 
+#' Add numeric validation to a column
+#'
+#' @param hot rhandsontable object
+#' @param col
+#' @param min
+#' @param max
+#' @param choices
+#' @param exclude
+#' @param allowInvalid
+#' @export
+hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
+                                choices = NULL, exclude = NULL,
+                                allowInvalid = FALSE) {
+  f = "function (value, callback) {
+         setTimeout(function(){
+           %exclude
+           %min
+           %max
+           %choices
+           callback(true);
+         }, 500)
+       }"
+
+  if (!is.null(exclude))
+    ex_str = paste0("if ([",
+                    paste0(paste0("'", exclude, "'"), collapse = ","),
+                    "].indexOf(value) > -1) { callback(false); }")
+  else
+    ex_str = ""
+  f = gsub("%exclude", ex_str, f)
+
+  if (!is.null(min))
+    min_str = paste0("if (value < ", min, ") { callback(false); }")
+  else
+    min_str = ""
+  f = gsub("%min", min_str, f)
+
+  if (!is.null(max))
+    max_str = paste0("if (value > ", max, ") { callback(false); }")
+  else
+    max_str = ""
+  f = gsub("%max", max_str, f)
+
+  if (!is.null(choices))
+    chcs_str = paste0("if ([",
+                      paste0(paste0("'", choices, "'"), collapse = ","),
+                      "].indexOf(value) == -1) { callback(false); }")
+  else
+    chcs_str = ""
+  f = gsub("%choices", chcs_str, f)
+
+  hot %>% hot_col(col, validator = gsub("\n", "", f),
+                  allowInvalid = allowInvalid)
+}
+
+#' Add numeric validation to a column
+#'
+#' @param hot rhandsontable object
+#' @param col
+#' @param choices
+#' @param allowInvalid
+#' @export
+hot_validate_character = function(hot, col, choices,
+                                  allowInvalid = FALSE) {
+  f = "function (value, callback) {
+         setTimeout(function(){
+           %choices
+           callback(false);
+         }, 500)
+       }"
+
+  ch_str = paste0("if ([",
+                  paste0(paste0("'", choices, "'"), collapse = ","),
+                  "].indexOf(value) > -1) { callback(true); }")
+  f = gsub("%choices%", ch_str, f)
+
+  hot %>% hot_col(col, validator = gsub("\n", "", f),
+                  allowInvalid = allowInvalid)
+}
+
 #' Configure rows.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'

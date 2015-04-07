@@ -5,39 +5,44 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = F)
 
+# table with dropdowns
 rhandsontable(DF, rowHeaders = NULL) %>%
   hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
   hot_col(col = "small", type = "autocomplete", source = letters,
           strict = FALSE)
 
+# read-only table
 rhandsontable(DF, readOnly = TRUE) %>%
   hot_col("small", "password") %>%
   hot_cell(1, 1, "Test comment")
 
+# column sorting enables
 rhandsontable(DF) %>%
   hot_cols(columnSorting = TRUE)
 
+# highlight selected row and column
 rhandsontable(DF) %>%
   hot_table(highlightCol = TRUE, highlightRow = TRUE)
 
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
+# turn the table into a heatmap
 rhandsontable(MAT) %>%
   hot_heatmap(cols = seq_len(ncol(MAT)),
               color_scale = c("#ED6D47", "#17F556"))
 
+# add fixed rows and columns
 rhandsontable(MAT, width = 300, height = 150) %>%
   hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
   hot_rows(rowHeights = 50, fixedRowsTop = 1)
 
-rhandsontable(MAT) %>%
-  hot_table(customBorders = TRUE)
-
+# group rows and columns
 rhandsontable(MAT) %>%
   hot_table(groups = jsonlite::toJSON(list(list(cols = c(0, 1)),
                                            list(rows = c(0, 1)))))
 
+# add custom borders
 rhandsontable(MAT) %>%
   hot_table(customBorders = jsonlite::toJSON(list(list(
     range = list(from = list(row = 1, col = 1),
@@ -47,7 +52,18 @@ rhandsontable(MAT) %>%
     bottom = list(width = 2, color = "red"),
     right = list(width = 2, color = "red"))), auto_unbox = TRUE))
 
-# try to update any cell to 0
+# add numeric validation
+rhandsontable(MAT * 10) %>%
+  hot_validate_numeric(col = 1, min = -50, max = 50, exclude = 40)
+
+rhandsontable(MAT * 10) %>%
+  hot_validate_numeric(col = 1, choices = c(10, 20, 40))
+
+# add character validation
+rhandsontable(DF) %>%
+  hot_validate_character(col = "big", choices = LETTERS[1:10])
+
+# custom validation; try to update any cell to 0
 rhandsontable(MAT * 10) %>%
   hot_cols(validator = gsub("\n", "", "
     function (value, callback) {
@@ -62,7 +78,7 @@ rhandsontable(MAT * 10) %>%
     }"),
            allowInvalid = FALSE)
 
-# add conditional formatting to a correlation matrix
+# add conditional formatting to a triangular matrix
 MAT = matrix(runif(100, -1, 1), nrow = 10,
              dimnames = list(LETTERS[1:10], LETTERS[1:10]))
 diag(MAT) = 1
