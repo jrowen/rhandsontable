@@ -10,17 +10,19 @@ hot_validate_numeric(hot, col, min = NULL, max = NULL, choices = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{col}{}
+\item{col}{numeric column index}
 
-\item{min}{}
+\item{min}{minimum value to accept}
 
-\item{max}{}
+\item{max}{maximum value to accept}
 
-\item{choices}{}
+\item{choices}{a vector of acceptable numeric choices. It will be evaluated
+after min and max if specified.}
 
-\item{exclude}{}
+\item{exclude}{a vector or unacceptable numeric values}
 
-\item{allowInvalid}{}
+\item{allowInvalid}{logical specifying whether invalid data will be
+accepted. Invalid data cells will be color red.}
 }
 \description{
 Add numeric validation to a column

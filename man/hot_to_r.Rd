@@ -2,14 +2,16 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_to_r}
 \alias{hot_to_r}
-\title{Convert handsontable data to R object}
+\title{Convert handsontable data to R object. Can be used in a \code{shiny} app
+ to convert the input json to an R dataset.}
 \usage{
 hot_to_r(...)
 }
 \arguments{
-\item{...}{}
+\item{...}{passed to \code{rhandsontable:::toR}}
 }
 \description{
-Convert handsontable data to R object
+Convert handsontable data to R object. Can be used in a \code{shiny} app
+ to convert the input json to an R dataset.
 }
 

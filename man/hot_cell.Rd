@@ -10,11 +10,11 @@ hot_cell(hot, row, col, comment = NULL)
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{row}{}
+\item{row}{numeric row index}
 
-\item{col}{}
+\item{col}{numeric column index}
 
-\item{comment}{}
+\item{comment}{character comment to add to cell}
 }
 \description{
 Configure single cell.  See

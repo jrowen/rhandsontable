@@ -12,27 +12,39 @@ hot_col(hot, col, type = NULL, format = NULL, source = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{col}{}
+\item{col}{numeric column index}
 
-\item{type}{}
+\item{type}{character specify the data type. Options include:
+numeric, date, checkbox, select, dropdown, autocomplete, password,
+and handsontable (not implemented yet)}
 
-\item{format}{}
+\item{format}{characer specifying column format. See Cell Types at
+\href{http://handsontable.com}{Handsontable.js} for the formatting
+options for each data type}
 
-\item{source}{}
+\item{source}{a vector of choices for select, dropdown and autocomplete
+column types}
 
-\item{strict}{}
+\item{strict}{logical specifying whether values not in the \code{source}
+vector will be accepted}
 
-\item{readOnly}{}
+\item{readOnly}{logical making the table read-only}
 
-\item{validator}{}
+\item{validator}{character defining a Javascript function to be used
+to validate user input. See \code{hot_validate_numeric} and
+\code{hot_validate_character} for pre-build validators.}
 
-\item{allowInvalid}{}
+\item{allowInvalid}{logical specifying whether invalid data will be
+accepted. Invalid data cells will be color red.}
 
-\item{halign}{htLeft, htCenter, htRight, htJustify}
+\item{halign}{character defining the horizontal alignment. Possible
+values are htLeft, htCenter, htRight and htJustify}
 
-\item{valign}{htTop, htMiddle, htBottom}
+\item{valign}{character defining the vertical alignment. Possible
+values are htTop, htMiddle, htBottom}
 
-\item{renderer}{}
+\item{renderer}{character defining a Javascript function to be used
+to format column cells. Can be used to implement conditional formatting.}
 }
 \description{
 Configure single column.  See

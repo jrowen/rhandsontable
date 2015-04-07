@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/jrowen/rhandsontable.svg?branch=master)](https://travis-ci.org/jrowen/rhandsontable)
 
-A [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](http://http://handsontable.com/).  See the [`shinyTable`](https://github.com/trestletech/shinyTable) package for a similar `shiny`-specific implementation.
+An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](http://http://handsontable.com/).  This library was inspired by the [`shinyTable`](https://github.com/trestletech/shinyTable) package.
 
 Output binding working in all cases, and input binding works with `shiny`.
 
@@ -9,6 +9,68 @@ To install use
 devtools::install_github("jrowen/rhandsontable")
 ```
 
-See [examples](https://github.com/jrowen/rhandsontable/tree/master/inst/examples) to learn more about using this library.
+A simple example
+```
+library(rhandsontable)
+
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = F)
+
+# table with dropdowns
+rhandsontable(DF, rowHeaders = NULL) %>%
+  hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
+  hot_col(col = "small", type = "autocomplete", source = letters,
+          strict = FALSE)
+```
+
+A heatmap example
+```
+MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+                                                   letters[1:5]))
+
+rhandsontable(MAT) %>%
+  hot_heatmap()
+```
+
+A simple `shiny` example
+```
+library(shiny)
+library(rhandsontable)
+
+ui = shinyUI(fluidPage(
+
+  titlePanel("Handsontable"),
+
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Handsontable demo output. Column add/delete does work ",
+               "for tables with defined column properties, including type."),
+      radioButtons("useType", "Use Data Types", c("TRUE", "FALSE"))
+    ),
+    mainPanel(
+      rHandsontableOutput("hot")
+    )
+  )
+))
+
+server = function(input, output) {
+  output$hot <- renderRHandsontable({
+    if (is.null(input$hot)) {
+      DF = data.frame(val = 1:10, bool = TRUE, nm = LETTERS[1:10],
+                      dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                      stringsAsFactors = F)
+    } else {
+      DF = hot_to_r(input$hot)
+    }
+    rhandsontable(DF, useTypes = as.logical(input$useType))
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+See the [examples](https://github.com/jrowen/rhandsontable/tree/master/inst/examples) folder for a lot more options, including `shiny` apps.
 
 Still a work-in-progress, especially documentation.  Feedback and pull requests welcome.

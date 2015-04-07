@@ -2,7 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_cols}
 \alias{hot_cols}
-\title{Configure column parameters.  See
+\title{Configure multiple columns.  See
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
 hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = NULL,
@@ -12,22 +12,24 @@ hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{columns}{}
+\item{columns}{a list of column settings}
 
-\item{colWidths}{scalar, vector or JS()}
+\item{colWidths}{a scalar or numeric vector of column widths}
 
-\item{columnSorting}{}
+\item{columnSorting}{logical enabling row sorting. Sorting only alters the
+table presentation and the original dataset row order is maintained.}
 
-\item{manualColumnMove}{}
+\item{manualColumnMove}{logical enabling column drag-and-drop reordering}
 
-\item{manualColumnResize}{}
+\item{manualColumnResize}{logical enabline column width resizing}
 
-\item{fixedColumnsLeft}{}
+\item{fixedColumnsLeft}{a numeric vector indicating which columns should be
+frozen on the left}
 
 \item{...}{passed to hot_col}
 }
 \description{
-Configure column parameters.  See
+Configure multiple columns.  See
 \href{http://handsontable.com}{Handsontable.js} for details.
 }
 

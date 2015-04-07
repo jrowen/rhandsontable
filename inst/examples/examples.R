@@ -29,8 +29,7 @@ MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
 
 # turn the table into a heatmap
 rhandsontable(MAT) %>%
-  hot_heatmap(cols = seq_len(ncol(MAT)),
-              color_scale = c("#ED6D47", "#17F556"))
+  hot_heatmap()
 
 # add fixed rows and columns
 rhandsontable(MAT, width = 300, height = 150) %>%

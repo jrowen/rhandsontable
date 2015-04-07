@@ -1,13 +1,16 @@
 #' See \href{http://handsontable.com}{Handsontable.js} for details.
 #'
-#' @param data
-#' @param colHeaders
-#' @param rowHeaders
-#' @param useTypes
-#' @param readOnly
-#' @param contextMenu
-#' @param width
-#' @param height
+#' @param data a \code{data.table}, \code{data.frame} or \code{matrix}
+#' @param colHeaders a vector of column names. If missing \code{colnames}
+#'  will be used. Setting to \code{NULL} will omit.
+#' @param rowHeaders a vector of row names. If missing \code{rownames}
+#'  will be used. Setting to \code{NULL} will omit.
+#' @param useTypes logical specifying whether column classes should be mapped to
+#'  equivalent Javascript types
+#' @param readOnly logical specifying whether the table is editable
+#' @param contextMenu passed to \code{hot_table}
+#' @param width numeric table width
+#' @param height numeric table height
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
                           readOnly = NULL, contextMenu = TRUE,
@@ -84,16 +87,18 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   hot
 }
 
-#' Configure column parameters.  See
+#' Configure multiple columns.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
-#' @param columns
-#' @param colWidths scalar, vector or JS()
-#' @param columnSorting
-#' @param manualColumnMove
-#' @param manualColumnResize
-#' @param fixedColumnsLeft
+#' @param columns a list of column settings
+#' @param colWidths a scalar or numeric vector of column widths
+#' @param columnSorting logical enabling row sorting. Sorting only alters the
+#'  table presentation and the original dataset row order is maintained.
+#' @param manualColumnMove logical enabling column drag-and-drop reordering
+#' @param manualColumnResize logical enabline column width resizing
+#' @param fixedColumnsLeft a numeric vector indicating which columns should be
+#'  frozen on the left
 #' @param ... passed to hot_col
 #' @export
 hot_cols = function(hot, columns = NULL, colWidths = NULL,
@@ -120,17 +125,29 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
-#' @param col
-#' @param type
-#' @param format
-#' @param source
-#' @param strict
-#' @param readOnly
-#' @param validator
-#' @param allowInvalid
-#' @param halign htLeft, htCenter, htRight, htJustify
-#' @param valign htTop, htMiddle, htBottom
-#' @param renderer
+#' @param col numeric column index
+#' @param type character specify the data type. Options include:
+#'  numeric, date, checkbox, select, dropdown, autocomplete, password,
+#'  and handsontable (not implemented yet)
+#' @param format characer specifying column format. See Cell Types at
+#'  \href{http://handsontable.com}{Handsontable.js} for the formatting
+#'  options for each data type
+#' @param source a vector of choices for select, dropdown and autocomplete
+#'  column types
+#' @param strict logical specifying whether values not in the \code{source}
+#'  vector will be accepted
+#' @param readOnly logical making the table read-only
+#' @param validator character defining a Javascript function to be used
+#'  to validate user input. See \code{hot_validate_numeric} and
+#'  \code{hot_validate_character} for pre-build validators.
+#' @param allowInvalid logical specifying whether invalid data will be
+#'  accepted. Invalid data cells will be color red.
+#' @param halign character defining the horizontal alignment. Possible
+#'  values are htLeft, htCenter, htRight and htJustify
+#' @param valign character defining the vertical alignment. Possible
+#'  values are htTop, htMiddle, htBottom
+#' @param renderer character defining a Javascript function to be used
+#'  to format column cells. Can be used to implement conditional formatting.
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL,
@@ -164,12 +181,14 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col
-#' @param min
-#' @param max
-#' @param choices
-#' @param exclude
-#' @param allowInvalid
+#' @param col numeric column index
+#' @param min minimum value to accept
+#' @param max maximum value to accept
+#' @param choices a vector of acceptable numeric choices. It will be evaluated
+#'  after min and max if specified.
+#' @param exclude a vector or unacceptable numeric values
+#' @param allowInvalid logical specifying whether invalid data will be
+#'  accepted. Invalid data cells will be color red.
 #' @export
 hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
@@ -219,9 +238,11 @@ hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col
-#' @param choices
-#' @param allowInvalid
+#' @param col numeric column index
+#' @param choices a vector of acceptable numeric choices. It will be evaluated
+#'  after min and max if specified.
+#' @param allowInvalid logical specifying whether invalid data will be
+#'  accepted. Invalid data cells will be color red.
 #' @export
 hot_validate_character = function(hot, col, choices,
                                   allowInvalid = FALSE) {
@@ -245,8 +266,9 @@ hot_validate_character = function(hot, col, choices,
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
-#' @param rowHeights scalar, vector or JS()
-#' @param fixedRowsTop
+#' @param rowHeights a scalar or numeric vector of row heights
+#' @param fixedRowsTop a numeric vector indicating which rows should be
+#'  frozen on the top
 #' @export
 hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
   if (!is.null(rowHeights)) hot$x$rowHeights = rowHeights
@@ -258,9 +280,9 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
-#' @param row
-#' @param col
-#' @param comment
+#' @param row numeric row index
+#' @param col numeric column index
+#' @param comment character comment to add to cell
 #' @export
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
@@ -278,15 +300,19 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
-#' @param customBorders json See
-#' \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
-#' @param contextMenu
-#' @param groups json See
-#' \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
-#' @param highlightRow
-#' @param highlightCol
-#' @param wordWrap
-#' @param comments
+#' @param customBorders json object. See
+#'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
+#' @param contextMenu logical enabling the right-click menu
+#' @param groups json object. See
+#'  \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
+#' @param highlightRow logical enabling row highlighting for the selected
+#'  cell
+#' @param highlightCol logical enabling column highlighting for the
+#'  selected cell
+#' @param wordWrap logical enabling word wrap for the table
+#' @param comments logical enabling comments in the table, including the
+#'  corresponding options in the right-click menu. User comments are not
+#'  currently returned to R.
 #' @export
 hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
                      groups = NULL, highlightRow = NULL,
@@ -312,13 +338,31 @@ hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
 #' for details.
 #'
 #' @param hot rhandsontable object
-#' @param cols
-#' @param color_scale
-#' @param renderer
+#' @param cols numeric vector of columns to include in the heatmap. If missing
+#'  all columns are used.
+#' @param color_scale character vector that includes the lower and upper
+#'  colors
+#' @param renderer character defining a Javascript function to be used
+#'  to determine the cell colors. If missing,
+#'  \code{rhandsontable:::renderer_heatmap} is used.
 #' @export
-hot_heatmap = function(hot, cols, color_scale, renderer = NULL) {
+hot_heatmap = function(hot, cols, color_scale = c("#ED6D47", "#17F556"),
+                       renderer = NULL) {
   if (is.null(renderer)) {
-    renderer = gsub("\n", "", "
+    renderer = renderer_heatmap(color_scale)
+  }
+
+  if (missing(cols))
+    cols = seq_along(hot$x$colHeaders)
+  for (x in hot$x$colHeaders[cols])
+    hot = hot %>% hot_col(x, renderer = renderer)
+
+  hot
+}
+
+# Used by hot_heatmap
+renderer_heatmap = function(color_scale) {
+  renderer = gsub("\n", "", "
       function (instance, td, row, col, prop, value, cellProperties) {
 
         Handsontable.renderers.TextRenderer.apply(this, arguments);
@@ -333,16 +377,9 @@ hot_heatmap = function(hot, cols, color_scale, renderer = NULL) {
         }
       }
       ")
-    renderer = gsub("%s1", color_scale[1], renderer)
-    renderer = gsub("%s2", color_scale[2], renderer)
-  }
-
-  if (missing(cols))
-    cols = seq_along(hot$x$colHeaders)
-  for (x in hot$x$colHeaders[cols])
-    hot = hot %>% hot_col(x, renderer = renderer)
-
-  hot
+  renderer = gsub("%s1", color_scale[1], renderer)
+  renderer = gsub("%s2", color_scale[2], renderer)
+  renderer
 }
 
 #' Widget output function for use in Shiny
@@ -369,9 +406,10 @@ renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, rHandsontableOutput, env, quoted = TRUE)
 }
 
-#' Convert handsontable data to R object
+#' Convert handsontable data to R object. Can be used in a \code{shiny} app
+#'  to convert the input json to an R dataset.
 #'
-#' @param ...
+#' @param ... passed to \code{rhandsontable:::toR}
 #'
 #' @export
 hot_to_r = function(...) {

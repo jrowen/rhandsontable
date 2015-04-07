@@ -10,9 +10,10 @@ hot_rows(hot, rowHeights = NULL, fixedRowsTop = NULL)
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{rowHeights}{scalar, vector or JS()}
+\item{rowHeights}{a scalar or numeric vector of row heights}
 
-\item{fixedRowsTop}{}
+\item{fixedRowsTop}{a numeric vector indicating which rows should be
+frozen on the top}
 }
 \description{
 Configure rows.  See

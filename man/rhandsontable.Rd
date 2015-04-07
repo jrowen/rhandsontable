@@ -11,21 +11,24 @@ rhandsontable(data, colHeaders, rowHeaders, useTypes = TRUE,
   readOnly = NULL, contextMenu = TRUE, width = NULL, height = NULL)
 }
 \arguments{
-\item{data}{}
+\item{data}{a \code{data.table}, \code{data.frame} or \code{matrix}}
 
-\item{colHeaders}{}
+\item{colHeaders}{a vector of column names. If missing \code{colnames}
+will be used. Setting to \code{NULL} will omit.}
 
-\item{rowHeaders}{}
+\item{rowHeaders}{a vector of row names. If missing \code{rownames}
+will be used. Setting to \code{NULL} will omit.}
 
-\item{useTypes}{}
+\item{useTypes}{logical specifying whether column classes should be mapped to
+equivalent Javascript types}
 
-\item{readOnly}{}
+\item{readOnly}{logical specifying whether the table is editable}
 
-\item{contextMenu}{}
+\item{contextMenu}{passed to \code{hot_table}}
 
-\item{width}{}
+\item{width}{numeric table width}
 
-\item{height}{}
+\item{height}{numeric table height}
 }
 \description{
 An \code{htmlwidget} interface to the

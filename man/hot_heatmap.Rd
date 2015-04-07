@@ -6,16 +6,21 @@
 \href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
 for details.}
 \usage{
-hot_heatmap(hot, cols, color_scale, renderer = NULL)
+hot_heatmap(hot, cols, color_scale = c("#ED6D47", "#17F556"),
+  renderer = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{cols}{}
+\item{cols}{numeric vector of columns to include in the heatmap. If missing
+all columns are used.}
 
-\item{color_scale}{}
+\item{color_scale}{character vector that includes the lower and upper
+colors}
 
-\item{renderer}{}
+\item{renderer}{character defining a Javascript function to be used
+to determine the cell colors. If missing,
+\code{rhandsontable:::renderer_heatmap} is used.}
 }
 \description{
 Add heatmap to table.  See

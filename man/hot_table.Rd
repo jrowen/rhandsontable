@@ -12,21 +12,25 @@ hot_table(hot, customBorders = NULL, contextMenu = NULL, groups = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{customBorders}{json See
+\item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
 
-\item{contextMenu}{}
+\item{contextMenu}{logical enabling the right-click menu}
 
-\item{groups}{json See
+\item{groups}{json object. See
 \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.}
 
-\item{highlightRow}{}
+\item{highlightRow}{logical enabling row highlighting for the selected
+cell}
 
-\item{highlightCol}{}
+\item{highlightCol}{logical enabling column highlighting for the
+selected cell}
 
-\item{wordWrap}{}
+\item{wordWrap}{logical enabling word wrap for the table}
 
-\item{comments}{}
+\item{comments}{logical enabling comments in the table, including the
+corresponding options in the right-click menu. User comments are not
+currently returned to R.}
 }
 \description{
 Configure table.  See
