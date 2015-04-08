@@ -52,6 +52,17 @@ HTMLWidgets.widget({
     this.afterRowAndColChange(x);
     this.afterSelectCallback(x);
 
+    x.contextMenu = {
+      callback: function (key, options) {
+        if (key === 'csv') {
+          csvDownload(instance.hot, "filename.csv");
+        }
+      },
+      items: {
+        "csv": {name: 'Export to csv'}
+      }
+    }
+
     if (instance.hot) { // update existing instance
 
       instance.hot.updateSettings(x);
@@ -202,3 +213,35 @@ if (typeof String.prototype.parseFunction != 'function') {
     };
 }
 
+function csvString(instance) {
+
+  var headers = instance.getColHeader();
+
+  var csv = headers.join(",") + "\n";
+
+  for (var i = 0; i < instance.countRows(); i++) {
+      var row = [];
+      for (var h in headers) {
+          var prop = instance.colToProp(h)
+          var value = instance.getDataAtRowProp(i, prop)
+          row.push(value)
+      }
+
+      csv += row.join(",")
+      csv += "\n";
+  }
+
+  return csv;
+}
+
+function csvDownload(instance, filename) {
+  var csv = csvString(instance)
+
+  var link = document.createElement("a");
+  link.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(csv));
+  link.setAttribute("download", filename);
+
+  document.body.appendChild(link)
+  link.click();
+  document.body.removeChild(link)
+}
