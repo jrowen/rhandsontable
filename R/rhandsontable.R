@@ -319,16 +319,22 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param comments logical enabling comments in the table, including the
 #'  corresponding options in the right-click menu. User comments are not
 #'  currently returned to R.
+#' @param exportToCsv logical adding a context menu option to export the table
+#'  data to a csv file
+#' @param csvFileName character csv file name
 #' @export
 hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
                      groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, wordWrap = NULL,
-                     comments = NULL) {
+                     comments = NULL, exportToCsv = NULL,
+                     csvFileName = "download.csv") {
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
   if (!is.null(wordWrap)) hot$x$wordWrap = wordWrap
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(comments)) hot$x$comments = comments
+  if (!is.null(exportToCsv)) hot$x$exportToCsv = exportToCsv
+  if (!is.null(csvFileName)) hot$x$csvFileName = csvFileName
 
   if ((!is.null(highlightRow) && highlightRow) ||
         (!is.null(highlightCol) && highlightCol))

@@ -52,15 +52,39 @@ HTMLWidgets.widget({
     this.afterRowAndColChange(x);
     this.afterSelectCallback(x);
 
+    menu_items = {
+      "row_above": {},
+      "row_below": {},
+      "hsep1": "---------",
+      "col_left": {},
+      "col_right": {},
+      "hsep2": "---------",
+      "remove_row": {},
+      "remove_col": {},
+      "hsep3": "---------",
+      "undo": {},
+      "redo": {},
+      "make_read_only": {},
+      "alignment": {},
+    };
+    if (x.customBorders) {
+      menu_items["borders"] = {};
+    }
+    if (x.comments) {
+      menu_items["commentsAddEdit"] = {};
+      menu_items["commentsRemove"] = {};
+    }
+    if (x.exportToCsv) {
+      menu_items["hsep4"] = "---------";
+      menu_items["csv"] = {"name": "Export to csv"};
+    }
     x.contextMenu = {
       callback: function (key, options) {
         if (key === 'csv') {
           csvDownload(instance.hot, "filename.csv");
         }
       },
-      items: {
-        "csv": {name: 'Export to csv'}
-      }
+      items: menu_items
     }
 
     if (instance.hot) { // update existing instance
@@ -213,6 +237,7 @@ if (typeof String.prototype.parseFunction != 'function') {
     };
 }
 
+// csv logic adapted from https://github.com/juantascon/jquery-handsontable-csv
 function csvString(instance) {
 
   var headers = instance.getColHeader();
@@ -235,6 +260,7 @@ function csvString(instance) {
 }
 
 function csvDownload(instance, filename) {
+
   var csv = csvString(instance)
 
   var link = document.createElement("a");

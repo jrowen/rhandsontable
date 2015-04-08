@@ -24,6 +24,10 @@ rhandsontable(DF) %>%
 rhandsontable(DF) %>%
   hot_table(highlightCol = TRUE, highlightRow = TRUE)
 
+# export data to csv
+rhandsontable(DF) %>%
+  hot_table(exportToCsv = TRUE)
+
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 

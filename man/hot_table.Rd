@@ -7,7 +7,7 @@
 \usage{
 hot_table(hot, customBorders = NULL, contextMenu = NULL, groups = NULL,
   highlightRow = NULL, highlightCol = NULL, wordWrap = NULL,
-  comments = NULL)
+  comments = NULL, exportToCsv = NULL, csvFileName = "download.csv")
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -31,6 +31,11 @@ selected cell}
 \item{comments}{logical enabling comments in the table, including the
 corresponding options in the right-click menu. User comments are not
 currently returned to R.}
+
+\item{exportToCsv}{logical adding a context menu option to export the table
+data to a csv file}
+
+\item{csvFileName}{character csv file name}
 }
 \description{
 Configure table.  See
