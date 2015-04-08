@@ -74,7 +74,7 @@ HTMLWidgets.widget({
       menu_items["commentsAddEdit"] = {};
       menu_items["commentsRemove"] = {};
     }
-    if (x.exportToCsv) {
+    if (x.exportToCsv && !HTMLWidgets.shinyMode) {
       menu_items["hsep4"] = "---------";
       menu_items["csv"] = {"name": "Export to csv"};
     }
