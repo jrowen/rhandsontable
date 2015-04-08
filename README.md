@@ -7,12 +7,12 @@ An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.
 This library was inspired by the [`shinyTable`](https://github.com/trestletech/shinyTable) package.  Most of the original functionality was preserved, and the `htmlwidgets` framework made it possible to leverage even more of the Handsontable.js functionality.
 
 To install use
-```
+```R
 devtools::install_github("jrowen/rhandsontable")
 ```
 
 A simple example
-```
+```R
 library(rhandsontable)
 
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -27,7 +27,7 @@ rhandsontable(DF, rowHeaders = NULL) %>%
 ```
 
 A heatmap example
-```
+```R
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
@@ -36,7 +36,7 @@ rhandsontable(MAT) %>%
 ```
 
 A simple `shiny` example
-```
+```R
 library(shiny)
 library(rhandsontable)
 
