@@ -195,6 +195,9 @@ hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
                                 allowInvalid = FALSE) {
   f = "function (value, callback) {
          setTimeout(function(){
+           if (isNaN(parseFloat(value))) {
+             callback(false);
+           }
            %exclude
            %min
            %max
@@ -247,7 +250,10 @@ hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
 hot_validate_character = function(hot, col, choices,
                                   allowInvalid = FALSE) {
   f = "function (value, callback) {
-         setTimeout(function(){
+         setTimeout(function() {
+           if (typeof(value) != 'string') {
+             callback(false);
+           }
            %choices
            callback(false);
          }, 500)
@@ -256,7 +262,7 @@ hot_validate_character = function(hot, col, choices,
   ch_str = paste0("if ([",
                   paste0(paste0("'", choices, "'"), collapse = ","),
                   "].indexOf(value) > -1) { callback(true); }")
-  f = gsub("%choices%", ch_str, f)
+  f = gsub("%choices", ch_str, f)
 
   hot %>% hot_col(col, validator = gsub("\n", "", f),
                   allowInvalid = allowInvalid)
