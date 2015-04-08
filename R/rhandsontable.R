@@ -23,7 +23,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   }
 
   rClass = class(data)
-  if (rClass == "matrix") {
+  if ("matrix" %in% rClass) {
     rColClasses = class(data[1, 1])
   } else {
     rColClasses = sapply(data, class)

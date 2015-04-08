@@ -52,14 +52,14 @@ toR = function(data, changes, params, ...) {
       order(c(seq_along(colHeaders), inds - 0.5))]
   } else if (changes$event == "afterRemoveCol") {
     # colHeaders already reflects removal
-    if (rClass != "matrix") {
+    if (!("matrix" %in% rClass)) {
       inds = seq(changes$ind + 1, 1, length.out = changes$ct)
       rColClasses = rColClasses[-inds]
     }
   }
 
   # convert
-  if (params$rClass[1] == "matrix") {
+  if ("matrix" %in% rClass) {
     class(out) = params$rColClasses
   } else if ("data.frame" %in% rClass) {
     out = colClasses(as.data.frame(out, stringsAsFactors = FALSE),
@@ -71,7 +71,7 @@ toR = function(data, changes, params, ...) {
   # post-conversion updates
   if (changes$event == "afterCreateRow") {
     # default logical NA in data.frame to FALSE
-    if (rClass != "matrix") {
+    if (!("matrix" %in% rClass)) {
       inds_logical = which(rColClasses == "logical")
       for (i in inds_logical)
         out[[i]] = ifelse(is.na(out[[i]]), FALSE, out[[i]])
