@@ -1,7 +1,9 @@
 Package: rhandsontable
 Title: htmlwidgets implementation of handsontable.js
 Version: 0.0.0.9000
-Authors@R: person("Jonathan", "Owen", , "jonathanro@gmail.com", role = c("aut", "cre"))
+Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
+                    role = c("aut", "cre")),
+             person("Jeff", "Allen", role = c("ctb")))
 Description: This package is based on the shinyTable package.
 License: MIT
 Depends: R (>= 3.1.2)
