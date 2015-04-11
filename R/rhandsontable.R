@@ -35,8 +35,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   if(useTypes) {
     # get column data types
     col_typs = get_col_types(data)
-    cols = list(type = col_typs)
-    cols$readOnly = readOnly
 
     # format date for display
     dt_inds = which(col_typs == "date")
@@ -45,7 +43,11 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
         data[, i] = as.character(data[, i], format = DATE_FORMAT)
     }
 
-    cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
+    cols = lapply(col_typs, function(type) {
+      res = list(type = type)
+      res$readOnly = readOnly
+      res
+    })
   }
 
   x = list(
@@ -151,7 +153,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    readOnly = NULL, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
-  cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
+  cols = hot$x$columns
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
 
@@ -170,8 +172,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     cols[[col]]$className = className
   }
 
-  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE,
-                                   force = TRUE)
+  hot$x$columns = cols
   hot
 }
 
@@ -290,8 +291,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
 
-  hot$x$cell = jsonlite::toJSON(c(hot$x$cell, list(cell)),
-                                auto_unbox = TRUE)
+  hot$x$cell = c(hot$x$cell, list(cell))
 
   if (is.null(hot$x$comments))
     hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)

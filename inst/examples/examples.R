@@ -38,18 +38,18 @@ rhandsontable(MAT, width = 300, height = 150) %>%
 
 # group rows and columns
 rhandsontable(MAT) %>%
-  hot_table(groups = jsonlite::toJSON(list(list(cols = c(0, 1)),
-                                           list(rows = c(0, 1)))))
+  hot_table(groups = list(list(cols = c(0, 1)),
+                          list(rows = c(0, 1))))
 
 # add custom borders
 rhandsontable(MAT) %>%
-  hot_table(customBorders = jsonlite::toJSON(list(list(
+  hot_table(customBorders = list(list(
     range = list(from = list(row = 1, col = 1),
                  to = list(row = 2, col = 2)),
     top = list(width = 2, color = "red"),
     left = list(width = 2, color = "red"),
     bottom = list(width = 2, color = "red"),
-    right = list(width = 2, color = "red"))), auto_unbox = TRUE))
+    right = list(width = 2, color = "red"))))
 
 # add numeric validation
 rhandsontable(MAT * 10) %>%

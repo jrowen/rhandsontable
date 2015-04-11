@@ -32,7 +32,7 @@ toR = function(data, changes, params, ...) {
   colHeaders = unlist(params$colHeaders)
   rowHeaders = unlist(params$rowHeaders)
 
-  out = jsonlite::fromJSON(data)
+  out = data
 
   # pre-conversion updates
   if (changes$event == "afterCreateRow") {
