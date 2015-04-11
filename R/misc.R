@@ -62,6 +62,7 @@ toR = function(data, changes, params, ...) {
   if ("matrix" %in% rClass) {
     class(out) = params$rColClasses
   } else if ("data.frame" %in% rClass) {
+    out = matrix(unlist(out), nrow = length(out), byrow = TRUE)
     out = colClasses(as.data.frame(out, stringsAsFactors = FALSE),
                      rColClasses)
   } else {
