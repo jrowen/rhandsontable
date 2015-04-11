@@ -45,14 +45,14 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
         data[, i] = as.character(data[, i], format = DATE_FORMAT)
     }
 
-    cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
+    cols = unclass(jsonlite::toJSON(data.frame(do.call(cbind, cols))))
   }
 
   # removes _row from jsonlite::toJSON
   rownames(data) = NULL
 
   x = list(
-    data = jsonlite::toJSON(data, na = "string"),
+    data = unclass(jsonlite::toJSON(data, na = "string")),
     rClass = rClass,
     rColClasses = rColClasses,
     colHeaders = colHeaders,
@@ -154,7 +154,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    readOnly = NULL, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
-  cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
+  cols = unclass(jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE))
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
 
@@ -173,8 +173,8 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     cols[[col]]$className = className
   }
 
-  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE,
-                                   force = TRUE)
+  hot$x$columns = unclass(jsonlite::toJSON(cols, auto_unbox = TRUE,
+                                           force = TRUE))
   hot
 }
 
@@ -293,8 +293,8 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
 
-  hot$x$cell = jsonlite::toJSON(c(hot$x$cell, list(cell)),
-                                auto_unbox = TRUE)
+  hot$x$cell = unclass(jsonlite::toJSON(c(hot$x$cell, list(cell)),
+                                        auto_unbox = TRUE))
 
   if (is.null(hot$x$comments))
     hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)
