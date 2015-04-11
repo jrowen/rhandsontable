@@ -67,12 +67,7 @@ rhandsontable(MAT * 10) %>%
   hot_cols(validator = "
     function (value, callback) {
       setTimeout(function(){
-        if (value != 0) {
-          callback(true);
-        }
-        else {
-          callback(false);
-        }
+        callback(value != 0);
       }, 1000)
     }",
            allowInvalid = FALSE)
