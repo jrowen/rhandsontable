@@ -45,7 +45,7 @@ server = function(input, output) {
     diag(MAT) = 1
     MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
     rhandsontable(MAT, readOnly = TRUE) %>%
-      hot_cols(renderer = gsub("\n", "", "
+      hot_cols(renderer = "
                                function (instance, td, row, col, prop, value, cellProperties) {
                                 Handsontable.renderers.TextRenderer.apply(this, arguments);
                                 if (row == col) {
@@ -58,7 +58,7 @@ server = function(input, output) {
                                 } else if (value > 0.75) {
                                   td.style.background = 'lightgreen';
                                 }
-                               }"))
+                               }")
   })
 
   output$plot = renderMetricsgraphics({

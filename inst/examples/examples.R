@@ -64,7 +64,7 @@ rhandsontable(DF) %>%
 
 # custom validation; try to update any cell to 0
 rhandsontable(MAT * 10) %>%
-  hot_cols(validator = gsub("\n", "", "
+  hot_cols(validator = "
     function (value, callback) {
       setTimeout(function(){
         if (value != 0) {
@@ -74,7 +74,7 @@ rhandsontable(MAT * 10) %>%
           callback(false);
         }
       }, 1000)
-    }"),
+    }",
            allowInvalid = FALSE)
 
 # add conditional formatting to a triangular matrix
@@ -83,7 +83,7 @@ MAT = matrix(runif(100, -1, 1), nrow = 10,
 diag(MAT) = 1
 MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
 rhandsontable(MAT, readOnly = TRUE) %>%
-  hot_cols(renderer = gsub("\n", "", "
+  hot_cols(renderer = "
     function (instance, td, row, col, prop, value, cellProperties) {
       Handsontable.renderers.TextRenderer.apply(this, arguments);
       if (row == col) {
@@ -96,4 +96,4 @@ rhandsontable(MAT, readOnly = TRUE) %>%
       } else if (value > 0.75) {
         td.style.background = 'lightgreen';
       }
-    }"))
+    }")
