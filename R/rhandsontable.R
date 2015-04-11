@@ -48,11 +48,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
     cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
   }
 
-  # removes _row from jsonlite::toJSON
-  rownames(data) = NULL
-
   x = list(
-    data = jsonlite::toJSON(data, na = "string"),
+    data = jsonlite::toJSON(data, na = "string", rownames = FALSE),
     rClass = rClass,
     rColClasses = rColClasses,
     colHeaders = colHeaders,
