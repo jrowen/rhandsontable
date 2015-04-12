@@ -8,7 +8,8 @@
 \href{http://http://handsontable.com//}{Handsontable.js} library}
 \usage{
 rhandsontable(data, colHeaders, rowHeaders, useTypes = TRUE,
-  readOnly = NULL, contextMenu = TRUE, width = NULL, height = NULL)
+  readOnly = NULL, contextMenu = TRUE, selectCallback = FALSE,
+  width = NULL, height = NULL)
 }
 \arguments{
 \item{data}{a \code{data.table}, \code{data.frame} or \code{matrix}}
@@ -25,6 +26,9 @@ equivalent Javascript types}
 \item{readOnly}{logical specifying whether the table is editable}
 
 \item{contextMenu}{passed to \code{hot_table}}
+
+\item{selectCallback}{logical enabling the afterSelect event to return data.
+This can be used with shiny to tie updates to a selected table cell.}
 
 \item{width}{numeric table width}
 
