@@ -1,9 +1,11 @@
 Package: rhandsontable
 Title: An htmlwidgets implementation of Handsontable.js
-Version: 0.0.1.0000
+Version: 0.0.1.0001
 Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
                     role = c("aut", "cre")),
              person("Jeff", "Allen", role = c("ctb")))
+             person("Enzo", "Martoglio", role = "ctb", email = "enzo@smartinsightsfromdata.com"),
+             person(family = "Nextgen", role = c("ctb", "cph")
 Description: This package is uses the htmlwidgets framework to create a
   Handsontable.js widget.
 License: MIT
