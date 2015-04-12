@@ -9,11 +9,14 @@
 #'  equivalent Javascript types
 #' @param readOnly logical specifying whether the table is editable
 #' @param contextMenu passed to \code{hot_table}
+#' @param selectCallback logical enabling the afterSelect event to return data.
+#'  This can be used with shiny to tie updates to a selected table cell.
 #' @param width numeric table width
 #' @param height numeric table height
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
                           readOnly = NULL, contextMenu = TRUE,
+                          selectCallback = FALSE,
                           width = NULL, height = NULL) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
@@ -55,6 +58,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
     data = jsonlite::toJSON(data, na = "string"),
     rClass = rClass,
     rColClasses = rColClasses,
+    selectCallback = selectCallback,
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
     columns = cols,

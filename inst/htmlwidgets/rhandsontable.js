@@ -50,7 +50,10 @@ HTMLWidgets.widget({
 
     this.afterChangeCallback(x);
     this.afterRowAndColChange(x);
-    this.afterSelectCallback(x);
+
+    if (x.selectCallback) {
+      this.afterSelectCallback(x);
+    }
 
     if (instance.hot) { // update existing instance
 

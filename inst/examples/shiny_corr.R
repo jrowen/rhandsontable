@@ -44,7 +44,7 @@ server = function(input, output) {
     MAT = calc()
     diag(MAT) = 1
     MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
-    rhandsontable(MAT, readOnly = TRUE) %>%
+    rhandsontable(MAT, readOnly = TRUE, selectCallback = TRUE) %>%
       hot_cols(renderer = gsub("\n", "", "
                                function (instance, td, row, col, prop, value, cellProperties) {
                                 Handsontable.renderers.TextRenderer.apply(this, arguments);
