@@ -179,7 +179,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col numeric column index
+#' @param cols numeric vector column index
 #' @param min minimum value to accept
 #' @param max maximum value to accept
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
@@ -188,7 +188,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @export
-hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
+hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
                                 allowInvalid = FALSE) {
   f = "function (value, callback) {
@@ -232,20 +232,23 @@ hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
     chcs_str = ""
   f = gsub("%choices", chcs_str, f)
 
-  hot %>% hot_col(col, validator = gsub("\n", "", f),
-                  allowInvalid = allowInvalid)
+  for (x in cols)
+    hot = hot %>% hot_col(x, validator = f,
+                          allowInvalid = allowInvalid)
+
+  hot
 }
 
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col numeric column index
+#' @param cols numeric vector column index
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
 #'  after min and max if specified.
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @export
-hot_validate_character = function(hot, col, choices,
+hot_validate_character = function(hot, cols, choices,
                                   allowInvalid = FALSE) {
   f = "function (value, callback) {
          setTimeout(function() {
@@ -262,8 +265,11 @@ hot_validate_character = function(hot, col, choices,
                   "].indexOf(value) > -1) { callback(true); }")
   f = gsub("%choices", ch_str, f)
 
-  hot %>% hot_col(col, validator = gsub("\n", "", f),
-                  allowInvalid = allowInvalid)
+  for (x in cols)
+    hot = hot %>% hot_col(x, validator = f,
+                          allowInvalid = allowInvalid)
+
+  hot
 }
 
 #' Configure rows.  See
