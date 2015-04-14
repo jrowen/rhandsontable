@@ -4,13 +4,13 @@
 \alias{hot_validate_numeric}
 \title{Add numeric validation to a column}
 \usage{
-hot_validate_numeric(hot, col, min = NULL, max = NULL, choices = NULL,
+hot_validate_numeric(hot, cols, min = NULL, max = NULL, choices = NULL,
   exclude = NULL, allowInvalid = FALSE)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{col}{numeric column index}
+\item{cols}{numeric vector column index}
 
 \item{min}{minimum value to accept}
 
