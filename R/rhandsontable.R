@@ -13,11 +13,11 @@
 #'  This can be used with shiny to tie updates to a selected table cell.
 #' @param width numeric table width
 #' @param height numeric table height
+#' @param ... passed to hot_table
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
-                          readOnly = NULL, contextMenu = TRUE,
-                          selectCallback = FALSE,
-                          width = NULL, height = NULL) {
+                          readOnly = NULL, selectCallback = FALSE,
+                          width = NULL, height = NULL, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
@@ -84,8 +84,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
       hot = hot %>% hot_col(x, readOnly = readOnly)
   }
 
-  if (!is.null(contextMenu))
-    hot = hot %>% hot_table(contextMenu = contextMenu)
+  if (!is.null(list(...)))
+    hot = hot %>% hot_table(...)
 
   hot
 }
@@ -313,35 +313,39 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
+#' @param contextMenu logical enabling the right-click menu
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
-#' @param contextMenu logical enabling the right-click menu
 #' @param groups json object. See
 #'  \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
 #'  selected cell
-#' @param wordWrap logical enabling word wrap for the table
 #' @param comments logical enabling comments in the table, including the
 #'  corresponding options in the right-click menu. User comments are not
 #'  currently returned to R.
+#' @param ... passed to Handsontable constructor
 #' @export
-hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
+hot_table = function(hot, contextMenu = TRUE, customBorders = NULL,
                      groups = NULL, highlightRow = NULL,
-                     highlightCol = NULL, wordWrap = NULL,
-                     comments = NULL) {
+                     highlightCol = NULL,
+                     comments = NULL, ...) {
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
-  if (!is.null(wordWrap)) hot$x$wordWrap = wordWrap
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(comments)) hot$x$comments = comments
 
   if ((!is.null(highlightRow) && highlightRow) ||
         (!is.null(highlightCol) && highlightCol))
     hot$x$ishighlight = TRUE
-  if (!is.null(highlightRow) && highlightRow) hot$x$currentRowClassName = "currentRow"
-  if (!is.null(highlightCol) && highlightCol) hot$x$currentColClassName = "currentCol"
+  if (!is.null(highlightRow) && highlightRow)
+    hot$x$currentRowClassName = "currentRow"
+  if (!is.null(highlightCol) && highlightCol)
+    hot$x$currentColClassName = "currentCol"
+
+  if (!is.null(list(...)))
+    hot$x = c(hot$x, list(...))
 
   hot
 }
