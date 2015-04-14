@@ -33,8 +33,6 @@ This can be used with shiny to tie updates to a selected table cell.}
 \item{height}{numeric table height}
 
 \item{...}{passed to hot_table}
-
-\item{contextMenu}{passed to \code{hot_table}}
 }
 \description{
 An \code{htmlwidget} interface to the

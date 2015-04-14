@@ -2,18 +2,18 @@
 % Please edit documentation in R/rhandsontable.R
 \name{rHandsontableOutput}
 \alias{rHandsontableOutput}
-\title{Widget output function for use in Shiny}
+\title{Shiny bindings for rhandsontable}
 \usage{
 rHandsontableOutput(outputId, width = NA, height = NA)
 }
 \arguments{
-\item{outputId}{}
+\item{outputId}{output variable to read from}
 
-\item{width}{}
-
-\item{height}{}
+\item{width,height}{Must be a valid CSS unit (like \code{"100\%"},
+\code{"400px"}, \code{"auto"}) or a number, which will be coerced to a
+string and have \code{"px"} appended.}
 }
 \description{
-Widget output function for use in Shiny
+Shiny bindings for rhandsontable
 }
 

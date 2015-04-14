@@ -2,18 +2,19 @@
 % Please edit documentation in R/rhandsontable.R
 \name{renderRHandsontable}
 \alias{renderRHandsontable}
-\title{Widget render function for use in Shiny}
+\title{Shiny bindings for rhandsontable}
 \usage{
 renderRHandsontable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{expr}{}
+\item{expr}{An expression that generates threejs graphics.}
 
-\item{env}{}
+\item{env}{The environment in which to evaluate \code{expr}.}
 
-\item{quoted}{}
+\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
+is useful if you want to save an expression in a variable.}
 }
 \description{
-Widget render function for use in Shiny
+Shiny bindings for rhandsontable
 }
 

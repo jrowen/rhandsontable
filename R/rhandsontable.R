@@ -8,7 +8,6 @@
 #' @param useTypes logical specifying whether column classes should be mapped to
 #'  equivalent Javascript types
 #' @param readOnly logical specifying whether the table is editable
-#' @param contextMenu passed to \code{hot_table}
 #' @param selectCallback logical enabling the afterSelect event to return data.
 #'  This can be used with shiny to tie updates to a selected table cell.
 #' @param width numeric table width
@@ -410,24 +409,24 @@ renderer_heatmap = function(color_scale) {
   renderer
 }
 
-#' Widget output function for use in Shiny
+#' Shiny bindings for rhandsontable
 #'
-#' @import htmlwidgets
-#' @param outputId
-#' @param width
-#' @param height
+#' @param outputId output variable to read from
+#' @param width,height Must be a valid CSS unit (like \code{"100\%"},
+#'  \code{"400px"}, \code{"auto"}) or a number, which will be coerced to a
+#'  string and have \code{"px"} appended.
 #' @export
 rHandsontableOutput <- function(outputId, width = NA, height = NA){
   htmlwidgets::shinyWidgetOutput(outputId, 'rhandsontable', width, height,
                                  package = 'rhandsontable')
 }
 
-#' Widget render function for use in Shiny
+#' Shiny bindings for rhandsontable
 #'
-#' @import htmlwidgets
-#' @param expr
-#' @param env
-#' @param quoted
+#' @param expr An expression that generates threejs graphics.
+#' @param env The environment in which to evaluate \code{expr}.
+#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
+#'  is useful if you want to save an expression in a variable.
 #' @export
 renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
