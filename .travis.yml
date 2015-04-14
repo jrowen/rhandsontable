@@ -1,4 +1,4 @@
 sudo: required
 language: r
-install:
-  - ./travis-tool.sh install_github ramnathv/htmlwidgets
+r_github_packages:
+  - ramnathv/htmlwidgets
