@@ -42,18 +42,18 @@ rhandsontable(MAT, width = 300, height = 150) %>%
 
 # group rows and columns
 rhandsontable(MAT) %>%
-  hot_table(groups = jsonlite::toJSON(list(list(cols = c(0, 1)),
-                                           list(rows = c(0, 1)))))
+  hot_table(groups = list(list(cols = c(0, 1)),
+                          list(rows = c(0, 1))))
 
 # add custom borders
 rhandsontable(MAT) %>%
-  hot_table(customBorders = jsonlite::toJSON(list(list(
+  hot_table(customBorders = list(list(
     range = list(from = list(row = 1, col = 1),
                  to = list(row = 2, col = 2)),
     top = list(width = 2, color = "red"),
     left = list(width = 2, color = "red"),
     bottom = list(width = 2, color = "red"),
-    right = list(width = 2, color = "red"))), auto_unbox = TRUE))
+    right = list(width = 2, color = "red"))))
 
 # add numeric validation
 rhandsontable(MAT * 10) %>%
@@ -68,17 +68,12 @@ rhandsontable(DF) %>%
 
 # custom validation; try to update any cell to 0
 rhandsontable(MAT * 10) %>%
-  hot_cols(validator = gsub("\n", "", "
+  hot_cols(validator = "
     function (value, callback) {
       setTimeout(function(){
-        if (value != 0) {
-          callback(true);
-        }
-        else {
-          callback(false);
-        }
+        callback(value != 0);
       }, 1000)
-    }"),
+    }",
            allowInvalid = FALSE)
 
 # add conditional formatting to a triangular matrix
@@ -87,7 +82,7 @@ MAT = matrix(runif(100, -1, 1), nrow = 10,
 diag(MAT) = 1
 MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
 rhandsontable(MAT, readOnly = TRUE) %>%
-  hot_cols(renderer = gsub("\n", "", "
+  hot_cols(renderer = "
     function (instance, td, row, col, prop, value, cellProperties) {
       Handsontable.renderers.TextRenderer.apply(this, arguments);
       if (row == col) {
@@ -100,4 +95,4 @@ rhandsontable(MAT, readOnly = TRUE) %>%
       } else if (value > 0.75) {
         td.style.background = 'lightgreen';
       }
-    }"))
+    }")

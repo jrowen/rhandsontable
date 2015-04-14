@@ -9,12 +9,15 @@
 #'  equivalent Javascript types
 #' @param readOnly logical specifying whether the table is editable
 #' @param contextMenu passed to \code{hot_table}
+#' @param selectCallback logical enabling the afterSelect event to return data.
+#'  This can be used with shiny to tie updates to a selected table cell.
 #' @param width numeric table width
 #' @param height numeric table height
+#' @param ... passed to hot_table
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
-                          readOnly = NULL, contextMenu = TRUE,
-                          width = NULL, height = NULL) {
+                          readOnly = NULL, selectCallback = FALSE,
+                          width = NULL, height = NULL, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
@@ -29,14 +32,12 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   if ("matrix" %in% rClass) {
     rColClasses = class(data[1, 1])
   } else {
-    rColClasses = sapply(data, class)
+    rColClasses = lapply(data, class)
   }
 
   if(useTypes) {
     # get column data types
     col_typs = get_col_types(data)
-    cols = list(type = col_typs)
-    cols$readOnly = readOnly
 
     # format date for display
     dt_inds = which(col_typs == "date")
@@ -45,16 +46,18 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
         data[, i] = as.character(data[, i], format = DATE_FORMAT)
     }
 
-    cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
+    cols = lapply(col_typs, function(type) {
+      res = list(type = type)
+      res$readOnly = readOnly
+      res
+    })
   }
 
-  # removes _row from jsonlite::toJSON
-  rownames(data) = NULL
-
   x = list(
-    data = jsonlite::toJSON(data, na = "string"),
+    data = jsonlite::toJSON(data, na = "string", rownames = FALSE),
     rClass = rClass,
     rColClasses = rColClasses,
+    selectCallback = selectCallback,
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
     columns = cols,
@@ -81,8 +84,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
       hot = hot %>% hot_col(x, readOnly = readOnly)
   }
 
-  if (!is.null(contextMenu))
-    hot = hot %>% hot_table(contextMenu = contextMenu)
+  if (!is.null(list(...)))
+    hot = hot %>% hot_table(...)
 
   hot
 }
@@ -154,7 +157,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    readOnly = NULL, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
-  cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
+  cols = hot$x$columns
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
 
@@ -173,15 +176,14 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     cols[[col]]$className = className
   }
 
-  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE,
-                                   force = TRUE)
+  hot$x$columns = cols
   hot
 }
 
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col numeric column index
+#' @param cols numeric vector column index
 #' @param min minimum value to accept
 #' @param max maximum value to accept
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
@@ -190,7 +192,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @export
-hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
+hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
                                 allowInvalid = FALSE) {
   f = "function (value, callback) {
@@ -234,20 +236,23 @@ hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
     chcs_str = ""
   f = gsub("%choices", chcs_str, f)
 
-  hot %>% hot_col(col, validator = gsub("\n", "", f),
-                  allowInvalid = allowInvalid)
+  for (x in cols)
+    hot = hot %>% hot_col(x, validator = f,
+                          allowInvalid = allowInvalid)
+
+  hot
 }
 
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col numeric column index
+#' @param cols numeric vector column index
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
 #'  after min and max if specified.
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @export
-hot_validate_character = function(hot, col, choices,
+hot_validate_character = function(hot, cols, choices,
                                   allowInvalid = FALSE) {
   f = "function (value, callback) {
          setTimeout(function() {
@@ -264,8 +269,11 @@ hot_validate_character = function(hot, col, choices,
                   "].indexOf(value) > -1) { callback(true); }")
   f = gsub("%choices", ch_str, f)
 
-  hot %>% hot_col(col, validator = gsub("\n", "", f),
-                  allowInvalid = allowInvalid)
+  for (x in cols)
+    hot = hot %>% hot_col(x, validator = f,
+                          allowInvalid = allowInvalid)
+
+  hot
 }
 
 #' Configure rows.  See
@@ -293,8 +301,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
 
-  hot$x$cell = jsonlite::toJSON(c(hot$x$cell, list(cell)),
-                                auto_unbox = TRUE)
+  hot$x$cell = c(hot$x$cell, list(cell))
 
   if (is.null(hot$x$comments))
     hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)
@@ -306,31 +313,30 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
+#' @param contextMenu logical enabling the right-click menu
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
-#' @param contextMenu logical enabling the right-click menu
 #' @param groups json object. See
 #'  \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
 #'  selected cell
-#' @param wordWrap logical enabling word wrap for the table
 #' @param comments logical enabling comments in the table, including the
 #'  corresponding options in the right-click menu. User comments are not
 #'  currently returned to R.
 #' @param exportToCsv logical adding a context menu option to export the table
 #'  data to a csv file
 #' @param csvFileName character csv file name
+#' @param ... passed to Handsontable constructor
 #' @export
-hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
-                     groups = NULL, highlightRow = NULL,
-                     highlightCol = NULL, wordWrap = NULL,
-                     comments = NULL, exportToCsv = NULL,
-                     csvFileName = "download.csv") {
-  if (!is.null(customBorders)) hot$x$customBorders = customBorders
+hot_table = function(hot, contextMenu = TRUE,
+                     customBorders = NULL, groups = NULL, highlightRow = NULL,
+                     highlightCol = NULL, comments = NULL,
+                     exportToCsv = NULL, csvFileName = "download.csv",
+                     ...) {
   if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
-  if (!is.null(wordWrap)) hot$x$wordWrap = wordWrap
+  if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(comments)) hot$x$comments = comments
   if (!is.null(exportToCsv)) hot$x$exportToCsv = exportToCsv
@@ -339,8 +345,13 @@ hot_table = function(hot, customBorders = NULL, contextMenu = NULL,
   if ((!is.null(highlightRow) && highlightRow) ||
         (!is.null(highlightCol) && highlightCol))
     hot$x$ishighlight = TRUE
-  if (!is.null(highlightRow) && highlightRow) hot$x$currentRowClassName = "currentRow"
-  if (!is.null(highlightCol) && highlightCol) hot$x$currentColClassName = "currentCol"
+  if (!is.null(highlightRow) && highlightRow)
+    hot$x$currentRowClassName = "currentRow"
+  if (!is.null(highlightCol) && highlightCol)
+    hot$x$currentColClassName = "currentCol"
+
+  if (!is.null(list(...)))
+    hot$x = c(hot$x, list(...))
 
   hot
 }

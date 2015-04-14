@@ -1,13 +1,17 @@
 Package: rhandsontable
-Title: htmlwidgets implementation of handsontable.js
-Version: 0.0.0.9000
+Title: An htmlwidgets implementation of Handsontable.js
+Version: 0.0.1.0002
 Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
                     role = c("aut", "cre")),
-             person("Jeff", "Allen", role = c("ctb")))
-Description: This package is based on the shinyTable package.
+             person("Jeff", "Allen", role = c("ctb")),
+             person("Yihui", "Xie", role = c("ctb")),
+             person("Enzo", "Martoglio", email = "enzo@smartinsightsfromdata.com",role = "ctb" ),
+             person(family = "Nextgen", role = c("ctb", "cph")))
+Description: This package is uses the htmlwidgets framework to create a
+  Handsontable.js widget.
 License: MIT
 Depends: R (>= 3.1.2)
 Imports:
   jsonlite,
-  htmlwidgets,
+  htmlwidgets (>= 0.3.3),
   magrittr
