@@ -32,14 +32,12 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   if ("matrix" %in% rClass) {
     rColClasses = class(data[1, 1])
   } else {
-    rColClasses = sapply(data, class)
+    rColClasses = lapply(data, class)
   }
 
   if(useTypes) {
     # get column data types
     col_typs = get_col_types(data)
-    cols = list(type = col_typs)
-    cols$readOnly = readOnly
 
     # format date for display
     dt_inds = which(col_typs == "date")
@@ -48,14 +46,15 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
         data[, i] = as.character(data[, i], format = DATE_FORMAT)
     }
 
-    cols = jsonlite::toJSON(data.frame(do.call(cbind, cols)))
+    cols = lapply(col_typs, function(type) {
+      res = list(type = type)
+      res$readOnly = readOnly
+      res
+    })
   }
 
-  # removes _row from jsonlite::toJSON
-  rownames(data) = NULL
-
   x = list(
-    data = jsonlite::toJSON(data, na = "string"),
+    data = jsonlite::toJSON(data, na = "string", rownames = FALSE),
     rClass = rClass,
     rColClasses = rColClasses,
     selectCallback = selectCallback,
@@ -158,7 +157,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    readOnly = NULL, validator = NULL, allowInvalid = NULL,
                    halign = NULL, valign = NULL,
                    renderer = NULL) {
-  cols = jsonlite::fromJSON(hot$x$columns, simplifyVector = FALSE)
+  cols = hot$x$columns
 
   if (is.character(col)) col = which(hot$x$colHeaders == col)
 
@@ -177,15 +176,14 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     cols[[col]]$className = className
   }
 
-  hot$x$columns = jsonlite::toJSON(cols, auto_unbox = TRUE,
-                                   force = TRUE)
+  hot$x$columns = cols
   hot
 }
 
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col numeric column index
+#' @param cols numeric vector column index
 #' @param min minimum value to accept
 #' @param max maximum value to accept
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
@@ -194,7 +192,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @export
-hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
+hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
                                 allowInvalid = FALSE) {
   f = "function (value, callback) {
@@ -238,20 +236,23 @@ hot_validate_numeric = function(hot, col, min = NULL, max = NULL,
     chcs_str = ""
   f = gsub("%choices", chcs_str, f)
 
-  hot %>% hot_col(col, validator = gsub("\n", "", f),
-                  allowInvalid = allowInvalid)
+  for (x in cols)
+    hot = hot %>% hot_col(x, validator = f,
+                          allowInvalid = allowInvalid)
+
+  hot
 }
 
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
-#' @param col numeric column index
+#' @param cols numeric vector column index
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
 #'  after min and max if specified.
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @export
-hot_validate_character = function(hot, col, choices,
+hot_validate_character = function(hot, cols, choices,
                                   allowInvalid = FALSE) {
   f = "function (value, callback) {
          setTimeout(function() {
@@ -268,8 +269,11 @@ hot_validate_character = function(hot, col, choices,
                   "].indexOf(value) > -1) { callback(true); }")
   f = gsub("%choices", ch_str, f)
 
-  hot %>% hot_col(col, validator = gsub("\n", "", f),
-                  allowInvalid = allowInvalid)
+  for (x in cols)
+    hot = hot %>% hot_col(x, validator = f,
+                          allowInvalid = allowInvalid)
+
+  hot
 }
 
 #' Configure rows.  See
@@ -297,8 +301,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
 
-  hot$x$cell = jsonlite::toJSON(c(hot$x$cell, list(cell)),
-                                auto_unbox = TRUE)
+  hot$x$cell = c(hot$x$cell, list(cell))
 
   if (is.null(hot$x$comments))
     hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)

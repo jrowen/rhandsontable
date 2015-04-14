@@ -18,32 +18,7 @@ HTMLWidgets.widget({
     hotParams[el.id] = x;
 
     // convert json to array
-    x.data = toArray(JSON.parse(x.data));
-
-    x.columns = JSON.parse(x.columns)
-
-    if (x.cell) {
-      x.cell = JSON.parse(x.cell)
-    }
-
-    if (x.customBorders) {
-      x.customBorders = JSON.parse(x.customBorders)
-    }
-
-    if (x.groups) {
-      x.groups = JSON.parse(x.groups)
-    }
-
-    for (var c in x.columns) {
-      col = x.columns[c];
-      if (col.renderer) {
-        x.columns[c].renderer = col.renderer.parseFunction()
-      }
-
-      if (col.validator) {
-        x.columns[c].validator = col.validator.parseFunction()
-      }
-    }
+    x.data = toArray(x.data);
 
     x.afterLoadData = this.updateHeatmap;
     x.beforeChangeRender = this.updateHeatmap;
@@ -80,7 +55,7 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode && changes) {
         Shiny.onInputChange(this.rootElement.id, {
-          data: JSON.stringify(this.getData()),
+          data: this.getData(),
           changes: { event: "afterChange", changes: changes },
           params: hotParams[this.rootElement.id]
         });
@@ -95,7 +70,7 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode) {
         Shiny.onInputChange(this.rootElement.id + "_select", {
-          data: JSON.stringify(this.getData()),
+          data: this.getData(),
           select: { r: r, c: c, r2: r2, c2: c2},
           params: hotParams[this.rootElement.id]
         });
@@ -110,7 +85,7 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
-          data: JSON.stringify(this.getData()),
+          data: this.getData(),
           changes: { event: "afterCreateRow", ind: ind, ct: ct },
           params: hotParams[this.rootElement.id]
         });
@@ -120,7 +95,7 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
-          data: JSON.stringify(this.getData()),
+          data: this.getData(),
           changes: { event: "afterRemoveRow", ind: ind, ct: ct },
           params: hotParams[this.rootElement.id]
         });
@@ -130,7 +105,7 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
-          data: JSON.stringify(this.getData()),
+          data: this.getData(),
           changes: { event: "afterCreateCol", ind: ind, ct: ct },
           params: hotParams[this.rootElement.id]
         });
@@ -140,7 +115,7 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
-          data: JSON.stringify(this.getData()),
+          data: this.getData(),
           changes: { event: "afterRemoveCol", ind: ind, ct: ct },
           params: hotParams[this.rootElement.id]
         });
@@ -190,18 +165,3 @@ function toArray(obj) {
   }
   return result;
 }
-
-// http://stackoverflow.com/questions/1271516/executing-anonymous-functions-created-using-javascript-eval
-if (typeof String.prototype.parseFunction != 'function') {
-    String.prototype.parseFunction = function () {
-        var funcReg = /function *\(([^()]*)\)[ \n\t]*{(.*)}/gmi;
-        var match = funcReg.exec(this.replace(/\n/g, ' '));
-
-        if(match) {
-            return new Function(match[1].split(','), match[2]);
-        }
-
-        return null;
-    };
-}
-
