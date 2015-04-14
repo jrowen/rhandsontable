@@ -9,7 +9,7 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person(family = "Nextgen", role = c("ctb", "cph")))
 Description: This package is uses the htmlwidgets framework to create a
   Handsontable.js widget.
-License: MIT
+License: MIT + file LICENSE
 Depends: R (>= 3.1.2)
 Imports:
   jsonlite,
