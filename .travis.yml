@@ -2,3 +2,4 @@ sudo: required
 language: r
 r_github_packages:
   - ramnathv/htmlwidgets
+  - rstudio/shiny
