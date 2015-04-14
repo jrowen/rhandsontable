@@ -4,12 +4,12 @@
 \alias{hot_validate_character}
 \title{Add numeric validation to a column}
 \usage{
-hot_validate_character(hot, col, choices, allowInvalid = FALSE)
+hot_validate_character(hot, cols, choices, allowInvalid = FALSE)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{col}{numeric column index}
+\item{cols}{numeric vector column index}
 
 \item{choices}{a vector of acceptable numeric choices. It will be evaluated
 after min and max if specified.}

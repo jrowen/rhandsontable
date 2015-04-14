@@ -5,17 +5,16 @@
 \title{Configure table.  See
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
-hot_table(hot, customBorders = NULL, contextMenu = NULL, groups = NULL,
-  highlightRow = NULL, highlightCol = NULL, wordWrap = NULL,
-  comments = NULL)
+hot_table(hot, contextMenu = TRUE, customBorders = NULL, groups = NULL,
+  highlightRow = NULL, highlightCol = NULL, comments = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
+\item{contextMenu}{logical enabling the right-click menu}
+
 \item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
-
-\item{contextMenu}{logical enabling the right-click menu}
 
 \item{groups}{json object. See
 \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.}
@@ -26,11 +25,11 @@ cell}
 \item{highlightCol}{logical enabling column highlighting for the
 selected cell}
 
-\item{wordWrap}{logical enabling word wrap for the table}
-
 \item{comments}{logical enabling comments in the table, including the
 corresponding options in the right-click menu. User comments are not
 currently returned to R.}
+
+\item{...}{passed to Handsontable constructor}
 }
 \description{
 Configure table.  See
