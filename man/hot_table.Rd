@@ -5,17 +5,22 @@
 \title{Configure table.  See
 \href{http://handsontable.com}{Handsontable.js} for details.}
 \usage{
-hot_table(hot, customBorders = NULL, contextMenu = NULL, groups = NULL,
-  highlightRow = NULL, highlightCol = NULL, wordWrap = NULL,
-  comments = NULL, exportToCsv = NULL, csvFileName = "download.csv")
+hot_table(hot, contextMenu = TRUE, allowRowEdit = TRUE,
+  allowColEdit = TRUE, customBorders = NULL, groups = NULL,
+  highlightRow = NULL, highlightCol = NULL, comments = NULL,
+  exportToCsv = NULL, csvFileName = "download.csv", ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
+\item{contextMenu}{logical enabling the right-click menu}
+
+\item{allowRowEdit}{logical enabling right-click row options}
+
+\item{allowColEdit}{logical enabling right-click column options}
+
 \item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
-
-\item{contextMenu}{logical enabling the right-click menu}
 
 \item{groups}{json object. See
 \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.}
@@ -26,8 +31,6 @@ cell}
 \item{highlightCol}{logical enabling column highlighting for the
 selected cell}
 
-\item{wordWrap}{logical enabling word wrap for the table}
-
 \item{comments}{logical enabling comments in the table, including the
 corresponding options in the right-click menu. User comments are not
 currently returned to R.}
@@ -36,6 +39,8 @@ currently returned to R.}
 data to a csv file}
 
 \item{csvFileName}{character csv file name}
+
+\item{...}{passed to Handsontable constructor}
 }
 \description{
 Configure table.  See

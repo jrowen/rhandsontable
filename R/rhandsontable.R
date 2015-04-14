@@ -314,6 +314,8 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #'
 #' @param hot rhandsontable object
 #' @param contextMenu logical enabling the right-click menu
+#' @param allowRowEdit logical enabling right-click row options
+#' @param allowColEdit logical enabling right-click column options
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param groups json object. See
@@ -331,11 +333,14 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param ... passed to Handsontable constructor
 #' @export
 hot_table = function(hot, contextMenu = TRUE,
+                     allowRowEdit = TRUE, allowColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, comments = NULL,
                      exportToCsv = NULL, csvFileName = "download.csv",
                      ...) {
   if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
+  if (!is.null(allowRowEdit)) hot$x$allowRowEdit = allowRowEdit
+  if (!is.null(allowColEdit)) hot$x$allowColEdit = allowColEdit
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(comments)) hot$x$comments = comments

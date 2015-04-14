@@ -30,32 +30,48 @@ HTMLWidgets.widget({
       this.afterSelectCallback(x);
     }
 
-    menu_items = {
-      "row_above": {},
-      "row_below": {},
-      "hsep1": "---------",
-      "col_left": {},
-      "col_right": {},
-      "hsep2": "---------",
-      "remove_row": {},
-      "remove_col": {},
-      "hsep3": "---------",
-      "undo": {},
-      "redo": {},
-      "make_read_only": {},
-      "alignment": {},
-    };
+    menu_items = {};
+
+    if (x.allowRowEdit) {
+      menu_items["row_above"] = {};
+      menu_items["row_below"] = {};
+      menu_items["hsep1"] = "---------";
+    }
+    if (x.allowColEdit) {
+      menu_items["col_left"] = {};
+      menu_items["col_right"] = {};
+      menu_items["hsep2"] = "---------";
+    }
+    if (x.allowRowEdit) {
+      menu_items["remove_row"] = {};
+    }
+    if (x.allowColEdit) {
+      menu_items["remove_col"] = {};
+    }
+    if (x.allowRowEdit || x.allowColEdit) {
+      menu_items["hsep3"] = "---------";
+    }
+
+    menu_items["undo"] = {};
+    menu_items["redo"] = {};
+    menu_items["hsep4"] = "---------";
+    menu_items["make_read_only"] = {};
+    menu_items["alignment"] = {};
+
     if (x.customBorders) {
       menu_items["borders"] = {};
     }
+
     if (x.comments) {
       menu_items["commentsAddEdit"] = {};
       menu_items["commentsRemove"] = {};
     }
+
     if (x.exportToCsv && !HTMLWidgets.shinyMode) {
-      menu_items["hsep4"] = "---------";
+      menu_items["hsep5"] = "---------";
       menu_items["csv"] = {"name": "Export to csv"};
     }
+
     x.contextMenu = {
       callback: function (key, options) {
         if (key === 'csv') {

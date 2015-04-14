@@ -22,7 +22,8 @@ rhandsontable(DF) %>%
 
 # highlight selected row and column
 rhandsontable(DF) %>%
-  hot_table(highlightCol = TRUE, highlightRow = TRUE)
+  hot_table(highlightCol = TRUE, highlightRow = TRUE,
+            allowRowEdit = FALSE, allowColEdit = FALSE)
 
 # export data to csv
 rhandsontable(DF) %>%
