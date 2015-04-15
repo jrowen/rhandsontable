@@ -1,6 +1,6 @@
 Package: rhandsontable
 Title: An htmlwidgets implementation of Handsontable.js
-Version: 0.0.1.0002
+Version: 0.0.2
 Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
                     role = c("aut", "cre")),
              person("Jeff", "Allen", role = c("ctb")),
