@@ -37,7 +37,7 @@ toR = function(data, changes, params, ...) {
   # pre-conversion updates
   if (changes$event == "afterCreateRow") {
     # rename to numeric index
-    rowHeaders = seq_len(nrow(out))
+    rowHeaders = seq_len(length(out))
   } else if (changes$event == "afterRemoveRow") {
     inds = seq(changes$ind + 1, 1, length.out = changes$ct)
     rowHeaders = rowHeaders[-inds]
