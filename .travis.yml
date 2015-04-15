@@ -3,3 +3,4 @@ language: r
 r_github_packages:
   - ramnathv/htmlwidgets
   - rstudio/shiny
+  - hrbrmstr/metricsgraphics
