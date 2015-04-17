@@ -53,7 +53,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   }
 
   x = list(
-    data = jsonlite::toJSON(data, na = "string", rownames = FALSE),
+    data = jsonlite::toJSON(data, na = "null", rownames = FALSE),
     rClass = rClass,
     rColClasses = rColClasses,
     selectCallback = selectCallback,
@@ -83,8 +83,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
       hot = hot %>% hot_col(x, readOnly = readOnly)
   }
 
-  if (!is.null(list(...)))
-    hot = hot %>% hot_table(...)
+  hot = hot %>% hot_table(allowColEdit = ("matrix" %in% rClass), ...)
 
   hot
 }
