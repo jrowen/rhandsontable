@@ -60,6 +60,11 @@ toR = function(data, changes, params, ...) {
 
   # convert
   if ("matrix" %in% rClass) {
+    nr = length(out)
+    out = unlist(out, recursive = FALSE)
+    # replace NULL with NA
+    out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
+    out = matrix(out, nrow = nr, byrow = TRUE)
     class(out) = params$rColClasses
   } else if ("data.frame" %in% rClass) {
     nr = length(out)
