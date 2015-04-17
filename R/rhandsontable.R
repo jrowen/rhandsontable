@@ -53,7 +53,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   }
 
   x = list(
-    data = jsonlite::toJSON(data, na = "null", rownames = FALSE),
+    data = jsonlite::toJSON(data, na = "string", rownames = FALSE),
     rClass = rClass,
     rColClasses = rColClasses,
     selectCallback = selectCallback,
