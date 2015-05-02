@@ -34,22 +34,17 @@ toR = function(data, changes, params, ...) {
 
   out = data
 
-  # pre-conversion updates
+  # copy/paste may add rows without firing an afterCreateRow event
+  if (length(out) != length(rowHeaders))
+    changes$event = "afterCreateRow"
+
+  # pre-conversion updates; afterCreateCol moved to end of function
   if (changes$event == "afterCreateRow") {
     # rename to numeric index
-    rowHeaders = seq_len(length(out))
+    rowHeaders = genRowHeaders(length(out))
   } else if (changes$event == "afterRemoveRow") {
     inds = seq(changes$ind + 1, 1, length.out = changes$ct)
     rowHeaders = rowHeaders[-inds]
-  } else if (changes$event == "afterCreateCol") {
-    # find count of existing columns matching pattern
-    ind_ct = length(which(grepl("V[0-9]{1,}", colHeaders)))
-    # create new column names
-    new_cols = paste0("V", changes$ct + ind_ct)
-    # insert into vector
-    inds = seq(changes$ind + 1, 1, length.out = changes$ct)
-    colHeaders = c(colHeaders, new_cols)[
-      order(c(seq_along(colHeaders), inds - 0.5))]
   } else if (changes$event == "afterRemoveCol") {
     # colHeaders already reflects removal
     if (!("matrix" %in% rClass)) {
@@ -88,6 +83,11 @@ toR = function(data, changes, params, ...) {
     }
   }
 
+  # copy/paste may add cols without firing an afterCreateCol event so check
+  #   header length;
+  if (ncol(out) != length(colHeaders))
+    colHeaders = genColHeaders(changes, colHeaders)
+
   colnames(out) = colHeaders
   rownames(out) = rowHeaders
 
@@ -106,4 +106,17 @@ colClasses <- function(d, colClasses) {
                                         format = DATE_FORMAT),
                    as(d[[i]], colClasses[i]))
   d
+}
+
+genColHeaders <- function(changes, colHeaders) {
+  ind_ct = length(which(grepl("V[0-9]{1,}", colHeaders)))
+  # create new column names
+  new_cols = paste0("V", changes$ct + ind_ct)
+  # insert into vector
+  inds = seq(changes$ind + 1, 1, length.out = changes$ct)
+  c(colHeaders, new_cols)[order(c(seq_along(colHeaders), inds - 0.5))]
+}
+
+genRowHeaders <- function(ct) {
+  seq_len(ct)
 }
