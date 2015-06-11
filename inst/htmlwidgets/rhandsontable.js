@@ -202,18 +202,13 @@ HTMLWidgets.widget({
 
 var hotParams = [];
 
-// http://stackoverflow.com/questions/11922383/access-process-nested-objects-arrays-or-json
-function toArray(obj) {
-  var result = [];
-  for (var prop in obj) {
-      var value = obj[prop];
-      if (typeof value === 'object') {
-          result.push(toArray(value)); // <- recursive call
-      }
-      else {
-          result.push(value);
-      }
-  }
+// https://stackoverflow.com/questions/22477612/converting-array-of-objects-into-array-of-arrays
+function toArray(input) {
+  var result = input.map(function(obj) {
+    return Object.keys(obj).map(function(key) {
+      return obj[key];
+    });
+  });
   return result;
 }
 
