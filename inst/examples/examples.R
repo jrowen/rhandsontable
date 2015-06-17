@@ -97,3 +97,4 @@ rhandsontable(MAT, readOnly = TRUE) %>%
         td.style.background = 'lightgreen';
       }
     }")
+
