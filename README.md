@@ -6,7 +6,7 @@ An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.
 
 This library was inspired by the [`shinyTable`](https://github.com/trestletech/shinyTable) package.  Most of the original functionality was preserved, and the `htmlwidgets` framework made it possible to leverage even more of the Handsontable.js functionality.
 
-**See the [vignette](https://github.com/jrowen/rhandsontable/blob/master/vignettes/intro_rhandsontable.Rmd) for detailed examples.**
+**See the [vignette](http://rpubs.com/jrowen/intro_rhandsontable) for detailed examples.**
 
 To install use
 ```R
