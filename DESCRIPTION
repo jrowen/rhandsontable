@@ -13,14 +13,16 @@ License: MIT + file LICENSE
 URL: https://github.com/jrowen/rhandsontable
 BugReports: https://github.com/jrowen/rhandsontable/issues
 Depends: R (>= 3.0.0)
-Imports:
+Imports: 
   jsonlite,
   htmlwidgets (>= 0.3.3),
   magrittr
-Suggests:
+Suggests: 
   shiny (>= 0.12),
   metricsgraphics,
   data.table,
   lpSolve,
   quadprog,
-  ggplot2
+  ggplot2,
+    knitr
+VignetteBuilder: knitr
