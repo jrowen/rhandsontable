@@ -1,7 +1,7 @@
 # (uncomment to add a dependency)
 dependencies:
  - name: handsontable
-   version: 0.12.6
+   version: 0.14.1
    src: "htmlwidgets/lib/handsontable"
    script: handsontable.full.js
    stylesheet: handsontable.full.css
@@ -15,7 +15,7 @@ dependencies:
    script: pikaday.js
    stylesheet: pikaday.css
  - name: chroma
-   version: 1.6.2
+   version: 0.8.0
    src: "htmlwidgets/lib/chroma"
    script: chroma.js
  - name: rhandsontable
