@@ -19,10 +19,5 @@ Imports:
   magrittr
 Suggests: 
   shiny (>= 0.12),
-  metricsgraphics,
-  data.table,
-  lpSolve,
-  quadprog,
-  ggplot2,
-    knitr
+  knitr
 VignetteBuilder: knitr
