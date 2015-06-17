@@ -1,0 +1,177 @@
+---
+title: "rhandsontable Introduction"
+author: "Jonathan Owen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rhandsontable Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+rhandsontable is an htmlwidget based on the [handsontable.js](www.handsontable.com) library.
+
+> Handsontable is a data grid component with an Excel-like appearance. Built in JavaScript, it integrates with any data source with peak efficiency. It comes with powerful features like data validation, sorting, grouping, data binding, formula support or column ordering. 
+([via](www.handsontable.com))
+
+The data grid will be editable by default and can be used as input to a shiny app.  A few shiny examples:
+
+* [Output only](shiny.R)
+* [Input](shiny_portfolio.R)
+* [Table linked to chart source](shiny_corr.R)
+* [Date file editor](shiny_lookup.R)
+* [Multiple tables as inputs](shiny_frontier.R)
+
+The table includes support for numeric, logical, character and Date types.  Logical values will appear as check boxes, and the [pikaday.js](https://github.com/dbushell/Pikaday) library is used to specify Date values.  
+
+Right-clicking in a cell will enable a context menu that includes customizable table actions.  For shiny apps, formatting and comment updates made via the context menu are not currently retained.
+
+```{r}
+library(rhandsontable)
+
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = F)
+
+rhandsontable(DF, rowHeaders = NULL)
+```
+
+To control character column values, the column type can be specified as `dropdown` or `autocomplete`.
+
+```{r}
+# try updating big to a value not in the dropdown
+rhandsontable(DF, rowHeaders = NULL) %>%
+  hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
+  hot_col(col = "small", type = "autocomplete", source = letters,
+          strict = FALSE)
+```
+
+A column can also be specified as a `password` type, and the whole table can to set to `readOnly` to prevent the user from making changes.  Comments (hover) can also be added to individual cells and will appear as red flags in the upper right of the cell.  Comments can also be added via the right-click context menu, but these updates will not currently be retained by shiny.
+
+```{r}
+rhandsontable(DF, readOnly = TRUE) %>%
+  hot_col("small", "password") %>%
+  hot_cell(1, 1, "Test comment")
+```
+
+Column sorting can be enabled; sorting only impacts the widget and will not reorder the original data set.
+
+```{r}
+rhandsontable(DF) %>%
+  hot_cols(columnSorting = TRUE)
+```
+
+With larger tables it my be desirable to highlight the row and column for a selected cell.  By default a user can add or remove table rows and columns, but this functionality can be disabled.
+
+```{r}
+rhandsontable(DF) %>%
+  hot_table(highlightCol = TRUE, highlightRow = TRUE,
+            allowRowEdit = FALSE, allowColEdit = FALSE)
+```
+
+Use the `exportToCsv` (experimental) parameter to enable a saving the table data to a csv using a right-click menu option.
+
+```{r}
+rhandsontable(DF) %>%
+  hot_table(exportToCsv = TRUE)
+```
+
+The [chroma.js](http://old.driven-by-data.net/about/chromajs/) library can be used to turn the table into a heatmap.
+
+```{r}
+MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+                                                   letters[1:5]))
+
+rhandsontable(MAT) %>%
+  hot_heatmap()
+```
+
+Column and row dimensions can be customized.  For larger data sets, (multiple) top rows and left columns can be frozen.
+
+```{r}
+rhandsontable(MAT, width = 300, height = 150) %>%
+  hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
+  hot_rows(rowHeights = 50, fixedRowsTop = 1)
+```
+
+It is also possible to group rows and columns.
+
+```{r}
+rhandsontable(MAT) %>%
+  hot_table(groups = list(list(cols = c(0, 1)),
+                          list(rows = c(0, 1))))
+```
+
+Custom borders can be drawn around cells to highlight specific items.  Borders can also be added via the right-click context menu, but these updates will not currently be retained by shiny.
+
+```{r}
+rhandsontable(MAT) %>%
+  hot_table(customBorders = list(list(
+    range = list(from = list(row = 1, col = 1),
+                 to = list(row = 2, col = 2)),
+    top = list(width = 2, color = "red"),
+    left = list(width = 2, color = "red"),
+    bottom = list(width = 2, color = "red"),
+    right = list(width = 2, color = "red"))))
+```
+
+Pre-defined validation can be added for numeric columns in two ways:
+
+* specify a min and max and any values within the range to exclude
+* similar to a `dropdown` column, specify allowed values
+
+```{r}
+rhandsontable(MAT * 10) %>%
+  hot_validate_numeric(col = 1, min = -50, max = 50, exclude = 40)
+
+rhandsontable(MAT * 10) %>%
+  hot_validate_numeric(col = 1, choices = c(10, 20, 40))
+```
+
+For character columns, a vector of allowed options can be specified.  A more user-friendly approach may be to use a `dropdown` column with `strict = TRUE`.
+
+```{r}
+rhandsontable(DF) %>%
+  hot_validate_character(col = "big", choices = LETTERS[1:10])
+```
+
+It is also possible to create a custom validation function in JavaScript.
+
+```{r}
+# try to update any cell to 0
+rhandsontable(MAT * 10) %>%
+  hot_cols(validator = "
+    function (value, callback) {
+      setTimeout(function(){
+        callback(value != 0);
+      }, 1000)
+    }",
+           allowInvalid = FALSE)
+```
+
+Conditional formatting can also be specified via custom JavaScript function.
+
+```{r}
+MAT = matrix(runif(100, -1, 1), nrow = 10,
+             dimnames = list(LETTERS[1:10], LETTERS[1:10]))
+diag(MAT) = 1
+MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
+rhandsontable(MAT, readOnly = TRUE) %>%
+  hot_cols(renderer = "
+    function (instance, td, row, col, prop, value, cellProperties) {
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
+      if (row == col) {
+        td.style.background = 'lightgrey';
+      } else if (col > row) {
+        td.style.background = 'grey';
+        td.style.color = 'grey';
+      } else if (value < -0.75) {
+        td.style.background = 'pink';
+      } else if (value > 0.75) {
+        td.style.background = 'lightgreen';
+      }
+    }")
+```
+
+Please file a issue if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
