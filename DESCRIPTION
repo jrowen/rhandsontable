@@ -12,12 +12,18 @@ Description: This package is uses the htmlwidgets framework to create a
 License: MIT + file LICENSE
 URL: https://github.com/jrowen/rhandsontable
 BugReports: https://github.com/jrowen/rhandsontable/issues
-Depends: R (>= 3.0.0)
 Imports: 
   jsonlite,
   htmlwidgets (>= 0.3.3),
   magrittr
-Suggests: 
-  shiny (>= 0.12),
-  knitr
+Suggests:
+  knitr,
+  data.table,
+  metricsgraphics,
+  dygraphs,
+  lpSolve,
+  quadprog,
+  ggplot2
+Enhances:
+  shiny (>= 0.12)
 VignetteBuilder: knitr
