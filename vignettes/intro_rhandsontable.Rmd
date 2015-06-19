@@ -16,11 +16,11 @@ rhandsontable is an htmlwidget based on the [handsontable.js](www.handsontable.c
 
 The data grid will be editable by default and can be used as input to a shiny app.  A few shiny examples:
 
-* [Output only](shiny.R)
-* [Input](shiny_portfolio.R)
-* [Table linked to chart source](shiny_corr.R)
-* [Date file editor](shiny_lookup.R)
-* [Multiple tables as inputs](shiny_frontier.R)
+* [Output only](https://jrowen.shinyapps.io/rhandsontable_output)
+* [Calculation input](https://jrowen.shinyapps.io/rhandsontable_portfolio)
+* [Table callback linked to chart](https://jrowen.shinyapps.io/rhandsontable_corr)
+* [Date file editor](https://jrowen.shinyapps.io/rhandsontable_datafile)
+* [Multiple input tables](https://jrowen.shinyapps.io/rhandsontable_frontier)
 
 The table includes support for numeric, logical, character and Date types.  Logical values will appear as check boxes, and the [pikaday.js](https://github.com/dbushell/Pikaday) library is used to specify Date values.  
 

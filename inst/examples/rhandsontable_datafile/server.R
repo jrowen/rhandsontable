@@ -1,23 +1,13 @@
-library(shiny)
 library(rhandsontable)
-library(metricsgraphics)
 
-ui = shinyUI(fluidPage(
-
-  titlePanel("Lookup"),
-  # actionButton("saveBtn", "Save"),
-  rHandsontableOutput("hot")
-
-))
-
-server = function(input, output) {
+shinyServer(function(input, output, session) {
   fname = tempfile()
 
-#   # relies on the actionButton to save
-#   values = list()
-#   setHot = function(x) values[["hot"]] <<- x
+  # uncomment lines below if action button is used to commit changes
+  # values = list()
+  # setHot = function(x) values[["hot"]] <<- x
 
-  # saves after each update
+  # comment lines below if action button is used to commit changes
   values = reactiveValues()
   setHot = function(x) values[["hot"]] = x
 
@@ -37,12 +27,10 @@ server = function(input, output) {
       rhandsontable(DF) %>%
         hot_table(highlightCol = TRUE, highlightRow = TRUE)
     } else {
-      DF = read.csv("inst/examples/mtcars.csv", stringsAsFactors = FALSE)
+      DF = read.csv("mtcars.csv", stringsAsFactors = FALSE)
       setHot(DF)
       rhandsontable(DF) %>%
         hot_table(highlightCol = TRUE, highlightRow = TRUE)
     }
   })
-}
-
-shinyApp(ui = ui, server = server)
+})

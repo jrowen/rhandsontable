@@ -4,33 +4,26 @@ library(lpSolve)
 library(quadprog)
 library(ggplot2)
 
-ui = shinyUI(fluidPage(
+tkrs = c("MSFT", "CAT", "AXP", "DIS", "MMM")
 
-  titlePanel("Efficient Frontier"),
+# quantmod::getSymbols(tkrs, from = "2012-06-01", auto.assign=TRUE)
+# returns = Reduce(function(x, y) merge(x, y), lapply(tkrs, get))
+# returns = returns[, names(returns)[grepl("Close", names(returns))]]
+# returns = data.table(Date = time(returns), coredata(returns))
+# returns = melt(returns, id.vars = "Date", variable.name = "Name",
+#                value.name = "Price")[order(Name, Date)]
+# returns[, `:=`(Name = gsub(".Close", "", Name))]
+# returns[, `:=`(Return = c(NA, Price[-1] / head(Price, -1) - 1)), by = Name]
+# saveRDS(returns, "returns.rds")
+returns = readRDS("returns.rds")
+setkey(returns, Name)
 
-  fluidRow(
-    column(3,
-           rHandsontableOutput("hot_retvol")
-    ),
-    column(3,
-           rHandsontableOutput("hot_corr")
-    )
-  ),
-  fluidRow(
-    column(6,
-           plotOutput("plot")
-    )
-  )
-))
-
-server = function(input, output) {
+shinyServer(function(input, output, session) {
   values = reactiveValues(
-    hot_corr = matrix(
-      c(1, 0.1, 0.3, 0.1, 1, 0.5, 0.3, 0.5, 1), nrow = 3,
-      dimnames = list(LETTERS[1:3], LETTERS[1:3])),
-    hot_retvol = data.frame(Return = c(0.05, 0.07, 0.03),
-                            Vol = c(0.1, 0.15, 0.07),
-                            row.names = LETTERS[1:3]))
+    hot_corr = cor(dcast.data.table(returns, Date ~ Name, value.var = "Return")[
+      , !"Date", with = FALSE], use = "pairwise.complete.obs"),
+    hot_retvol = returns[, list(Return = mean(Return, na.rm = TRUE),
+                                Vol = sd(Return, na.rm = TRUE)), by = Name])
 
   calc = reactive({
     # load initial values
@@ -72,17 +65,17 @@ server = function(input, output) {
     frntr.mat = rbind(ret, mat)
     frntr.meq = meq + 1
     frntr = lapply(
-      seq(t(min_rsk$solution) %*% ret, t(max_ret$solution) %*% ret,
-          length.out = 100), function(x) {
-            sol = solve.QP(Dmat = cov,
-                           dvec = rep(0, n),
-                           Amat = t(frntr.mat),
-                           bvec = c(x, rhs),
-                           meq = frntr.meq,
-                           factorized = FALSE)
-            data.frame(Return = x,
-                       Risk = sqrt(t(sol$solution) %*% cov %*% sol$solution))
-          })
+      head(seq(t(min_rsk$solution) %*% ret, t(max_ret$solution) %*% ret,
+               length.out = 100), -1), function(x) {
+                 sol = solve.QP(Dmat = cov,
+                                dvec = rep(0, n),
+                                Amat = t(frntr.mat),
+                                bvec = c(x, rhs),
+                                meq = frntr.meq,
+                                factorized = FALSE)
+                 data.frame(Return = x,
+                            Risk = sqrt(t(sol$solution) %*% cov %*% sol$solution))
+               })
     frntr = do.call(rbind, frntr)
 
     list(Covariance = cov,
@@ -119,13 +112,16 @@ server = function(input, output) {
   output$plot = renderPlot({
     if (!is.null(calc())) {
       DF = calc()$Frontier
+      DF$Return = (1 + DF$Return) ^ 252 - 1
+      DF$Risk = DF$Risk * sqrt(252)
       DF$Sharpe = DF$Return / DF$Risk
-      ggplot(calc()$Frontier) +
+      ggplot(DF) +
         geom_line(aes(x = Risk, y = Return)) +
         geom_point(data = DF[which.max(DF$Sharpe),],
-                   aes(x = Risk, y = Return), color = "red", size = 4)
+                   aes(x = Risk, y = Return), color = "red", size = 4) +
+        scale_x_continuous(label = scales::percent) +
+        scale_y_continuous(label = scales::percent) +
+        theme_bw()
     }
   })
-}
-
-shinyApp(ui = ui, server = server)
+})
