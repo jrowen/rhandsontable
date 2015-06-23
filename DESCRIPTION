@@ -7,6 +7,7 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("Yihui", "Xie", role = c("ctb")),
              person("Enzo", "Martoglio",
                     email = "enzo@smartinsightsfromdata.com", role = c("ctb")))
+Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: This package is uses the htmlwidgets framework to create a
   Handsontable.js widget.
 License: MIT + file LICENSE
