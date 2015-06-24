@@ -6,7 +6,7 @@
 \title{rhandsontable exported operators}
 \description{
 The following functions are imported and then re-exported
-from the dygraphs package to enable use of the magrittr
+from the rhandsontable package to enable use of the magrittr
 pipe operator with no additional library calls
 }
 

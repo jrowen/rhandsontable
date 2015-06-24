@@ -2,8 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_to_r}
 \alias{hot_to_r}
-\title{Convert handsontable data to R object. Can be used in a \code{shiny} app
- to convert the input json to an R dataset.}
+\title{Handsontable widget}
 \usage{
 hot_to_r(...)
 }

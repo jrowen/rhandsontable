@@ -2,9 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_heatmap}
 \alias{hot_heatmap}
-\title{Add heatmap to table.  See
-\href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
-for details.}
+\title{Handsontable widget}
 \usage{
 hot_heatmap(hot, cols, color_scale = c("#ED6D47", "#17F556"),
   renderer = NULL)
@@ -26,5 +24,12 @@ to determine the cell colors. If missing,
 Add heatmap to table.  See
 \href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
 for details.
+}
+\examples{
+MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+             letters[1:5]))
+
+rhandsontable(MAT) \%>\%
+ hot_heatmap()
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_validate_character}
 \alias{hot_validate_character}
-\title{Add numeric validation to a column}
+\title{Handsontable widget}
 \usage{
 hot_validate_character(hot, cols, choices, allowInvalid = FALSE)
 }
@@ -19,5 +19,15 @@ accepted. Invalid data cells will be color red.}
 }
 \description{
 Add numeric validation to a column
+}
+\examples{
+library(rhandsontable)
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF) \%>\%
+  hot_validate_character(col = "big", choices = LETTERS[1:10])
 }
 

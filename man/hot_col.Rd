@@ -2,8 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_col}
 \alias{hot_col}
-\title{Configure single column.  See
-\href{http://handsontable.com}{Handsontable.js} for details.}
+\title{Handsontable widget}
 \usage{
 hot_col(hot, col, type = NULL, format = NULL, source = NULL,
   strict = NULL, readOnly = NULL, validator = NULL, allowInvalid = NULL,
@@ -47,7 +46,18 @@ values are htTop, htMiddle, htBottom}
 to format column cells. Can be used to implement conditional formatting.}
 }
 \description{
-Configure single column.  See
-\href{http://handsontable.com}{Handsontable.js} for details.
+Configure single column.
+}
+\examples{
+library(rhandsontable)
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF, rowHeaders = NULL) \%>\%
+  hot_col(col = "big", type = "dropdown", source = LETTERS) \%>\%
+  hot_col(col = "small", type = "autocomplete", source = letters,
+          strict = FALSE)
 }
 

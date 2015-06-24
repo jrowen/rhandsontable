@@ -2,7 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_validate_numeric}
 \alias{hot_validate_numeric}
-\title{Add numeric validation to a column}
+\title{Handsontable widget}
 \usage{
 hot_validate_numeric(hot, cols, min = NULL, max = NULL, choices = NULL,
   exclude = NULL, allowInvalid = FALSE)
@@ -26,5 +26,16 @@ accepted. Invalid data cells will be color red.}
 }
 \description{
 Add numeric validation to a column
+}
+\examples{
+library(rhandsontable)
+MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+             letters[1:5]))
+
+rhandsontable(MAT * 10) \%>\%
+  hot_validate_numeric(col = 1, min = -50, max = 50, exclude = 40)
+
+rhandsontable(MAT * 10) \%>\%
+  hot_validate_numeric(col = 1, choices = c(10, 20, 40))
 }
 

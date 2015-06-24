@@ -1,4 +1,6 @@
-#' See \href{http://handsontable.com}{Handsontable.js} for details.
+#' Handsontable widget
+#'
+#' Create a \href{http://handsontable.com}{Handsontable.js} widget.
 #'
 #' @param data a \code{data.table}, \code{data.frame} or \code{matrix}
 #' @param colHeaders a vector of column names. If missing \code{colnames}
@@ -13,6 +15,14 @@
 #' @param width numeric table width
 #' @param height numeric table height
 #' @param ... passed to hot_table
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF, rowHeaders = NULL)
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
                           readOnly = NULL, selectCallback = FALSE,
@@ -88,8 +98,9 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
   hot
 }
 
-#' Configure multiple columns.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
+#' Handsontable widget
+#'
+#' Configure multiple columns.
 #'
 #' @param hot rhandsontable object
 #' @param columns a list of column settings
@@ -101,6 +112,15 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #' @param fixedColumnsLeft a numeric vector indicating which columns should be
 #'  frozen on the left
 #' @param ... passed to hot_col
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF) %>%
+#'   hot_cols(columnSorting = TRUE)
 #' @export
 hot_cols = function(hot, columns = NULL, colWidths = NULL,
                     columnSorting = NULL, manualColumnMove = NULL,
@@ -122,8 +142,9 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
   hot
 }
 
-#' Configure single column.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
+#' Handsontable widget
+#'
+#' Configure single column.
 #'
 #' @param hot rhandsontable object
 #' @param col numeric column index
@@ -149,6 +170,17 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #'  values are htTop, htMiddle, htBottom
 #' @param renderer character defining a Javascript function to be used
 #'  to format column cells. Can be used to implement conditional formatting.
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF, rowHeaders = NULL) %>%
+#'   hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
+#'   hot_col(col = "small", type = "autocomplete", source = letters,
+#'           strict = FALSE)
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL,
@@ -186,6 +218,8 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   hot
 }
 
+#' Handsontable widget
+#'
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
@@ -197,6 +231,16 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #' @param exclude a vector or unacceptable numeric values
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
+#' @examples
+#' library(rhandsontable)
+#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+#'              letters[1:5]))
+#'
+#' rhandsontable(MAT * 10) %>%
+#'   hot_validate_numeric(col = 1, min = -50, max = 50, exclude = 40)
+#'
+#' rhandsontable(MAT * 10) %>%
+#'   hot_validate_numeric(col = 1, choices = c(10, 20, 40))
 #' @export
 hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
@@ -249,6 +293,8 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
   hot
 }
 
+#' Handsontable widget
+#'
 #' Add numeric validation to a column
 #'
 #' @param hot rhandsontable object
@@ -257,6 +303,15 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
 #'  after min and max if specified.
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF) %>%
+#'   hot_validate_character(col = "big", choices = LETTERS[1:10])
 #' @export
 hot_validate_character = function(hot, cols, choices,
                                   allowInvalid = FALSE) {
@@ -282,6 +337,8 @@ hot_validate_character = function(hot, cols, choices,
   hot
 }
 
+#' Handsontable widget
+#'
 #' Configure rows.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
@@ -289,6 +346,14 @@ hot_validate_character = function(hot, cols, choices,
 #' @param rowHeights a scalar or numeric vector of row heights
 #' @param fixedRowsTop a numeric vector indicating which rows should be
 #'  frozen on the top
+#' @examples
+#' library(rhandsontable)
+#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+#'              letters[1:5]))
+#'
+#' rhandsontable(MAT, width = 300, height = 150) %>%
+#' hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
+#'   hot_rows(rowHeights = 50, fixedRowsTop = 1)
 #' @export
 hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
   if (!is.null(rowHeights)) hot$x$rowHeights = rowHeights
@@ -296,6 +361,8 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
   hot
 }
 
+#' Handsontable widget
+#'
 #' Configure single cell.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
@@ -303,6 +370,15 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' @param row numeric row index
 #' @param col numeric column index
 #' @param comment character comment to add to cell
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF, readOnly = TRUE) %>%
+#'   hot_cell(1, 1, "Test comment")
 #' @export
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
@@ -315,6 +391,8 @@ hot_cell = function(hot, row, col, comment = NULL) {
   hot
 }
 
+#' Handsontable widget
+#'
 #' Configure table.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
@@ -336,7 +414,17 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param exportToCsv logical adding a context menu option to export the table
 #'  data to a csv file
 #' @param csvFileName character csv file name
-#' @param ... passed to Handsontable constructor
+#' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF) %>%
+#' hot_table(highlightCol = TRUE, highlightRow = TRUE,
+#'           allowRowEdit = FALSE, allowColEdit = FALSE)
 #' @export
 hot_table = function(hot, contextMenu = TRUE,
                      allowRowEdit = TRUE, allowColEdit = TRUE,
@@ -367,6 +455,8 @@ hot_table = function(hot, contextMenu = TRUE,
   hot
 }
 
+#' Handsontable widget
+#'
 #' Add heatmap to table.  See
 #' \href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
 #' for details.
@@ -379,6 +469,12 @@ hot_table = function(hot, contextMenu = TRUE,
 #' @param renderer character defining a Javascript function to be used
 #'  to determine the cell colors. If missing,
 #'  \code{rhandsontable:::renderer_heatmap} is used.
+#' @examples
+#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+#'              letters[1:5]))
+#'
+#'rhandsontable(MAT) %>%
+#'  hot_heatmap()
 #' @export
 hot_heatmap = function(hot, cols, color_scale = c("#ED6D47", "#17F556"),
                        renderer = NULL) {
@@ -416,6 +512,8 @@ renderer_heatmap = function(color_scale) {
   renderer
 }
 
+#' Handsontable widget
+#'
 #' Shiny bindings for rhandsontable
 #'
 #' @param outputId output variable to read from
@@ -428,6 +526,8 @@ rHandsontableOutput <- function(outputId, width = NA, height = NA){
                                  package = 'rhandsontable')
 }
 
+#' Handsontable widget
+#'
 #' Shiny bindings for rhandsontable
 #'
 #' @param expr An expression that generates threejs graphics.
@@ -440,11 +540,12 @@ renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, rHandsontableOutput, env, quoted = TRUE)
 }
 
+#' Handsontable widget
+#'
 #' Convert handsontable data to R object. Can be used in a \code{shiny} app
 #'  to convert the input json to an R dataset.
 #'
 #' @param ... passed to \code{rhandsontable:::toR}
-#'
 #' @export
 hot_to_r = function(...) {
   do.call(toR, ...)

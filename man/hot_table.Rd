@@ -2,8 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_table}
 \alias{hot_table}
-\title{Configure table.  See
-\href{http://handsontable.com}{Handsontable.js} for details.}
+\title{Handsontable widget}
 \usage{
 hot_table(hot, contextMenu = TRUE, allowRowEdit = TRUE,
   allowColEdit = TRUE, customBorders = NULL, groups = NULL,
@@ -40,10 +39,21 @@ data to a csv file}
 
 \item{csvFileName}{character csv file name}
 
-\item{...}{passed to Handsontable constructor}
+\item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
 }
 \description{
 Configure table.  See
 \href{http://handsontable.com}{Handsontable.js} for details.
+}
+\examples{
+library(rhandsontable)
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF) \%>\%
+hot_table(highlightCol = TRUE, highlightRow = TRUE,
+          allowRowEdit = FALSE, allowColEdit = FALSE)
 }
 

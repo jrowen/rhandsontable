@@ -2,8 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_cell}
 \alias{hot_cell}
-\title{Configure single cell.  See
-\href{http://handsontable.com}{Handsontable.js} for details.}
+\title{Handsontable widget}
 \usage{
 hot_cell(hot, row, col, comment = NULL)
 }
@@ -19,5 +18,15 @@ hot_cell(hot, row, col, comment = NULL)
 \description{
 Configure single cell.  See
 \href{http://handsontable.com}{Handsontable.js} for details.
+}
+\examples{
+library(rhandsontable)
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF, readOnly = TRUE) \%>\%
+  hot_cell(1, 1, "Test comment")
 }
 

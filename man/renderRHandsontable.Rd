@@ -2,7 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{renderRHandsontable}
 \alias{renderRHandsontable}
-\title{Shiny bindings for rhandsontable}
+\title{Handsontable widget}
 \usage{
 renderRHandsontable(expr, env = parent.frame(), quoted = FALSE)
 }

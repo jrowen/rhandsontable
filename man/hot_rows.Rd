@@ -2,8 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_rows}
 \alias{hot_rows}
-\title{Configure rows.  See
-\href{http://handsontable.com}{Handsontable.js} for details.}
+\title{Handsontable widget}
 \usage{
 hot_rows(hot, rowHeights = NULL, fixedRowsTop = NULL)
 }
@@ -18,5 +17,14 @@ frozen on the top}
 \description{
 Configure rows.  See
 \href{http://handsontable.com}{Handsontable.js} for details.
+}
+\examples{
+library(rhandsontable)
+MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+             letters[1:5]))
+
+rhandsontable(MAT, width = 300, height = 150) \%>\%
+hot_cols(colWidths = 100, fixedColumnsLeft = 1) \%>\%
+  hot_rows(rowHeights = 50, fixedRowsTop = 1)
 }
 

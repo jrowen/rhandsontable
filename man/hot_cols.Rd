@@ -2,8 +2,7 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_cols}
 \alias{hot_cols}
-\title{Configure multiple columns.  See
-\href{http://handsontable.com}{Handsontable.js} for details.}
+\title{Handsontable widget}
 \usage{
 hot_cols(hot, columns = NULL, colWidths = NULL, columnSorting = NULL,
   manualColumnMove = NULL, manualColumnResize = NULL,
@@ -29,7 +28,16 @@ frozen on the left}
 \item{...}{passed to hot_col}
 }
 \description{
-Configure multiple columns.  See
-\href{http://handsontable.com}{Handsontable.js} for details.
+Configure multiple columns.
+}
+\examples{
+library(rhandsontable)
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF) \%>\%
+  hot_cols(columnSorting = TRUE)
 }
 
