@@ -24,3 +24,4 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 
 rhandsontable(DF, rowHeaders = NULL)
 ```
+![alt text](https://github.com/jrowen/rhandsontable/tree/master/inst/examples/images/rhandsontable_readme.png "A simple example")
