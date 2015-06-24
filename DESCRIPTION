@@ -18,14 +18,7 @@ Imports:
   htmlwidgets (>= 0.3.3),
   magrittr
 Suggests:
-  knitr,
-  data.table,
-  metricsgraphics,
-  dygraphs,
-  lpSolve,
-  quadprog,
-  ggplot2,
-  scales
+  knitr
 Enhances:
   shiny (>= 0.12)
 VignetteBuilder: knitr
