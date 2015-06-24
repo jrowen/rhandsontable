@@ -1,5 +1,5 @@
 Package: rhandsontable
-Title: Interface to the Handsontable.js Library
+Title: Interface to the 'Handsontable.js' Library
 Version: 0.1
 Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
                     role = c("aut", "cre")),
@@ -8,7 +8,7 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("Enzo", "Martoglio",
                     email = "enzo@smartinsightsfromdata.com", role = c("ctb")))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
-Description: An R interface to the Handsontable Javascript library, which is a
+Description: An R interface to the Handsontable JavaScript library, which is a
   minimalist Excel-like data grid editor.
 License: MIT + file LICENSE
 URL: https://github.com/jrowen/rhandsontable
