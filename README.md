@@ -8,8 +8,12 @@ This library was inspired by the [`shinyTable`](https://github.com/trestletech/s
 
 **See the [vignette](http://rpubs.com/jrowen/intro_rhandsontable) for detailed examples and links to shiny apps.**
 
-To install use
+To install from CRAN use
 ```R
+install.packages("rhandsontable")
+```
+For the latest development version use
+```
 devtools::install_github("jrowen/rhandsontable")
 ```
 
