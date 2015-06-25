@@ -14,7 +14,7 @@ get_col_types = function(data) {
     switch(type,
            integer="text",
            double="text",
-           numeric="text",
+           numeric="numeric",
            character="text",
            logical="checkbox",
            factor="text",
