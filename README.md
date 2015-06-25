@@ -17,15 +17,4 @@ For the latest development version use
 devtools::install_github("jrowen/rhandsontable")
 ```
 
-A simple example
-```R
-library(rhandsontable)
-
-DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
-                small = letters[1:10],
-                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
-                stringsAsFactors = F)
-
-rhandsontable(DF, rowHeaders = NULL)
-```
-![alt tag](https://raw.github.com/jrowen/rhandsontable/master/inst/examples/images/rhandsontable_readme.png "A simple example")
+This is a test build
