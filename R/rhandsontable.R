@@ -27,6 +27,7 @@
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
                           readOnly = NULL, selectCallback = FALSE,
                           width = NULL, height = NULL, ...) {
+  print( 'check check')
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
