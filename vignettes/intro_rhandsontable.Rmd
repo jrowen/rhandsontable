@@ -14,14 +14,6 @@ rhandsontable is an htmlwidget based on the [handsontable.js](www.handsontable.c
 > Handsontable is a data grid component with an Excel-like appearance. Built in JavaScript, it integrates with any data source with peak efficiency. It comes with powerful features like data validation, sorting, grouping, data binding, formula support or column ordering. 
 ([via](www.handsontable.com))
 
-The data grid will be editable by default and can be used as input to a shiny app.  A few shiny examples:
-
-* [Output only](https://jrowen.shinyapps.io/rhandsontable_output)
-* [Calculation input](https://jrowen.shinyapps.io/rhandsontable_portfolio)
-* [Table callback linked to chart](https://jrowen.shinyapps.io/rhandsontable_corr)
-* [Date file editor](https://jrowen.shinyapps.io/rhandsontable_datafile)
-* [Multiple input tables](https://jrowen.shinyapps.io/rhandsontable_frontier)
-
 The table includes support for numeric, logical, character and Date types.  Logical values will appear as check boxes, and the [pikaday.js](https://github.com/dbushell/Pikaday) library is used to specify Date values.  
 
 Right-clicking in a cell will enable a context menu that includes customizable table actions.  For shiny apps, formatting and comment updates made via the context menu are not currently retained.
@@ -172,6 +164,29 @@ rhandsontable(MAT, readOnly = TRUE) %>%
         td.style.background = 'lightgreen';
       }
     }")
+```
+
+The data grid will be editable by default and can be used as input to a shiny app.  A few shiny examples:
+
+* Output only
+```
+shiny::runGitHub("rhandsontable", "jrowen", subdir = "inst/examples/rhandsontable_output")
+```
+* Calculation input
+```
+shiny::runGitHub("rhandsontable", "jrowen", subdir = "inst/examples/rhandsontable_portfolio")
+```
+* Table callback linked to chart
+```
+shiny::runGitHub("rhandsontable", "jrowen", subdir = "inst/examples/rhandsontable_corr")
+```
+* Date file editor
+```
+shiny::runGitHub("rhandsontable", "jrowen", subdir = "inst/examples/rhandsontable_datafile")
+```
+* Multiple input tables
+```
+shiny::runGitHub("rhandsontable", "jrowen", subdir = "inst/examples/rhandsontable_frontier")
 ```
 
 Please file a issue if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
