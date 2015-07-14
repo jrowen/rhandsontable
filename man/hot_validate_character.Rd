@@ -11,14 +11,13 @@ hot_validate_character(hot, cols, choices, allowInvalid = FALSE)
 
 \item{cols}{numeric vector column index}
 
-\item{choices}{a vector of acceptable numeric choices. It will be evaluated
-after min and max if specified.}
+\item{choices}{a vector of acceptable character choices.}
 
 \item{allowInvalid}{logical specifying whether invalid data will be
 accepted. Invalid data cells will be color red.}
 }
 \description{
-Add numeric validation to a column
+Add character validation to a column
 }
 \examples{
 library(rhandsontable)
