@@ -5,3 +5,7 @@
 .handsontable .currentCol {
   background-color: #F9F9FB;
 }
+
+.handsontable {
+  overflow: auto;
+}
