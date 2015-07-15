@@ -1,3 +1,9 @@
+rhandsontable 0.2
+-------------------------
+
+* Upgraded to handsontable 0.15.1
+* Set overflow: auto and specified a default height in shiny (#21)
+
 rhandsontable 0.1
 -------------------------
 
