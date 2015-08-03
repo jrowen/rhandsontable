@@ -222,12 +222,12 @@ function csvString(instance) {
   for (var i = 0; i < instance.countRows(); i++) {
       var row = [];
       for (var h in headers) {
-          var prop = instance.colToProp(h)
-          var value = instance.getDataAtRowProp(i, prop)
-          row.push(value)
+          var prop = instance.colToProp(h);
+          var value = instance.getDataAtRowProp(i, prop);
+          row.push(value);
       }
 
-      csv += row.join(",")
+      csv += row.join(",");
       csv += "\n";
   }
 
@@ -236,13 +236,22 @@ function csvString(instance) {
 
 function csvDownload(instance, filename) {
 
-  var csv = csvString(instance)
+  var csv = csvString(instance);
 
   var link = document.createElement("a");
   link.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(csv));
   link.setAttribute("download", filename);
 
-  document.body.appendChild(link)
+  document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link)
+  document.body.removeChild(link);
+}
+
+function numericRendererNA(instance, TD, row, col, prop, value, cellProperties) {
+  if (value === 'NA') {
+    value = '';
+    Handsontable.renderers.TextRenderer(instance, TD, row, col, prop, value, cellProperties);
+  } else {
+    Handsontable.renderers.NumericRenderer(instance, TD, row, col, prop, value, cellProperties);
+  }
 }

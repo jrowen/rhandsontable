@@ -12,9 +12,9 @@ get_col_types = function(data) {
 
   types <- sapply(types, function(type) {
     switch(type,
-           integer="text",
-           double="text",
-           numeric="text",
+           integer="numeric",
+           double="numeric",
+           numeric="numeric",
            character="text",
            logical="checkbox",
            factor="text",
