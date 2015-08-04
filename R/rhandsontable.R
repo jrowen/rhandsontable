@@ -9,6 +9,8 @@
 #'  will be used. Setting to \code{NULL} will omit.
 #' @param useTypes logical specifying whether column classes should be mapped to
 #'  equivalent Javascript types
+#' @param numericFmt character default format for numeric columns (see 
+#'  \href{http://numeraljs.com}{Numeral.js} for details)
 #' @param readOnly logical specifying whether the table is editable
 #' @param selectCallback logical enabling the afterSelect event to return data.
 #'  This can be used with shiny to tie updates to a selected table cell.
@@ -26,7 +28,7 @@
 #' @seealso \code{link{hot_table}}, \code{link{hot_cols}}, \code{link{hot_rows}, \code{link{hot_cell}}}
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
-                          readOnly = NULL, selectCallback = FALSE,
+                          numericFmt = "0.00", readOnly = NULL, selectCallback = FALSE,
                           width = NULL, height = NULL, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
@@ -69,6 +71,9 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #                                               #rownames = FALSE)
 #                    )
         )
+      } else if (type == "numeric") {
+        res = list(type = type,
+                   format = numericFmt)        
       } else {
         res = list(type = type)
       }
@@ -170,7 +175,8 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #'  and handsontable (not implemented yet)
 #' @param format characer specifying column format. See Cell Types at
 #'  \href{http://handsontable.com}{Handsontable.js} for the formatting
-#'  options for each data type
+#'  options for each data type. Numeric columns are formatted using
+#'  \href{http://numeraljs.com}{Numeral.js}.
 #' @param source a vector of choices for select, dropdown and autocomplete
 #'  column types
 #' @param strict logical specifying whether values not in the \code{source}
