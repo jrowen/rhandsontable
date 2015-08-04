@@ -248,11 +248,15 @@ function csvDownload(instance, filename) {
 }
 
 function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
-  val = JSON.parse(value);
-  
-  td.innerHTML = '<span class=\"sparklines\"></span>';
-  
-  $('.sparklines').sparkline(val.values, val.options);
-  
+  try {
+    val = JSON.parse(value);
+
+    td.innerHTML = '<span class=\"sparklines\"></span>';
+
+    $('.sparklines').sparkline(val.values, val.options);
+  } catch(err) {
+    td.innerHTML = '';
+  }
+
   return td;
 }
