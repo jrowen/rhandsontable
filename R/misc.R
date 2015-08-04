@@ -17,7 +17,7 @@ get_col_types = function(data) {
            numeric="numeric",
            character="text",
            logical="checkbox",
-           factor="text",
+           factor="factor",
            Date="date",
            "text")
   })

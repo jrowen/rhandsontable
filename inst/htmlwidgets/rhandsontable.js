@@ -239,7 +239,8 @@ function csvDownload(instance, filename) {
   var csv = csvString(instance);
 
   var link = document.createElement("a");
-  link.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(csv));
+  link.setAttribute("href", "data:text/plain;charset=utf-8," +
+    encodeURIComponent(csv));
   link.setAttribute("download", filename);
 
   document.body.appendChild(link);
@@ -247,11 +248,16 @@ function csvDownload(instance, filename) {
   document.body.removeChild(link);
 }
 
-function numericRendererNA(instance, TD, row, col, prop, value, cellProperties) {
+function customRenderer(instance, TD, row, col, prop, value, cellProperties) {
   if (value === 'NA') {
     value = '';
-    Handsontable.renderers.TextRenderer(instance, TD, row, col, prop, value, cellProperties);
+    Handsontable.renderers.getRenderer('text')(instance, TD, row, col, prop, value, cellProperties);
   } else {
-    Handsontable.renderers.NumericRenderer(instance, TD, row, col, prop, value, cellProperties);
+    if (['date', 'handsontable', 'dropdown'].indexOf(cellProperties.type) > -1) {
+      type = 'autocomplete';
+    } else {
+      type = cellProperties.type;
+    }
+    Handsontable.renderers.getRenderer(type)(instance, TD, row, col, prop, value, cellProperties);
   }
 }

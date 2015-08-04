@@ -56,9 +56,24 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
         data[, i] = as.character(data[, i], format = DATE_FORMAT)
     }
 
-    cols = lapply(col_typs, function(type) {
-      res = list(type = type)
+    cols = lapply(seq_along(col_typs), function(i) {
+      type = col_typs[i]
+      if (type == "factor") {
+#         data_fact = data.frame(level = levels(data[, i]),
+#                                label = labels(data[, i]))
+        res = list(type = "dropdown",
+                   source = levels(data[, i])
+#                    handsontable = list(
+#                      colHeaders = FALSE, #c("Label", "Level"),
+#                      data = levels(data[, i]) #jsonlite::toJSON(data_fact, na = "string",
+#                                               #rownames = FALSE)
+#                    )
+        )
+      } else {
+        res = list(type = type)
+      }
       res$readOnly = readOnly
+      res$renderer = JS("customRenderer")
       res
     })
   }
@@ -525,7 +540,7 @@ renderer_heatmap = function(color_scale) {
 #' Shiny bindings for rhandsontable
 #'
 #' @param outputId output variable to read from
-#' @param width,height Must be a valid CSS unit in pixels (like  \code{"400px"}) 
+#' @param width,height Must be a valid CSS unit in pixels (like  \code{"400px"})
 #'  or a number, which will be coerced to a string and have \code{"px"} appended.
 #' @seealso \code{link{renderRHandsontable}}
 #' @export
