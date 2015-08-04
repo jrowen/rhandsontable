@@ -246,3 +246,13 @@ function csvDownload(instance, filename) {
   link.click();
   document.body.removeChild(link)
 }
+
+function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
+  val = JSON.parse(value);
+  
+  td.innerHTML = '<span class=\"sparklines\"></span>';
+  
+  $('.sparklines').sparkline(val.values, val.options);
+  
+  return td;
+}
