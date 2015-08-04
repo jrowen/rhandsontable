@@ -251,9 +251,10 @@ function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
   try {
     val = JSON.parse(value);
 
-    td.innerHTML = '<span class=\"sparklines\"></span>';
+    nm = 'sparklines_r' + row + '_c' + col;
+    td.innerHTML = '<span class=\"' + nm + '\"></span>';
 
-    $('.sparklines').sparkline(val.values, val.options);
+    $('.' + nm).sparkline(val.values, val.options);
   } catch(err) {
     td.innerHTML = '';
   }
