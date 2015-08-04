@@ -22,3 +22,11 @@ dependencies:
    version: 0.1.1
    src: "htmlwidgets"
    stylesheet: rhandsontable.css
+ - name: jquery
+   version: 2.1.2
+   src: "htmlwidgets/lib/jquery"
+   script: jquery.js
+ - name: sparkline
+   version: 2.1.2
+   src: "htmlwidgets/lib/sparkline"
+   script: jquery.sparkline.js
