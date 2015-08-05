@@ -9,8 +9,6 @@
 #'  will be used. Setting to \code{NULL} will omit.
 #' @param useTypes logical specifying whether column classes should be mapped to
 #'  equivalent Javascript types
-#' @param numericFmt character default format for numeric columns (see 
-#'  \href{http://numeraljs.com}{Numeral.js} for details)
 #' @param readOnly logical specifying whether the table is editable
 #' @param selectCallback logical enabling the afterSelect event to return data.
 #'  This can be used with shiny to tie updates to a selected table cell.
@@ -28,7 +26,7 @@
 #' @seealso \code{link{hot_table}}, \code{link{hot_cols}}, \code{link{hot_rows}, \code{link{hot_cell}}}
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
-                          numericFmt = "0.00", readOnly = NULL, selectCallback = FALSE,
+                          readOnly = NULL, selectCallback = FALSE,
                           width = NULL, height = NULL, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
@@ -72,8 +70,11 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #                    )
         )
       } else if (type == "numeric") {
-        res = list(type = type,
-                   format = numericFmt)        
+        res = list(type = "numeric",
+                   format = "0.00")
+      } else if (type == "integer") {
+        res = list(type = "numeric",
+                   format = "0")
       } else {
         res = list(type = type)
       }

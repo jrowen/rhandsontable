@@ -12,7 +12,7 @@ get_col_types = function(data) {
 
   types <- sapply(types, function(type) {
     switch(type,
-           integer="numeric",
+           integer="integer",
            double="numeric",
            numeric="numeric",
            character="text",
