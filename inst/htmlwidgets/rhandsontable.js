@@ -261,3 +261,18 @@ function customRenderer(instance, TD, row, col, prop, value, cellProperties) {
     Handsontable.renderers.getRenderer(type)(instance, TD, row, col, prop, value, cellProperties);
   }
 }
+
+function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
+  try {
+    val = JSON.parse(value);
+
+    nm = 'sparklines_r' + row + '_c' + col;
+    td.innerHTML = '<span class=\"' + nm + '\"></span>';
+
+    $('.' + nm).sparkline(val.values, val.options);
+  } catch(err) {
+    td.innerHTML = '';
+  }
+
+  return td;
+}
