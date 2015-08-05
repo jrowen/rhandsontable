@@ -11,7 +11,7 @@ hot_col(hot, col, type = NULL, format = NULL, source = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{col}{numeric column index}
+\item{col}{column name or index}
 
 \item{type}{character specify the data type. Options include:
 numeric, date, checkbox, select, dropdown, autocomplete, password,
@@ -19,7 +19,8 @@ and handsontable (not implemented yet)}
 
 \item{format}{characer specifying column format. See Cell Types at
 \href{http://handsontable.com}{Handsontable.js} for the formatting
-options for each data type}
+options for each data type. Numeric columns are formatted using
+\href{http://numeraljs.com}{Numeral.js}.}
 
 \item{source}{a vector of choices for select, dropdown and autocomplete
 column types}
@@ -59,5 +60,8 @@ rhandsontable(DF, rowHeaders = NULL) \%>\%
   hot_col(col = "big", type = "dropdown", source = LETTERS) \%>\%
   hot_col(col = "small", type = "autocomplete", source = letters,
           strict = FALSE)
+}
+\seealso{
+\code{link{hot_cols}}, \code{link{hot_rows}}, \code{link{hot_cell}}
 }
 

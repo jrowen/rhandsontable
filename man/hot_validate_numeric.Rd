@@ -10,7 +10,7 @@ hot_validate_numeric(hot, cols, min = NULL, max = NULL, choices = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{cols}{numeric vector column index}
+\item{cols}{vector of column names or indices}
 
 \item{min}{minimum value to accept}
 
@@ -37,5 +37,8 @@ rhandsontable(MAT * 10) \%>\%
 
 rhandsontable(MAT * 10) \%>\%
   hot_validate_numeric(col = 1, choices = c(10, 20, 40))
+}
+\seealso{
+\code{link{hot_validate_character}}
 }
 

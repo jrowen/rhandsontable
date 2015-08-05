@@ -29,4 +29,7 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 rhandsontable(DF, readOnly = TRUE) \%>\%
   hot_cell(1, 1, "Test comment")
 }
+\seealso{
+\code{link{hot_cols}}, \code{link{hot_rows}}
+}
 

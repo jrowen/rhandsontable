@@ -27,4 +27,7 @@ rhandsontable(MAT, width = 300, height = 150) \%>\%
 hot_cols(colWidths = 100, fixedColumnsLeft = 1) \%>\%
   hot_rows(rowHeights = 50, fixedRowsTop = 1)
 }
+\seealso{
+\code{link{hot_cols}}, \code{link{hot_cell}}
+}
 

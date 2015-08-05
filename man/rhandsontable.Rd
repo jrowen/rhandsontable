@@ -43,4 +43,7 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 
 rhandsontable(DF, rowHeaders = NULL)
 }
+\seealso{
+\code{link{hot_table}}, \code{link{hot_cols}}, \code{link{hot_rows}}, \code{link{hot_cell}}
+}
 

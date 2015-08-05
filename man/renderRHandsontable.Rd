@@ -17,4 +17,7 @@ is useful if you want to save an expression in a variable.}
 \description{
 Shiny bindings for rhandsontable
 }
+\seealso{
+\code{link{rHandsontableOutput}}, \code{link{hot_to_r}}
+}
 

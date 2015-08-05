@@ -13,4 +13,7 @@ hot_to_r(...)
 Convert handsontable data to R object. Can be used in a \code{shiny} app
  to convert the input json to an R dataset.
 }
+\seealso{
+\code{link{rHandsontableOutput}}
+}
 

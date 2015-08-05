@@ -9,15 +9,16 @@ hot_validate_character(hot, cols, choices, allowInvalid = FALSE)
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{cols}{numeric vector column index}
+\item{cols}{vector of column names or indices}
 
-\item{choices}{a vector of acceptable character choices.}
+\item{choices}{a vector of acceptable numeric choices. It will be evaluated
+after min and max if specified.}
 
 \item{allowInvalid}{logical specifying whether invalid data will be
 accepted. Invalid data cells will be color red.}
 }
 \description{
-Add character validation to a column
+Add numeric validation to a column
 }
 \examples{
 library(rhandsontable)
@@ -28,5 +29,8 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 
 rhandsontable(DF) \%>\%
   hot_validate_character(col = "big", choices = LETTERS[1:10])
+}
+\seealso{
+\code{link{hot_validate_numeric}}
 }
 
