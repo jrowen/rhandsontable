@@ -13,7 +13,9 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("Wood", "Tim", role = c("ctb", "cph"), comment = "Moment.js library"),
              person("Chernev", "Iskren", role = c("ctb", "cph"), comment = "Moment.js library"),
              person("Moment.js contributors", role = c("ctb", "cph"), comment = "Moment.js library"),
-             person("Bushell", "David", role = c("ctb", "cph"), comment = "Pikaday.js library"))
+             person("Bushell", "David", role = c("ctb", "cph"), comment = "Pikaday.js library"),
+             person("jQuery Foundation", role = c("ctb", "cph"), comment = "jQuery.js library"),
+             person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: An R interface to the Handsontable JavaScript library, which is a
   minimalist Excel-like data grid editor.
