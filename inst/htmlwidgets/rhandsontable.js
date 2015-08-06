@@ -269,6 +269,9 @@ function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
     nm = 'sparklines_r' + row + '_c' + col;
     td.innerHTML = '<span class=\"' + nm + '\"></span>';
 
+    // adjust for cell padding
+    val.options.width = [instance.getColWidth(col) - 8];
+
     $('.' + nm).sparkline(val.values, val.options);
   } catch(err) {
     td.innerHTML = '';
