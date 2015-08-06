@@ -270,7 +270,12 @@ function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
     td.innerHTML = '<span class=\"' + nm + '\"></span>';
 
     // adjust for cell padding
-    val.options.width = [instance.getColWidth(col) - 8];
+    if (['bar', 'tristate'].indexOf(val.options.type[0]) > -1) {
+      val.options.barSpacing = 1
+      val.options.barWidth = Math.max(1, Math.round((instance.getColWidth(col) - 8 - (val.values.length - 1)) / val.values.length));
+    } else {
+      val.options.width = (instance.getColWidth(col) - 8) + "px";
+    }
 
     $('.' + nm).sparkline(val.values, val.options);
   } catch(err) {
