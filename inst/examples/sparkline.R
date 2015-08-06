@@ -1,7 +1,7 @@
 library(rhandsontable)
 
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
-                small = letters[1:10],
+                small = factor(letters[1:10]),
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 

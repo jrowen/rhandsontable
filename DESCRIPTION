@@ -1,6 +1,6 @@
 Package: rhandsontable
 Title: Interface to the 'Handsontable.js' Library
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
                     role = c("aut", "cre", "cph")),
              person("Jeff", "Allen", role = c("ctb")),
@@ -25,7 +25,8 @@ BugReports: https://github.com/jrowen/rhandsontable/issues
 Imports:
   jsonlite,
   htmlwidgets (>= 0.3.3),
-  magrittr
+  magrittr,
+  methods
 Suggests:
   knitr
 Enhances:

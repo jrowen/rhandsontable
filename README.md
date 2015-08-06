@@ -23,12 +23,19 @@ A simple example
 ```R
 library(rhandsontable)
 
-DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
-                small = letters[1:10],
-                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
-                stringsAsFactors = F)
+DF = data.frame(int = 1:10,
+                numeric = rnorm(10),
+                logical = TRUE,
+                character = LETTERS[1:10],
+                fact = factor(letters[1:10]),
+                date = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
 
-rhandsontable(DF, rowHeaders = NULL)
+# add a sparkline chart
+DF$chart = sapply(1:10, function(x) jsonlite::toJSON(list(values=rnorm(10))))
+                                                    
+rhandsontable(DF, rowHeaders = NULL) %>%
+  hot_col("chart", renderer = htmlwidgets::JS("renderSparkline"))
 ```
 ![alt tag](https://raw.github.com/jrowen/rhandsontable/master/inst/examples/images/rhandsontable_readme.png "A simple example")
 

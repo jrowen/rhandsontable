@@ -96,6 +96,7 @@ toR = function(data, changes, params, ...) {
 
 # Coerces data.frame columns to the specified classes
 # see http://stackoverflow.com/questions/9214819/supply-a-vector-to-classes-of-dataframe
+#' @importFrom methods as
 colClasses <- function(d, colClasses) {
   colClasses <- rep(colClasses, len=length(d))
   for(i in seq_along(d))
