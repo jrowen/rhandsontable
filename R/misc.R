@@ -105,6 +105,7 @@ colClasses <- function(d, colClasses) {
                                   format = DATE_FORMAT),
                    POSIXct = as.POSIXct(d[[i]], origin='1970-01-01',
                                         format = DATE_FORMAT),
+                   json = jsonlite::toJSON(d[[i]]),
                    as(d[[i]], colClasses[i]))
   d
 }
