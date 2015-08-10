@@ -125,7 +125,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #' Configure multiple columns.
 #'
 #' @param hot rhandsontable object
-#' @param columns a list of column settings
 #' @param colWidths a scalar or numeric vector of column widths
 #' @param columnSorting logical enabling row sorting. Sorting only alters the
 #'  table presentation and the original dataset row order is maintained.
@@ -145,12 +144,9 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #'   hot_cols(columnSorting = TRUE)
 #' @seealso \code{link{hot_col}}, \code{link{hot_rows}}, \code{link{hot_cell}}
 #' @export
-hot_cols = function(hot, columns = NULL, colWidths = NULL,
-                    columnSorting = NULL, manualColumnMove = NULL,
-                    manualColumnResize = NULL, fixedColumnsLeft = NULL, ...) {
-  # overwrite original settings
-  if (!is.null(columns)) hot$x$columns = columns
-
+hot_cols = function(hot, colWidths = NULL, columnSorting = NULL, 
+                    manualColumnMove = NULL, manualColumnResize = NULL, 
+                    fixedColumnsLeft = NULL, ...) {
   if (!is.null(colWidths)) hot$x$colWidths = colWidths
 
   if (!is.null(columnSorting)) hot$x$columnSorting = columnSorting
@@ -170,7 +166,7 @@ hot_cols = function(hot, columns = NULL, colWidths = NULL,
 #' Configure single column.
 #'
 #' @param hot rhandsontable object
-#' @param col column name or index
+#' @param col vector of column names or indices
 #' @param type character specify the data type. Options include:
 #'  numeric, date, checkbox, select, dropdown, autocomplete, password,
 #'  and handsontable (not implemented yet)
@@ -222,21 +218,23 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     })
   }
 
-  if (is.character(col)) col = which(hot$x$colHeaders == col)
+  for (i in col) {
+    if (is.character(i)) i = which(hot$x$colHeaders == i)
 
-  if (!is.null(type)) cols[[col]]$type = type
-  if (!is.null(format)) cols[[col]]$format = format
-  if (!is.null(source)) cols[[col]]$source = source
-  if (!is.null(strict)) cols[[col]]$strict = strict
-  if (!is.null(readOnly)) cols[[col]]$readOnly = readOnly
+    if (!is.null(type)) cols[[i]]$type = type
+    if (!is.null(format)) cols[[i]]$format = format
+    if (!is.null(source)) cols[[i]]$source = source
+    if (!is.null(strict)) cols[[i]]$strict = strict
+    if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
 
-  if (!is.null(validator)) cols[[col]]$validator = JS(validator)
-  if (!is.null(allowInvalid)) cols[[col]]$allowInvalid = allowInvalid
-  if (!is.null(renderer)) cols[[col]]$renderer = JS(renderer)
+    if (!is.null(validator)) cols[[i]]$validator = JS(validator)
+    if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid
+    if (!is.null(renderer)) cols[[i]]$renderer = JS(renderer)
 
-  className = c(halign, valign)
-  if (!is.null(className)) {
-    cols[[col]]$className = className
+    className = c(halign, valign)
+    if (!is.null(className)) {
+      cols[[i]]$className = className
+    }
   }
 
   hot$x$columns = cols
