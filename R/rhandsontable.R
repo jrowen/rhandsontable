@@ -547,11 +547,11 @@ renderer_heatmap = function(color_scale) {
 #' Shiny bindings for rhandsontable
 #'
 #' @param outputId output variable to read from
-#' @param width,height Must be a valid CSS unit in pixels (like  \code{"400px"})
+#' @param width,height Must be a valid CSS unit in pixels
 #'  or a number, which will be coerced to a string and have \code{"px"} appended.
 #' @seealso \code{link{renderRHandsontable}}
 #' @export
-rHandsontableOutput <- function(outputId, width = NA, height = 400){
+rHandsontableOutput <- function(outputId, width = "100%", height = "100%"){
   htmlwidgets::shinyWidgetOutput(outputId, 'rhandsontable', width, height,
                                  package = 'rhandsontable')
 }
