@@ -79,7 +79,7 @@ HTMLWidgets.widget({
         }
       },
       items: menu_items
-    }
+    };
 
     if (instance.hot) { // update existing instance
 
@@ -105,6 +105,10 @@ HTMLWidgets.widget({
     x.afterChange = function(changes, source) {
 
       if (HTMLWidgets.shinyMode && changes) {
+        if (this.sortIndex && this.sortIndex.length !== 0) {
+          changes[0] = this.sortIndex[changes[0][0]][0];
+        }
+        
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterChange", changes: changes },
@@ -120,6 +124,11 @@ HTMLWidgets.widget({
     x.afterSelectionEnd = function(r, c, r2, c2) {
 
       if (HTMLWidgets.shinyMode) {
+        if (this.sortIndex && this.sortIndex.length !== 0) {
+          r = this.sortIndex[r][0];
+          r2 = this.sortIndex[r2][0];
+        }
+
         Shiny.onInputChange(this.rootElement.id + "_select", {
           data: this.getData(),
           select: { r: r, c: c, r2: r2, c2: c2},
