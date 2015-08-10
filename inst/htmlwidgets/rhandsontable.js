@@ -106,12 +106,14 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode && changes) {
         if (this.sortIndex && this.sortIndex.length !== 0) {
-          changes[0] = this.sortIndex[changes[0][0]][0];
+          c = [this.sortIndex[changes[0][0]][0], changes.slice(1, 1 + 3)];
+        } else {
+          c = changes;
         }
-        
+
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
-          changes: { event: "afterChange", changes: changes },
+          changes: { event: "afterChange", changes: c },
           params: hotParams[this.rootElement.id]
         });
       }
