@@ -1,4 +1,4 @@
-#' @import htmlwidgets jsonlite
+#' @import htmlwidgets jsonlite methods
 NULL
 
 #' rhandsontable exported operators
