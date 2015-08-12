@@ -11,7 +11,7 @@ hot_col(hot, col, type = NULL, format = NULL, source = NULL,
 \arguments{
 \item{hot}{rhandsontable object}
 
-\item{col}{column name or index}
+\item{col}{vector of column names or indices}
 
 \item{type}{character specify the data type. Options include:
 numeric, date, checkbox, select, dropdown, autocomplete, password,
@@ -62,6 +62,6 @@ rhandsontable(DF, rowHeaders = NULL) \%>\%
           strict = FALSE)
 }
 \seealso{
-\code{link{hot_cols}}, \code{link{hot_rows}}, \code{link{hot_cell}}
+\code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 }
 

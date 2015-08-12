@@ -39,6 +39,6 @@ rhandsontable(MAT * 10) \%>\%
   hot_validate_numeric(col = 1, choices = c(10, 20, 40))
 }
 \seealso{
-\code{link{hot_validate_character}}
+\code{\link{hot_validate_character}}
 }
 

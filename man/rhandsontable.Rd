@@ -34,6 +34,9 @@ This can be used with shiny to tie updates to a selected table cell.}
 \description{
 Create a \href{http://handsontable.com}{Handsontable.js} widget.
 }
+\details{
+For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
+}
 \examples{
 library(rhandsontable)
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -44,6 +47,6 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 rhandsontable(DF, rowHeaders = NULL)
 }
 \seealso{
-\code{link{hot_table}}, \code{link{hot_cols}}, \code{link{hot_rows}}, \code{link{hot_cell}}
+\code{\link{hot_table}}, \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 }
 

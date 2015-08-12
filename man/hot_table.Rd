@@ -57,6 +57,6 @@ hot_table(highlightCol = TRUE, highlightRow = TRUE,
           allowRowEdit = FALSE, allowColEdit = FALSE)
 }
 \seealso{
-\code{link{rhandsontable}}
+\code{\link{rhandsontable}}
 }
 

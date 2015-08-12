@@ -4,18 +4,18 @@
 \alias{rHandsontableOutput}
 \title{Handsontable widget}
 \usage{
-rHandsontableOutput(outputId, width = NA, height = 400)
+rHandsontableOutput(outputId, width = "100\%", height = "100\%")
 }
 \arguments{
 \item{outputId}{output variable to read from}
 
-\item{width,height}{Must be a valid CSS unit in pixels (like  \code{"400px"})
+\item{width,height}{Must be a valid CSS unit in pixels
 or a number, which will be coerced to a string and have \code{"px"} appended.}
 }
 \description{
 Shiny bindings for rhandsontable
 }
 \seealso{
-\code{link{renderRHandsontable}}
+\code{\link{renderRHandsontable}}
 }
 

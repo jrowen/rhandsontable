@@ -30,6 +30,6 @@ rhandsontable(DF, readOnly = TRUE) \%>\%
   hot_cell(1, 1, "Test comment")
 }
 \seealso{
-\code{link{hot_cols}}, \code{link{hot_rows}}
+\code{\link{hot_cols}}, \code{\link{hot_rows}}
 }
 

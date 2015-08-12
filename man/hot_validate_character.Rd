@@ -31,6 +31,6 @@ rhandsontable(DF) \%>\%
   hot_validate_character(col = "big", choices = LETTERS[1:10])
 }
 \seealso{
-\code{link{hot_validate_numeric}}
+\code{\link{hot_validate_numeric}}
 }
 

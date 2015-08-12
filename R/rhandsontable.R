@@ -2,6 +2,7 @@
 #'
 #' Create a \href{http://handsontable.com}{Handsontable.js} widget.
 #'
+#' For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
 #' @param data a \code{data.table}, \code{data.frame} or \code{matrix}
 #' @param colHeaders a vector of column names. If missing \code{colnames}
 #'  will be used. Setting to \code{NULL} will omit.
@@ -23,7 +24,7 @@
 #'                 stringsAsFactors = FALSE)
 #'
 #' rhandsontable(DF, rowHeaders = NULL)
-#' @seealso \code{link{hot_table}}, \code{link{hot_cols}}, \code{link{hot_rows}}, \code{link{hot_cell}}
+#' @seealso \code{\link{hot_table}}, \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
 rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
                           readOnly = NULL, selectCallback = FALSE,
@@ -142,10 +143,10 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #'
 #' rhandsontable(DF) %>%
 #'   hot_cols(columnSorting = TRUE)
-#' @seealso \code{link{hot_col}}, \code{link{hot_rows}}, \code{link{hot_cell}}
+#' @seealso \code{\link{hot_col}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
-hot_cols = function(hot, colWidths = NULL, columnSorting = NULL, 
-                    manualColumnMove = NULL, manualColumnResize = NULL, 
+hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
+                    manualColumnMove = NULL, manualColumnResize = NULL,
                     fixedColumnsLeft = NULL, ...) {
   if (!is.null(colWidths)) hot$x$colWidths = colWidths
 
@@ -201,7 +202,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'   hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
 #'   hot_col(col = "small", type = "autocomplete", source = letters,
 #'           strict = FALSE)
-#' @seealso \code{link{hot_cols}}, \code{link{hot_rows}}, \code{link{hot_cell}}
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL,
@@ -264,7 +265,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #'
 #' rhandsontable(MAT * 10) %>%
 #'   hot_validate_numeric(col = 1, choices = c(10, 20, 40))
-#' @seealso \code{link{hot_validate_character}}
+#' @seealso \code{\link{hot_validate_character}}
 #' @export
 hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
@@ -336,7 +337,7 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
 #'
 #' rhandsontable(DF) %>%
 #'   hot_validate_character(col = "big", choices = LETTERS[1:10])
-#' @seealso \code{link{hot_validate_numeric}}
+#' @seealso \code{\link{hot_validate_numeric}}
 #' @export
 hot_validate_character = function(hot, cols, choices,
                                   allowInvalid = FALSE) {
@@ -379,7 +380,7 @@ hot_validate_character = function(hot, cols, choices,
 #' rhandsontable(MAT, width = 300, height = 150) %>%
 #' hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
 #'   hot_rows(rowHeights = 50, fixedRowsTop = 1)
-#' @seealso \code{link{hot_cols}}, \code{link{hot_cell}}
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
 #' @export
 hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
   if (!is.null(rowHeights)) hot$x$rowHeights = rowHeights
@@ -405,7 +406,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #'
 #' rhandsontable(DF, readOnly = TRUE) %>%
 #'   hot_cell(1, 1, "Test comment")
-#' @seealso \code{link{hot_cols}}, \code{link{hot_rows}}
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
 #' @export
 hot_cell = function(hot, row, col, comment = NULL) {
   cell = list(row = row, col = col, comment = comment)
@@ -452,7 +453,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' rhandsontable(DF) %>%
 #' hot_table(highlightCol = TRUE, highlightRow = TRUE,
 #'           allowRowEdit = FALSE, allowColEdit = FALSE)
-#' @seealso \code{link{rhandsontable}}
+#' @seealso \code{\link{rhandsontable}}
 #' @export
 hot_table = function(hot, contextMenu = TRUE,
                      allowRowEdit = TRUE, allowColEdit = TRUE,
@@ -547,7 +548,7 @@ renderer_heatmap = function(color_scale) {
 #' @param outputId output variable to read from
 #' @param width,height Must be a valid CSS unit in pixels
 #'  or a number, which will be coerced to a string and have \code{"px"} appended.
-#' @seealso \code{link{renderRHandsontable}}
+#' @seealso \code{\link{renderRHandsontable}}
 #' @export
 rHandsontableOutput <- function(outputId, width = "100%", height = "100%"){
   htmlwidgets::shinyWidgetOutput(outputId, 'rhandsontable', width, height,
@@ -562,7 +563,7 @@ rHandsontableOutput <- function(outputId, width = "100%", height = "100%"){
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'  is useful if you want to save an expression in a variable.
-#' @seealso \code{link{rHandsontableOutput}}, \code{link{hot_to_r}}
+#' @seealso \code{\link{rHandsontableOutput}}, \code{\link{hot_to_r}}
 #' @export
 renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
@@ -575,7 +576,7 @@ renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'  to convert the input json to an R dataset.
 #'
 #' @param ... passed to \code{rhandsontable:::toR}
-#' @seealso \code{link{rHandsontableOutput}}
+#' @seealso \code{\link{rHandsontableOutput}}
 #' @export
 hot_to_r = function(...) {
   do.call(toR, ...)
