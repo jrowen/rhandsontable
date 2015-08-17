@@ -106,8 +106,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
     package = 'rhandsontable',
     sizingPolicy = htmlwidgets::sizingPolicy(
       padding = 5,
-      defaultHeight = 0,
-      defaultWidth = 0
+      defaultHeight = "100%",
+      defaultWidth = "100%"
     )
   )
 
