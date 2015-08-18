@@ -98,6 +98,8 @@ HTMLWidgets.widget({
     instance.hot.updateSettings({ width: width,
                                   height: height
     });
+    instance.hot.render();
+
   },
 
   afterChangeCallback: function(x) {
