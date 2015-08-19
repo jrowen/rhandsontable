@@ -4,7 +4,7 @@
 \alias{hot_table}
 \title{Handsontable widget}
 \usage{
-hot_table(hot, contextMenu = TRUE, allowRowEdit = TRUE,
+hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
   allowColEdit = TRUE, customBorders = NULL, groups = NULL,
   highlightRow = NULL, highlightCol = NULL, comments = NULL,
   exportToCsv = NULL, csvFileName = "download.csv", ...)
@@ -13,6 +13,9 @@ hot_table(hot, contextMenu = TRUE, allowRowEdit = TRUE,
 \item{hot}{rhandsontable object}
 
 \item{contextMenu}{logical enabling the right-click menu}
+
+\item{stretchH}{character describing column stretching. Options are 'all', 'right',
+and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.}
 
 \item{allowRowEdit}{logical enabling right-click row options}
 

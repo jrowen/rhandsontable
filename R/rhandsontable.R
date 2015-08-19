@@ -426,6 +426,8 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #'
 #' @param hot rhandsontable object
 #' @param contextMenu logical enabling the right-click menu
+#' @param stretchH character describing column stretching. Options are 'all', 'right',
+#'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
 #' @param allowRowEdit logical enabling right-click row options
 #' @param allowColEdit logical enabling right-click column options
 #' @param customBorders json object. See
@@ -455,13 +457,14 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #'           allowRowEdit = FALSE, allowColEdit = FALSE)
 #' @seealso \code{\link{rhandsontable}}
 #' @export
-hot_table = function(hot, contextMenu = TRUE,
+hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      allowRowEdit = TRUE, allowColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, comments = NULL,
                      exportToCsv = NULL, csvFileName = "download.csv",
                      ...) {
   if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
+  if (!is.null(stretchH)) hot$x$stretchH = stretchH
   if (!is.null(allowRowEdit)) hot$x$allowRowEdit = allowRowEdit
   if (!is.null(allowColEdit)) hot$x$allowColEdit = allowColEdit
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
