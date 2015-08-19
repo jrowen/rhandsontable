@@ -44,6 +44,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
     rColClasses = class(data[1, 1])
   } else {
     rColClasses = lapply(data, class)
+    rColClasses[grepl("factor", rColClasses)] = "factor"
   }
 
   if(useTypes) {
