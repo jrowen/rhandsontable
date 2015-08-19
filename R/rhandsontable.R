@@ -63,7 +63,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #         data_fact = data.frame(level = levels(data[, i]),
 #                                label = labels(data[, i]))
         res = list(type = "dropdown",
-                   source = levels(data[, i])
+                   source = levels(data[, i]),
+                   allowInvalid = FALSE
 #                    handsontable = list(
 #                      colHeaders = FALSE, #c("Label", "Level"),
 #                      data = levels(data[, i]) #jsonlite::toJSON(data_fact, na = "string",
