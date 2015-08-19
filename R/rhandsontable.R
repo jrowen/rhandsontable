@@ -430,6 +430,8 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
 #' @param allowRowEdit logical enabling right-click row options
 #' @param allowColEdit logical enabling right-click column options
+#' @param resizeOnRowEdit logical resize table when add/removing rows
+#' @param resizeOnColEdit logical resize table when add/removing rows
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param groups json object. See
@@ -459,6 +461,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      allowRowEdit = TRUE, allowColEdit = TRUE,
+                     resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, comments = NULL,
                      exportToCsv = NULL, csvFileName = "download.csv",

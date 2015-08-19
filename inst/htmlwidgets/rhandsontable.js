@@ -147,6 +147,11 @@ HTMLWidgets.widget({
 
     x.afterCreateRow = function(ind, ct) {
 
+      if (this.params.resizeOnRowEdit) {
+        this.updateSettings({ height: $('.wtHider').height() });
+        this.render();
+      }
+
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
@@ -156,6 +161,11 @@ HTMLWidgets.widget({
     };
 
     x.afterRemoveRow = function(ind, ct) {
+
+      if (this.params.resizeOnRowEdit) {
+        this.updateSettings({ height: $('.wtHider').height() });
+        this.render();
+      }
 
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
@@ -167,6 +177,11 @@ HTMLWidgets.widget({
 
     x.afterCreateCol = function(ind, ct) {
 
+      if (this.params.resizeOnColEdit) {
+        this.updateSettings({ width: $('.wtHider').width() });
+        this.render();
+      }
+
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
@@ -176,6 +191,11 @@ HTMLWidgets.widget({
     };
 
     x.afterRemoveCol = function(ind, ct) {
+
+      if (this.params.resizeOnColEdit) {
+        this.updateSettings({ width: $('.wtHider').width() });
+        this.render();
+      }
 
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {

@@ -24,6 +24,12 @@ rhandsontable 0.2
   for Date and factor columns.  See the examples on the project page for more details.
   Thanks to Melanie Bacou for the suggestion.
 
+* Added stretchH parameter to hot_table.
+
+* Fixed a bug where the table was not updated when resized.
+
+* Fixed a bug with row indices when sorting rows (#34)
+
 * Set overflow: auto and specified a default height = 400 in shiny (#21).
 
 rhandsontable 0.1
