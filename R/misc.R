@@ -11,13 +11,14 @@ get_col_types = function(data) {
   }
 
   types <- sapply(types, function(type) {
+    if (grepl("factor", type)) return("factor")
+  
     switch(type,
            integer="integer",
            double="numeric",
            numeric="numeric",
            character="text",
            logical="checkbox",
-           factor="factor",
            Date="date",
            "text")
   })
@@ -68,7 +69,7 @@ toR = function(data, changes, params, ...) {
     out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
     out = matrix(out, nrow = nr, byrow = TRUE)
     out = colClasses(as.data.frame(out, stringsAsFactors = FALSE),
-                     rColClasses)
+                     rColClasses, params$columns)
   } else {
     stop("Conversion not implemented: ", rClass)
   }
@@ -97,17 +98,21 @@ toR = function(data, changes, params, ...) {
 # Coerces data.frame columns to the specified classes
 # see http://stackoverflow.com/questions/9214819/supply-a-vector-to-classes-of-dataframe
 #' @importFrom methods as
-colClasses <- function(d, colClasses) {
+colClasses <- function(d, colClasses, cols) {
   colClasses <- rep(colClasses, len=length(d))
   for(i in seq_along(d))
-    d[[i]] = switch(colClasses[i],
-                   Date = as.Date(d[[i]], origin='1970-01-01',
-                                  format = DATE_FORMAT),
-                   POSIXct = as.POSIXct(d[[i]], origin='1970-01-01',
-                                        format = DATE_FORMAT),
-                   factor = as.factor(d[[i]]),
-                   json = jsonlite::toJSON(d[[i]]),
-                   as(d[[i]], colClasses[i]))
+    d[[i]] = switch(
+      colClasses[i],
+      Date = as.Date(d[[i]], origin='1970-01-01',
+                     format = DATE_FORMAT),
+      POSIXct = as.POSIXct(d[[i]], origin='1970-01-01',
+                           format = DATE_FORMAT),
+      factor = factor(d[[i]],
+                      levels = c(unlist(cols[[i]]$source),
+                                 unique(d[[i]][!(d[[i]] %in% unlist(cols[[i]]$source))])),
+                      ordered = TRUE),
+      json = jsonlite::toJSON(d[[i]]),
+      as(d[[i]], colClasses[i]))
   d
 }
 
