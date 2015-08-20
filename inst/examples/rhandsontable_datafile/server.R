@@ -23,14 +23,12 @@ shinyServer(function(input, output, session) {
   output$hot = renderRHandsontable({
     if (!is.null(input$hot)) {
       DF = hot_to_r(input$hot)
-      setHot(DF)
-      rhandsontable(DF) %>%
-        hot_table(highlightCol = TRUE, highlightRow = TRUE)
     } else {
       DF = read.csv("mtcars.csv", stringsAsFactors = FALSE)
-      setHot(DF)
-      rhandsontable(DF) %>%
-        hot_table(highlightCol = TRUE, highlightRow = TRUE)
     }
+    
+    setHot(DF)
+    rhandsontable(DF) %>%
+        hot_table(highlightCol = TRUE, highlightRow = TRUE)
   })
 })
