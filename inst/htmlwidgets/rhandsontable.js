@@ -321,3 +321,29 @@ function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
 
   return td;
 }
+
+// http://docs.handsontable.com/0.16.1/demo-custom-renderers.html
+function strip_tags(input, allowed) {
+  var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+    commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+
+  // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+  allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
+
+  return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+    return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+  });
+}
+
+function safeHtmlRenderer(instance, td, row, col, prop, value, cellProperties) {
+  var escaped = Handsontable.helper.stringify(value);
+  if (instance.getSettings().allowedTags) {
+    tags = instance.getSettings().allowedTags
+  } else {
+    tags = '<em><b><strong><a><big>'
+  }
+  escaped = strip_tags(escaped, tags); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
+  td.innerHTML = escaped;
+
+  return td;
+}
