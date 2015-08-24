@@ -17,10 +17,10 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("jQuery Foundation", role = c("ctb", "cph"), comment = "jQuery.js library"),
              person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
-Description: An R interface to the Handsontable JavaScript library, which is a
+Description: An R interface to the 'Handsontable' JavaScript library, which is a
   minimalist Excel-like data grid editor.
 License: MIT + file LICENSE
-URL: https://github.com/jrowen/rhandsontable
+URL: http://jrowen.github.io/rhandsontable/
 BugReports: https://github.com/jrowen/rhandsontable/issues
 Imports:
   jsonlite,
