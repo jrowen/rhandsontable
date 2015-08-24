@@ -5,9 +5,10 @@
 \title{Handsontable widget}
 \usage{
 hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
-  allowColEdit = TRUE, customBorders = NULL, groups = NULL,
-  highlightRow = NULL, highlightCol = NULL, comments = NULL,
-  exportToCsv = NULL, csvFileName = "download.csv", ...)
+  allowColEdit = TRUE, resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
+  customBorders = NULL, groups = NULL, highlightRow = NULL,
+  highlightCol = NULL, comments = NULL, exportToCsv = NULL,
+  csvFileName = "download.csv", ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -20,6 +21,10 @@ and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{
 \item{allowRowEdit}{logical enabling right-click row options}
 
 \item{allowColEdit}{logical enabling right-click column options}
+
+\item{resizeOnRowEdit}{logical resize table when add/removing rows}
+
+\item{resizeOnColEdit}{logical resize table when add/removing rows}
 
 \item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
