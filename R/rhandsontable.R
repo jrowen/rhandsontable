@@ -430,8 +430,6 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param contextMenu logical enabling the right-click menu
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
 #'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
-#' @param allowRowEdit logical enabling right-click row options
-#' @param allowColEdit logical enabling right-click column options
 #' @param resizeOnRowEdit logical resize table when add/removing rows
 #' @param resizeOnColEdit logical resize table when add/removing rows
 #' @param customBorders json object. See
@@ -442,12 +440,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
 #'  selected cell
-#' @param comments logical enabling comments in the table, including the
-#'  corresponding options in the right-click menu. User comments are not
-#'  currently returned to R.
-#' @param exportToCsv logical adding a context menu option to export the table
-#'  data to a csv file
-#' @param csvFileName character csv file name
+#' @param allowComments logical enabling comments in the table
 #' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
 #' @examples
 #' library(rhandsontable)
@@ -466,17 +459,11 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, comments = NULL,
-                     exportToCsv = NULL, csvFileName = "download.csv",
                      ...) {
-  if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
   if (!is.null(stretchH)) hot$x$stretchH = stretchH
-  if (!is.null(allowRowEdit)) hot$x$allowRowEdit = allowRowEdit
-  if (!is.null(allowColEdit)) hot$x$allowColEdit = allowColEdit
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(comments)) hot$x$comments = comments
-  if (!is.null(exportToCsv)) hot$x$exportToCsv = exportToCsv
-  if (!is.null(csvFileName)) hot$x$csvFileName = csvFileName
 
   if ((!is.null(highlightRow) && highlightRow) ||
         (!is.null(highlightCol) && highlightCol))
@@ -486,8 +473,87 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
   if (!is.null(highlightCol) && highlightCol)
     hot$x$currentColClassName = "currentCol"
 
+  if (!is.null(contextMenu) && contextMenu)
+    hot = hot %>%
+      hot_context_menu(allowComments = !is.null(comments),
+                       allowCustomBorders = !is.null(customBorders), ...)
+
   if (!is.null(list(...)))
     hot$x = c(hot$x, list(...))
+
+  hot
+}
+
+#' Configure the options for the right-click context menu
+#'
+#' @param hot rhandsontable object
+#' @param allowRowEdit logical enabling row editing
+#' @param allowColEdit logical enabling column editing ***ADD MORE
+#' @param allowReadOnly logical enabling read-only toggle
+#' @param allowComments logical enabling comments
+#' @param allowCustomBorders logical enabling custom borders
+#' @param exportToCsv logical adding a context menu option to export the table
+#'  data to a csv file
+#' @param csvFileName character csv file name
+#' @param ... ignored
+#' @export
+hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
+                            allowReadOnly = FALSE, allowComments = TRUE,
+                            allowCustomBorders = FALSE,
+                            exportToCsv = FALSE, csvFileName = "download.csv",
+                            ...) {
+  sep_ct = 1
+  add_opts = function(new, old, sep = TRUE) {
+    new_ = lapply(new, function(x) list())
+    names(new_) = new
+    if (length(old) > 0 && sep) {
+      old[[paste0("hsep", sep_ct)]] = list(name = "---------")
+      sep_ct <<- sep_ct + 1
+      c(old, new_)
+    } else if (!sep) {
+      c(old, new_)
+    } else {
+      new_
+    }
+  }
+
+  # reset options
+  opts = list()
+
+  if (!is.null(allowRowEdit) && allowRowEdit)
+    opts =  add_opts(c("row_above", "row_below", "remove_row"), opts)
+
+  if (!is.null(allowColEdit) && allowColEdit)
+    opts = add_opts(c("col_left", "col_right", "remove_col"), opts)
+
+  opts = add_opts(c("undo", "redo"), opts)
+
+  opts = add_opts(c("alignment"), opts)
+
+  if (!is.null(allowReadOnly) && allowReadOnly)
+    opts = add_opts(c("make_read_only"), opts)
+
+  if (!is.null(allowComments) && allowComments)
+    opts = add_opts(c("commentsAddEdit", "commentsRemove"), opts)
+
+  if (!is.null(allowCustomBorders) && allowCustomBorders)
+    opts = add_opts(c("borders"), opts)
+
+  if (!is.null(exportToCsv)) {
+    opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
+    sep_ct = sep_ct + 1
+    opts[["csv"]] = list(name = "Export to csv",
+                         callback = JS(gsub(
+                           "%fn", csvFileName,
+                           "function (key, options) {
+                              if (key === 'csv') {
+                                csvDownload(instance.hot, '%fn');
+                              }
+                            }")))
+  }
+
+  hot$x$menu_items = opts
+  hot$x$menu_callback = NULL
 
   hot
 }
