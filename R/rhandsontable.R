@@ -132,8 +132,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #' @param contextMenu logical enabling the right-click menu
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
 #'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
-#' @param resizeOnRowEdit logical resize table when add/removing rows
-#' @param resizeOnColEdit logical resize table when add/removing columns
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param groups json object. See
@@ -158,7 +156,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      allowRowEdit = TRUE, allowColEdit = TRUE,
-                     resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, enableComments = TRUE,
                      ...) {
@@ -166,9 +163,6 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(enableComments)) hot$x$comments = enableComments
-
-  if (!is.null(resizeOnRowEdit)) hot$x$resizeOnRowEdit = resizeOnRowEdit
-  if (!is.null(resizeOnColEdit)) hot$x$resizeOnColEdit = resizeOnColEdit
 
   if ((!is.null(highlightRow) && highlightRow) ||
       (!is.null(highlightCol) && highlightCol))
