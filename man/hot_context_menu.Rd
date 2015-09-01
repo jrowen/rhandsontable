@@ -6,7 +6,7 @@
 \usage{
 hot_context_menu(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
   allowReadOnly = FALSE, allowComments = TRUE, allowCustomBorders = FALSE,
-  exportToCsv = FALSE, csvFileName = "download.csv", ...)
+  customOpts = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -21,10 +21,7 @@ hot_context_menu(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
 
 \item{allowCustomBorders}{logical enabling custom borders}
 
-\item{exportToCsv}{logical adding a context menu option to export the table
-data to a csv file}
-
-\item{csvFileName}{character csv file name}
+\item{customOpts}{list}
 
 \item{...}{ignored}
 }

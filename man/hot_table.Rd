@@ -7,7 +7,7 @@
 hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
   allowColEdit = TRUE, resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
   customBorders = NULL, groups = NULL, highlightRow = NULL,
-  highlightCol = NULL, comments = NULL, ...)
+  highlightCol = NULL, enableComments = TRUE, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -19,7 +19,7 @@ and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{
 
 \item{resizeOnRowEdit}{logical resize table when add/removing rows}
 
-\item{resizeOnColEdit}{logical resize table when add/removing rows}
+\item{resizeOnColEdit}{logical resize table when add/removing columns}
 
 \item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
@@ -33,9 +33,9 @@ cell}
 \item{highlightCol}{logical enabling column highlighting for the
 selected cell}
 
-\item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
+\item{enableComments}{logical enabling comments in the table}
 
-\item{allowComments}{logical enabling comments in the table}
+\item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
 }
 \description{
 Configure table.  See
