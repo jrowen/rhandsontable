@@ -440,7 +440,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
 #'  selected cell
-#' @param allowComments logical enabling comments in the table
+#' @param enableComments logical enabling comments in the table
 #' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
 #' @examples
 #' library(rhandsontable)
@@ -458,12 +458,12 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      allowRowEdit = TRUE, allowColEdit = TRUE,
                      resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
-                     highlightCol = NULL, comments = NULL,
+                     highlightCol = NULL, enableComments = TRUE,
                      ...) {
   if (!is.null(stretchH)) hot$x$stretchH = stretchH
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(groups)) hot$x$groups = groups
-  if (!is.null(comments)) hot$x$comments = comments
+  if (!is.null(enableComments)) hot$x$comments = enableComments
 
   if ((!is.null(highlightRow) && highlightRow) ||
         (!is.null(highlightCol) && highlightCol))
@@ -475,7 +475,7 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 
   if (!is.null(contextMenu) && contextMenu)
     hot = hot %>%
-      hot_context_menu(allowComments = !is.null(comments),
+      hot_context_menu(allowComments = enableComments,
                        allowCustomBorders = !is.null(customBorders), ...)
 
   if (!is.null(list(...)))
@@ -495,13 +495,14 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 #' @param exportToCsv logical adding a context menu option to export the table
 #'  data to a csv file
 #' @param csvFileName character csv file name
+#' @param customOpts list
 #' @param ... ignored
 #' @export
 hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
                             allowReadOnly = FALSE, allowComments = TRUE,
                             allowCustomBorders = FALSE,
                             exportToCsv = FALSE, csvFileName = "download.csv",
-                            ...) {
+                            customOpts = NULL, ...) {
   sep_ct = 1
   add_opts = function(new, old, sep = TRUE) {
     new_ = lapply(new, function(x) list())
@@ -539,7 +540,7 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
   if (!is.null(allowCustomBorders) && allowCustomBorders)
     opts = add_opts(c("borders"), opts)
 
-  if (!is.null(exportToCsv)) {
+  if (!is.null(exportToCsv) && exportToCsv) {
     opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
     sep_ct = sep_ct + 1
     opts[["csv"]] = list(name = "Export to csv",
@@ -551,6 +552,9 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
                               }
                             }")))
   }
+
+  if (!is.null(customOpts))
+    opts = c(opts, customOpts)
 
   hot$x$menu_items = opts
   hot$x$menu_callback = NULL
