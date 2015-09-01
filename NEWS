@@ -1,3 +1,10 @@
+rhandsontable 0.2.1
+-------------------------
+
+* Added a new function, hot_context_menu, to better control right-click menu. The option to export to csv has been removed for now, but a new context_menu example has been added that shows how to enable the option. The example also shows how to enable the table search functionality.
+
+* Two new parameters have been added to hot_table: resizeOnRowEdit and resizeOnColEdit. When set to TRUE (default), the table will attempt to re-size when rows or columns are added or removed. This functionality is still experimental, so feedback is very welcome.
+
 rhandsontable 0.2
 -------------------------
 
