@@ -14,9 +14,6 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, instance) {
 
-    // used to pass color to heatmap
-    hotParams[el.id] = x;
-
     // convert json to array
     x.data = toArray(x.data);
 
@@ -30,11 +27,6 @@ HTMLWidgets.widget({
       this.afterSelectCallback(x);
     }
 
-    x.contextMenu = {
-      callback: x.menu_callback,
-      items: x.menu_items
-    };
-
     if (instance.hot) { // update existing instance
 
       instance.hot.updateSettings(x);
@@ -45,6 +37,7 @@ HTMLWidgets.widget({
 
     }
 
+    instance.hot.params = x;
   },
 
   resize: function(el, width, height, instance) {
@@ -70,7 +63,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterChange", changes: c },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
       }
 
@@ -90,7 +83,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id + "_select", {
           data: this.getData(),
           select: { r: r, c: c, r2: r2, c2: c2},
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
       }
 
@@ -110,7 +103,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateRow", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
@@ -125,7 +118,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterRemoveRow", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
@@ -140,7 +133,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateCol", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
@@ -155,7 +148,7 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterRemoveCol", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
@@ -187,8 +180,6 @@ HTMLWidgets.widget({
 
 });
 
-var hotParams = [];
-
 // https://stackoverflow.com/questions/22477612/converting-array-of-objects-into-array-of-arrays
 function toArray(input) {
   var result = input.map(function(obj) {
@@ -219,20 +210,6 @@ function csvString(instance) {
   }
 
   return csv;
-}
-
-function csvDownload(instance, filename) {
-
-  var csv = csvString(instance);
-
-  var link = document.createElement("a");
-  link.setAttribute("href", "data:text/plain;charset=utf-8," +
-    encodeURIComponent(csv));
-  link.setAttribute("download", filename);
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }
 
 function customRenderer(instance, TD, row, col, prop, value, cellProperties) {

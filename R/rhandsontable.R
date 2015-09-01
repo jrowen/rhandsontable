@@ -431,7 +431,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
 #'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
 #' @param resizeOnRowEdit logical resize table when add/removing rows
-#' @param resizeOnColEdit logical resize table when add/removing rows
+#' @param resizeOnColEdit logical resize table when add/removing columns
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param groups json object. See
@@ -465,6 +465,9 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
   if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(enableComments)) hot$x$comments = enableComments
 
+  if (!is.null(resizeOnRowEdit)) hot$x$resizeOnRowEdit = resizeOnRowEdit
+  if (!is.null(resizeOnColEdit)) hot$x$resizeOnColEdit = resizeOnColEdit
+
   if ((!is.null(highlightRow) && highlightRow) ||
         (!is.null(highlightCol) && highlightCol))
     hot$x$ishighlight = TRUE
@@ -492,17 +495,18 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 #' @param allowReadOnly logical enabling read-only toggle
 #' @param allowComments logical enabling comments
 #' @param allowCustomBorders logical enabling custom borders
-#' @param exportToCsv logical adding a context menu option to export the table
-#'  data to a csv file
-#' @param csvFileName character csv file name
 #' @param customOpts list
 #' @param ... ignored
 #' @export
 hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
                             allowReadOnly = FALSE, allowComments = TRUE,
                             allowCustomBorders = FALSE,
-                            exportToCsv = FALSE, csvFileName = "download.csv",
                             customOpts = NULL, ...) {
+  if (is.null(hot$x$contextMenu$items))
+    opts = list()
+  else
+    opts = hot$x$contextMenu$items
+
   sep_ct = 1
   add_opts = function(new, old, sep = TRUE) {
     new_ = lapply(new, function(x) list())
@@ -510,16 +514,13 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
     if (length(old) > 0 && sep) {
       old[[paste0("hsep", sep_ct)]] = list(name = "---------")
       sep_ct <<- sep_ct + 1
-      c(old, new_)
+      modifyList(old, new_)
     } else if (!sep) {
-      c(old, new_)
+      modifyList(old, new_)
     } else {
       new_
     }
   }
-
-  # reset options
-  opts = list()
 
   if (!is.null(allowRowEdit) && allowRowEdit)
     opts =  add_opts(c("row_above", "row_below", "remove_row"), opts)
@@ -540,24 +541,13 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
   if (!is.null(allowCustomBorders) && allowCustomBorders)
     opts = add_opts(c("borders"), opts)
 
-  if (!is.null(exportToCsv) && exportToCsv) {
+  if (!is.null(customOpts)) {
     opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
     sep_ct = sep_ct + 1
-    opts[["csv"]] = list(name = "Export to csv",
-                         callback = JS(gsub(
-                           "%fn", csvFileName,
-                           "function (key, options) {
-                              if (key === 'csv') {
-                                csvDownload(instance.hot, '%fn');
-                              }
-                            }")))
+    opts = modifyList(opts, customOpts)
   }
 
-  if (!is.null(customOpts))
-    opts = c(opts, customOpts)
-
-  hot$x$menu_items = opts
-  hot$x$menu_callback = NULL
+  hot$x$contextMenu = list(items = opts)
 
   hot
 }
