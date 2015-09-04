@@ -18,7 +18,9 @@ will be used. Setting to \code{NULL} will omit.}
 will be used. Setting to \code{NULL} will omit.}
 
 \item{useTypes}{logical specifying whether column classes should be mapped to
-equivalent Javascript types}
+equivalent Javascript types.  Note that
+Handsontable does not support column add/remove when column types
+are defined (i.e. useTypes == TRUE in rhandsontable).}
 
 \item{readOnly}{logical specifying whether the table is editable}
 

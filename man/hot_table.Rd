@@ -4,8 +4,7 @@
 \alias{hot_table}
 \title{Handsontable widget}
 \usage{
-hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
-  allowColEdit = TRUE, resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
+hot_table(hot, contextMenu = TRUE, stretchH = "none",
   customBorders = NULL, groups = NULL, highlightRow = NULL,
   highlightCol = NULL, enableComments = TRUE, ...)
 }
@@ -16,10 +15,6 @@ hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
 
 \item{stretchH}{character describing column stretching. Options are 'all', 'right',
 and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.}
-
-\item{resizeOnRowEdit}{logical resize table when add/removing rows}
-
-\item{resizeOnColEdit}{logical resize table when add/removing columns}
 
 \item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}

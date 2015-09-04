@@ -9,7 +9,9 @@
 #' @param rowHeaders a vector of row names. If missing \code{rownames}
 #'  will be used. Setting to \code{NULL} will omit.
 #' @param useTypes logical specifying whether column classes should be mapped to
-#'  equivalent Javascript types
+#'  equivalent Javascript types.  Note that
+#'  Handsontable does not support column add/remove when column types
+#'  are defined (i.e. useTypes == TRUE in rhandsontable).
 #' @param readOnly logical specifying whether the table is editable
 #' @param selectCallback logical enabling the afterSelect event to return data.
 #'  This can be used with shiny to tie updates to a selected table cell.
@@ -155,7 +157,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #' @seealso \code{\link{rhandsontable}}
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
-                     allowRowEdit = TRUE, allowColEdit = TRUE,
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
                      highlightCol = NULL, enableComments = TRUE,
                      ...) {
@@ -175,7 +176,8 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
   if (!is.null(contextMenu) && contextMenu)
     hot = hot %>%
       hot_context_menu(allowComments = enableComments,
-                       allowCustomBorders = !is.null(customBorders), ...)
+                       allowCustomBorders = !is.null(customBorders),
+                       allowColEdit = is.null(hot$x$columns), ...)
 
   if (!is.null(list(...)))
     hot$x = c(hot$x, list(...))
@@ -186,12 +188,15 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 #' Handsontable widget
 #'
 #' Configure the options for the right-click context menu.  See
-#'  \href{http://docs.handsontable.com/0.16.1/demo-context-menu.html} and
-#'  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}
+#'  \href{http://handsontable.com/demo/demo-context-menu.html}{Context Menu} and
+#'  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
+#'  for details.
 #'
 #' @param hot rhandsontable object
 #' @param allowRowEdit logical enabling row editing
-#' @param allowColEdit logical enabling column editing ***ADD MORE
+#' @param allowColEdit logical enabling column editing. Note that
+#'  Handsontable does not support column add/remove when column types
+#'  are defined (i.e. useTypes == TRUE in rhandsontable).
 #' @param allowReadOnly logical enabling read-only toggle
 #' @param allowComments logical enabling comments
 #' @param allowCustomBorders logical enabling custom borders
@@ -199,9 +204,17 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 #' @param ... ignored
 #' @export
 hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
-                            allowReadOnly = FALSE, allowComments = TRUE,
+                            allowReadOnly = FALSE, allowComments = FALSE,
                             allowCustomBorders = FALSE,
                             customOpts = NULL, ...) {
+  if (!is.null(hot$x$contextMenu) && !hot$x$contextMenu)
+    warning("The context menu was disabled but will be re-enabled (hot_context_menu)")
+
+  if (!is.null(hot$x$colums) && allowColEdit)
+    warning("Handsontable.js does not support column add/delete when column types ",
+            "are defined.  Set useTypes = FALSE in rhandsontable to enable column ",
+            "edits.")
+
   if (is.null(hot$x$contextMenu$items))
     opts = list()
   else
@@ -322,6 +335,8 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  values are htTop, htMiddle, htBottom
 #' @param renderer character defining a Javascript function to be used
 #'  to format column cells. Can be used to implement conditional formatting.
+#' @param copyable logical defining whether data in a cell can be copied using
+#'  Ctrl + C
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -336,10 +351,9 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
-                   strict = NULL,
-                   readOnly = NULL, validator = NULL, allowInvalid = NULL,
-                   halign = NULL, valign = NULL,
-                   renderer = NULL) {
+                   strict = NULL, readOnly = NULL, validator = NULL,
+                   allowInvalid = NULL, halign = NULL, valign = NULL,
+                   renderer = NULL, copyable = NULL) {
   cols = hot$x$columns
   if (is.null(cols)) {
     # create a columns list
@@ -358,6 +372,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     if (!is.null(source)) cols[[i]]$source = source
     if (!is.null(strict)) cols[[i]]$strict = strict
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
+    if (!is.null(copyable)) cols[[i]]$copyable = copyable
 
     if (!is.null(validator)) cols[[i]]$validator = JS(validator)
     if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid

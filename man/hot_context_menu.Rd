@@ -2,18 +2,20 @@
 % Please edit documentation in R/rhandsontable.R
 \name{hot_context_menu}
 \alias{hot_context_menu}
-\title{Configure the options for the right-click context menu}
+\title{Handsontable widget}
 \usage{
 hot_context_menu(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
-  allowReadOnly = FALSE, allowComments = TRUE, allowCustomBorders = FALSE,
-  customOpts = NULL, ...)
+  allowReadOnly = FALSE, allowComments = FALSE,
+  allowCustomBorders = FALSE, customOpts = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
 \item{allowRowEdit}{logical enabling row editing}
 
-\item{allowColEdit}{logical enabling column editing ***ADD MORE}
+\item{allowColEdit}{logical enabling column editing. Note that
+Handsontable does not support column add/remove when column types
+are defined (i.e. useTypes == TRUE in rhandsontable).}
 
 \item{allowReadOnly}{logical enabling read-only toggle}
 
@@ -26,6 +28,9 @@ hot_context_menu(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
 \item{...}{ignored}
 }
 \description{
-Configure the options for the right-click context menu
+Configure the options for the right-click context menu.  See
+ \href{http://handsontable.com/demo/demo-context-menu.html}{Context Menu} and
+ \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
+ for details.
 }
 
