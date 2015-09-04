@@ -178,6 +178,8 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
       hot_context_menu(allowComments = enableComments,
                        allowCustomBorders = !is.null(customBorders),
                        allowColEdit = is.null(hot$x$columns), ...)
+  else
+    hot$x$contextMenu = FALSE
 
   if (!is.null(list(...)))
     hot$x = c(hot$x, list(...))
@@ -207,7 +209,8 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
                             allowReadOnly = FALSE, allowComments = FALSE,
                             allowCustomBorders = FALSE,
                             customOpts = NULL, ...) {
-  if (!is.null(hot$x$contextMenu) && !hot$x$contextMenu)
+  if (!is.null(hot$x$contextMenu) && is.logical(hot$x$contextMenu) &&
+      !hot$x$contextMenu)
     warning("The context menu was disabled but will be re-enabled (hot_context_menu)")
 
   if (!is.null(hot$x$colums) && allowColEdit)
@@ -221,8 +224,8 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
     opts = hot$x$contextMenu$items
 
   sep_ct = 1
-  add_opts = function(new, old, sep = TRUE) {
-    new_ = lapply(new, function(x) list())
+  add_opts = function(new, old, sep = TRUE, val = list()) {
+    new_ = lapply(new, function(x) val)
     names(new_) = new
     if (length(old) > 0 && sep) {
       old[[paste0("hsep", sep_ct)]] = list(name = "---------")
@@ -234,12 +237,19 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
       new_
     }
   }
+  remove_opts = function(new) {
+    add_opts(new, opts, sep = FALSE, val = NULL)
+  }
 
   if (!is.null(allowRowEdit) && allowRowEdit)
     opts =  add_opts(c("row_above", "row_below", "remove_row"), opts)
+  else
+    opts =  remove_opts(c("row_above", "row_below", "remove_row"))
 
   if (!is.null(allowColEdit) && allowColEdit)
     opts = add_opts(c("col_left", "col_right", "remove_col"), opts)
+  else
+    opts =  remove_opts(c("col_left", "col_right", "remove_col"))
 
   opts = add_opts(c("undo", "redo"), opts)
 
@@ -247,12 +257,18 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
 
   if (!is.null(allowReadOnly) && allowReadOnly)
     opts = add_opts(c("make_read_only"), opts)
+  else
+    opts =  remove_opts(c("make_read_only"))
 
   if (!is.null(allowComments) && allowComments)
     opts = add_opts(c("commentsAddEdit", "commentsRemove"), opts)
+  else
+    opts =  remove_opts(c("commentsAddEdit", "commentsRemove"))
 
   if (!is.null(allowCustomBorders) && allowCustomBorders)
     opts = add_opts(c("borders"), opts)
+  else
+    opts =  remove_opts(c("borders"))
 
   if (!is.null(customOpts)) {
     opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
