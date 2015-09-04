@@ -44,8 +44,7 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 stringsAsFactors = FALSE)
 
 rhandsontable(DF) \%>\%
-hot_table(highlightCol = TRUE, highlightRow = TRUE,
-          allowRowEdit = FALSE, allowColEdit = FALSE)
+hot_table(highlightCol = TRUE, highlightRow = TRUE)
 }
 \seealso{
 \code{\link{rhandsontable}}

@@ -33,4 +33,14 @@ Configure the options for the right-click context menu.  See
  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
  for details.
 }
+\examples{
+library(rhandsontable)
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF) \%>\%
+  hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+}
 

@@ -152,8 +152,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #'                 stringsAsFactors = FALSE)
 #'
 #' rhandsontable(DF) %>%
-#' hot_table(highlightCol = TRUE, highlightRow = TRUE,
-#'           allowRowEdit = FALSE, allowColEdit = FALSE)
+#' hot_table(highlightCol = TRUE, highlightRow = TRUE)
 #' @seealso \code{\link{rhandsontable}}
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
@@ -204,6 +203,15 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 #' @param allowCustomBorders logical enabling custom borders
 #' @param customOpts list
 #' @param ... ignored
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF) %>%
+#'   hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
 #' @export
 hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
                             allowReadOnly = FALSE, allowComments = FALSE,
