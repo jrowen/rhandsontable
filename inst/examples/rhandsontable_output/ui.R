@@ -9,7 +9,7 @@ shinyUI(fluidPage(
       radioButtons("useType", "Use Data Types", c("TRUE", "FALSE"))
     ),
     mainPanel(
-      rHandsontableOutput("hot")
+      rHandsontableOutput("hot", width = 350)
     )
   )
 ))
