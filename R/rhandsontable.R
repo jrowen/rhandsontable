@@ -8,6 +8,7 @@
 #'  will be used. Setting to \code{NULL} will omit.
 #' @param rowHeaders a vector of row names. If missing \code{rownames}
 #'  will be used. Setting to \code{NULL} will omit.
+#' @param comments matrix or data.frame of comments; NA values are ignored
 #' @param useTypes logical specifying whether column classes should be mapped to
 #'  equivalent Javascript types.  Note that
 #'  Handsontable does not support column add/remove when column types
@@ -28,8 +29,9 @@
 #' rhandsontable(DF, rowHeaders = NULL)
 #' @seealso \code{\link{hot_table}}, \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
-rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
-                          readOnly = NULL, selectCallback = FALSE,
+rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
+                          useTypes = TRUE, readOnly = NULL,
+                          selectCallback = FALSE,
                           width = NULL, height = NULL, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
@@ -120,7 +122,15 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
       hot = hot %>% hot_col(x, readOnly = readOnly)
   }
 
-  hot = hot %>% hot_table(...)
+  hot = hot %>% hot_table(enableComments = !is.null(comments), ...)
+
+  if (!is.null(comments)) {
+    inds = which(!is.na(comments), arr.ind = TRUE)
+    for (i in 1:nrow(inds))
+      hot = hot %>%
+        hot_cell(inds[i, "row"], inds[i, "col"],
+                 comment = comments[inds[i, "row"], inds[i, "col"]])
+  }
 
   hot
 }
@@ -157,7 +167,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      customBorders = NULL, groups = NULL, highlightRow = NULL,
-                     highlightCol = NULL, enableComments = TRUE,
+                     highlightCol = NULL, enableComments = FALSE,
                      ...) {
   if (!is.null(stretchH)) hot$x$stretchH = stretchH
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
@@ -458,12 +468,12 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
 #' @export
 hot_cell = function(hot, row, col, comment = NULL) {
-  cell = list(row = row, col = col, comment = comment)
+  cell = list(row = row - 1, col = col - 1, comment = comment)
 
   hot$x$cell = c(hot$x$cell, list(cell))
 
   if (is.null(hot$x$comments))
-    hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)
+    hot = hot %>% hot_table(comments = TRUE)
 
   hot
 }

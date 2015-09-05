@@ -21,6 +21,7 @@ HTMLWidgets.widget({
     x.beforeChangeRender = this.updateHeatmap;
 
     this.afterChangeCallback(x);
+    this.afterCellMetaCallback(x);
     this.afterRowAndColChange(x);
 
     if (x.selectCallback) {
@@ -70,6 +71,25 @@ HTMLWidgets.widget({
     };
   },
 
+  afterCellMetaCallback: function(x) {
+
+    x.afterSetCellMeta = function(r, c, key, val) {
+
+      if (HTMLWidgets.shinyMode && key === "comment") {
+        if (this.sortIndex && this.sortIndex.length !== 0) {
+          r = this.sortIndex[r][0];
+        }
+
+        Shiny.onInputChange(this.rootElement.id + "_comment", {
+          data: this.getData(),
+          comment: { r: r + 1, c: c + 1, key: key, val: val},
+          params: this.params
+        });
+      }
+
+    };
+  },
+
   afterSelectCallback: function(x) {
 
     x.afterSelectionEnd = function(r, c, r2, c2) {
@@ -82,7 +102,7 @@ HTMLWidgets.widget({
 
         Shiny.onInputChange(this.rootElement.id + "_select", {
           data: this.getData(),
-          select: { r: r, c: c, r2: r2, c2: c2},
+          select: { r: r + 1, c: c + 1, r2: r2 + 1, c2: c2 + 1},
           params: this.params
         });
       }
