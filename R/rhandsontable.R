@@ -38,11 +38,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
   if (missing(rowHeaders))
     rowHeaders = rownames(data)
 
-  if (!useTypes) {
-    data = as.matrix(data, rownames.force = TRUE)
-    cols = NULL
-  }
-
   rClass = class(data)
   if ("matrix" %in% rClass) {
     rColClasses = class(data[1, 1])
@@ -51,7 +46,16 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rColClasses[grepl("factor", rColClasses)] = "factor"
   }
 
-  if(useTypes) {
+  if (!useTypes) {
+    data = do.call(cbind, lapply(data, function(x) {
+      if (class(x) == "Date")
+        as.character(x, format = "%m/%d/%Y")
+      else
+        as.character(x)
+    }))
+    data = as.matrix(data, rownames.force = TRUE)
+    cols = NULL
+  } else {
     # get column data types
     col_typs = get_col_types(data)
 
@@ -59,7 +63,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     dt_inds = which(col_typs == "date")
     if (length(dt_inds) > 0L) {
       for (i in dt_inds)
-        data[, i] = as.character(data[, i], format = DATE_FORMAT)
+        data[, i] = as.character(data[, i], format = "%m/%d/%Y")
     }
 
     cols = lapply(seq_along(col_typs), function(i) {
@@ -82,6 +86,10 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
       } else if (type == "integer") {
         res = list(type = "numeric",
                    format = "0")
+      } else if (type == "date") {
+        res = list(type = "date",
+                   correctFormat = TRUE,
+                   dateFormat = "MM/DD/YYYY")
       } else {
         res = list(type = type)
       }
@@ -371,6 +379,9 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  to format column cells. Can be used to implement conditional formatting.
 #' @param copyable logical defining whether data in a cell can be copied using
 #'  Ctrl + C
+#' @param dateFormat character defining the date format. See
+#'  {https://github.com/moment/moment}{Moment.js} for details.
+#' @param ... passed to handsontable
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -387,7 +398,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL, readOnly = NULL, validator = NULL,
                    allowInvalid = NULL, halign = NULL, valign = NULL,
-                   renderer = NULL, copyable = NULL) {
+                   renderer = NULL, copyable = NULL, dateFormat = NULL, ...) {
   cols = hot$x$columns
   if (is.null(cols)) {
     # create a columns list
@@ -403,6 +414,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
     if (!is.null(type)) cols[[i]]$type = type
     if (!is.null(format)) cols[[i]]$format = format
+    if (!is.null(dateFormat)) cols[[i]]$dateFormat = dateFormat
     if (!is.null(source)) cols[[i]]$source = source
     if (!is.null(strict)) cols[[i]]$strict = strict
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
@@ -411,6 +423,9 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     if (!is.null(validator)) cols[[i]]$validator = JS(validator)
     if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid
     if (!is.null(renderer)) cols[[i]]$renderer = JS(renderer)
+
+    if (!is.null(list(...)))
+      cols[[i]] = c(cols[[i]], list(...))
 
     className = c(halign, valign)
     if (!is.null(className)) {

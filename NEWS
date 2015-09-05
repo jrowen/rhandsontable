@@ -11,6 +11,10 @@ rhandsontable 0.2.1
 
 * Fixed shiny select callback to use 1-based indices (instead of JavaScripts 0-based indices).
 
+* Fixed hot_to_r to preserve original data classes (#39).
+
+* Added dateFormat to hot_col and allow passing additional column parameters via ...
+
 rhandsontable 0.2
 -------------------------
 
