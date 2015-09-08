@@ -7,13 +7,13 @@ rhandsontable 0.2.1
 
 * Added a new shiny _comment callback to track changes to table comments. See the new rhandsontable_comment example for more details.
 
+* Added dateFormat to hot_col and allow passing additional column parameters. Future updates should hopefully allow more control over date formatting.
+
 * Fixed a table resize bug (#26)
 
+* Fixed hot_to_r to preserve original data classes when useTypes = FALSE (#39). See the rhandsontable_output example for more details.
+
 * Fixed shiny select callback to use 1-based indices (instead of JavaScripts 0-based indices).
-
-* Fixed hot_to_r to preserve original data classes (#39).
-
-* Added dateFormat to hot_col and allow passing additional column parameters via ...
 
 rhandsontable 0.2
 -------------------------
