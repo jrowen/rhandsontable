@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/jrowen/rhandsontable.svg?branch=master)](https://travis-ci.org/jrowen/rhandsontable)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
 
 **See the [project website](http://jrowen.github.io/rhandsontable/) for more details and live examples.**
 
