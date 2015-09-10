@@ -8,8 +8,11 @@
 #'  will be used. Setting to \code{NULL} will omit.
 #' @param rowHeaders a vector of row names. If missing \code{rownames}
 #'  will be used. Setting to \code{NULL} will omit.
+#' @param comments matrix or data.frame of comments; NA values are ignored
 #' @param useTypes logical specifying whether column classes should be mapped to
-#'  equivalent Javascript types
+#'  equivalent Javascript types.  Note that
+#'  Handsontable does not support column add/remove when column types
+#'  are defined (i.e. useTypes == TRUE in rhandsontable).
 #' @param readOnly logical specifying whether the table is editable
 #' @param selectCallback logical enabling the afterSelect event to return data.
 #'  This can be used with shiny to tie updates to a selected table cell.
@@ -26,18 +29,14 @@
 #' rhandsontable(DF, rowHeaders = NULL)
 #' @seealso \code{\link{hot_table}}, \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
-rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
-                          readOnly = NULL, selectCallback = FALSE,
+rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
+                          useTypes = TRUE, readOnly = NULL,
+                          selectCallback = FALSE,
                           width = NULL, height = NULL, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
     rowHeaders = rownames(data)
-
-  if (!useTypes) {
-    data = as.matrix(data, rownames.force = TRUE)
-    cols = NULL
-  }
 
   rClass = class(data)
   if ("matrix" %in% rClass) {
@@ -47,7 +46,16 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
     rColClasses[grepl("factor", rColClasses)] = "factor"
   }
 
-  if(useTypes) {
+  if (!useTypes) {
+    data = do.call(cbind, lapply(data, function(x) {
+      if (class(x) == "Date")
+        as.character(x, format = "%m/%d/%Y")
+      else
+        as.character(x)
+    }))
+    data = as.matrix(data, rownames.force = TRUE)
+    cols = NULL
+  } else {
     # get column data types
     col_typs = get_col_types(data)
 
@@ -55,7 +63,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
     dt_inds = which(col_typs == "date")
     if (length(dt_inds) > 0L) {
       for (i in dt_inds)
-        data[, i] = as.character(data[, i], format = DATE_FORMAT)
+        data[, i] = as.character(data[, i], format = "%m/%d/%Y")
     }
 
     cols = lapply(seq_along(col_typs), function(i) {
@@ -78,6 +86,10 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
       } else if (type == "integer") {
         res = list(type = "numeric",
                    format = "0")
+      } else if (type == "date") {
+        res = list(type = "date",
+                   correctFormat = TRUE,
+                   dateFormat = "MM/DD/YYYY")
       } else {
         res = list(type = type)
       }
@@ -118,7 +130,179 @@ rhandsontable <- function(data, colHeaders, rowHeaders, useTypes = TRUE,
       hot = hot %>% hot_col(x, readOnly = readOnly)
   }
 
-  hot = hot %>% hot_table(allowColEdit = ("matrix" %in% rClass), ...)
+  hot = hot %>% hot_table(enableComments = !is.null(comments), ...)
+
+  if (!is.null(comments)) {
+    inds = which(!is.na(comments), arr.ind = TRUE)
+    for (i in 1:nrow(inds))
+      hot = hot %>%
+        hot_cell(inds[i, "row"], inds[i, "col"],
+                 comment = comments[inds[i, "row"], inds[i, "col"]])
+  }
+
+  hot
+}
+
+#' Handsontable widget
+#'
+#' Configure table.  See
+#' \href{http://handsontable.com}{Handsontable.js} for details.
+#'
+#' @param hot rhandsontable object
+#' @param contextMenu logical enabling the right-click menu
+#' @param stretchH character describing column stretching. Options are 'all', 'right',
+#'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
+#' @param customBorders json object. See
+#'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
+#' @param groups json object. See
+#'  \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
+#' @param highlightRow logical enabling row highlighting for the selected
+#'  cell
+#' @param highlightCol logical enabling column highlighting for the
+#'  selected cell
+#' @param enableComments logical enabling comments in the table
+#' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF) %>%
+#' hot_table(highlightCol = TRUE, highlightRow = TRUE)
+#' @seealso \code{\link{rhandsontable}}
+#' @export
+hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
+                     customBorders = NULL, groups = NULL, highlightRow = NULL,
+                     highlightCol = NULL, enableComments = FALSE,
+                     ...) {
+  if (!is.null(stretchH)) hot$x$stretchH = stretchH
+  if (!is.null(customBorders)) hot$x$customBorders = customBorders
+  if (!is.null(groups)) hot$x$groups = groups
+  if (!is.null(enableComments)) hot$x$comments = enableComments
+
+  if ((!is.null(highlightRow) && highlightRow) ||
+      (!is.null(highlightCol) && highlightCol))
+    hot$x$ishighlight = TRUE
+  if (!is.null(highlightRow) && highlightRow)
+    hot$x$currentRowClassName = "currentRow"
+  if (!is.null(highlightCol) && highlightCol)
+    hot$x$currentColClassName = "currentCol"
+
+  if (!is.null(contextMenu) && contextMenu)
+    hot = hot %>%
+      hot_context_menu(allowComments = enableComments,
+                       allowCustomBorders = !is.null(customBorders),
+                       allowColEdit = is.null(hot$x$columns), ...)
+  else
+    hot$x$contextMenu = FALSE
+
+  if (!is.null(list(...)))
+    hot$x = c(hot$x, list(...))
+
+  hot
+}
+
+#' Handsontable widget
+#'
+#' Configure the options for the right-click context menu.  See
+#'  \href{http://handsontable.com/demo/demo-context-menu.html}{Context Menu} and
+#'  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
+#'  for details.
+#'
+#' @param hot rhandsontable object
+#' @param allowRowEdit logical enabling row editing
+#' @param allowColEdit logical enabling column editing. Note that
+#'  Handsontable does not support column add/remove when column types
+#'  are defined (i.e. useTypes == TRUE in rhandsontable).
+#' @param allowReadOnly logical enabling read-only toggle
+#' @param allowComments logical enabling comments
+#' @param allowCustomBorders logical enabling custom borders
+#' @param customOpts list
+#' @param ... ignored
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF) %>%
+#'   hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+#' @export
+hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
+                            allowReadOnly = FALSE, allowComments = FALSE,
+                            allowCustomBorders = FALSE,
+                            customOpts = NULL, ...) {
+  if (!is.null(hot$x$contextMenu) && is.logical(hot$x$contextMenu) &&
+      !hot$x$contextMenu)
+    warning("The context menu was disabled but will be re-enabled (hot_context_menu)")
+
+  if (!is.null(hot$x$colums) && allowColEdit)
+    warning("Handsontable.js does not support column add/delete when column types ",
+            "are defined.  Set useTypes = FALSE in rhandsontable to enable column ",
+            "edits.")
+
+  if (is.null(hot$x$contextMenu$items))
+    opts = list()
+  else
+    opts = hot$x$contextMenu$items
+
+  sep_ct = 1
+  add_opts = function(new, old, sep = TRUE, val = list()) {
+    new_ = lapply(new, function(x) val)
+    names(new_) = new
+    if (length(old) > 0 && sep) {
+      old[[paste0("hsep", sep_ct)]] = list(name = "---------")
+      sep_ct <<- sep_ct + 1
+      modifyList(old, new_)
+    } else if (!sep) {
+      modifyList(old, new_)
+    } else {
+      new_
+    }
+  }
+  remove_opts = function(new) {
+    add_opts(new, opts, sep = FALSE, val = NULL)
+  }
+
+  if (!is.null(allowRowEdit) && allowRowEdit)
+    opts =  add_opts(c("row_above", "row_below", "remove_row"), opts)
+  else
+    opts =  remove_opts(c("row_above", "row_below", "remove_row"))
+
+  if (!is.null(allowColEdit) && allowColEdit)
+    opts = add_opts(c("col_left", "col_right", "remove_col"), opts)
+  else
+    opts =  remove_opts(c("col_left", "col_right", "remove_col"))
+
+  opts = add_opts(c("undo", "redo"), opts)
+
+  opts = add_opts(c("alignment"), opts)
+
+  if (!is.null(allowReadOnly) && allowReadOnly)
+    opts = add_opts(c("make_read_only"), opts)
+  else
+    opts =  remove_opts(c("make_read_only"))
+
+  if (!is.null(allowComments) && allowComments)
+    opts = add_opts(c("commentsAddEdit", "commentsRemove"), opts)
+  else
+    opts =  remove_opts(c("commentsAddEdit", "commentsRemove"))
+
+  if (!is.null(allowCustomBorders) && allowCustomBorders)
+    opts = add_opts(c("borders"), opts)
+  else
+    opts =  remove_opts(c("borders"))
+
+  if (!is.null(customOpts)) {
+    opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
+    sep_ct = sep_ct + 1
+    opts = modifyList(opts, customOpts)
+  }
+
+  hot$x$contextMenu = list(items = opts)
 
   hot
 }
@@ -193,6 +377,11 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  values are htTop, htMiddle, htBottom
 #' @param renderer character defining a Javascript function to be used
 #'  to format column cells. Can be used to implement conditional formatting.
+#' @param copyable logical defining whether data in a cell can be copied using
+#'  Ctrl + C
+#' @param dateFormat character defining the date format. See
+#'  {https://github.com/moment/moment}{Moment.js} for details.
+#' @param ... passed to handsontable
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -207,10 +396,9 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
-                   strict = NULL,
-                   readOnly = NULL, validator = NULL, allowInvalid = NULL,
-                   halign = NULL, valign = NULL,
-                   renderer = NULL) {
+                   strict = NULL, readOnly = NULL, validator = NULL,
+                   allowInvalid = NULL, halign = NULL, valign = NULL,
+                   renderer = NULL, copyable = NULL, dateFormat = NULL, ...) {
   cols = hot$x$columns
   if (is.null(cols)) {
     # create a columns list
@@ -226,13 +414,18 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
     if (!is.null(type)) cols[[i]]$type = type
     if (!is.null(format)) cols[[i]]$format = format
+    if (!is.null(dateFormat)) cols[[i]]$dateFormat = dateFormat
     if (!is.null(source)) cols[[i]]$source = source
     if (!is.null(strict)) cols[[i]]$strict = strict
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
+    if (!is.null(copyable)) cols[[i]]$copyable = copyable
 
     if (!is.null(validator)) cols[[i]]$validator = JS(validator)
     if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid
     if (!is.null(renderer)) cols[[i]]$renderer = JS(renderer)
+
+    if (!is.null(list(...)))
+      cols[[i]] = c(cols[[i]], list(...))
 
     className = c(halign, valign)
     if (!is.null(className)) {
@@ -241,6 +434,62 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
   }
 
   hot$x$columns = cols
+  hot
+}
+
+#' Handsontable widget
+#'
+#' Configure rows.  See
+#' \href{http://handsontable.com}{Handsontable.js} for details.
+#'
+#' @param hot rhandsontable object
+#' @param rowHeights a scalar or numeric vector of row heights
+#' @param fixedRowsTop a numeric vector indicating which rows should be
+#'  frozen on the top
+#' @examples
+#' library(rhandsontable)
+#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+#'              letters[1:5]))
+#'
+#' rhandsontable(MAT, width = 300, height = 150) %>%
+#' hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
+#'   hot_rows(rowHeights = 50, fixedRowsTop = 1)
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
+#' @export
+hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
+  if (!is.null(rowHeights)) hot$x$rowHeights = rowHeights
+  if (!is.null(fixedRowsTop)) hot$x$fixedRowsTop = fixedRowsTop
+  hot
+}
+
+#' Handsontable widget
+#'
+#' Configure single cell.  See
+#' \href{http://handsontable.com}{Handsontable.js} for details.
+#'
+#' @param hot rhandsontable object
+#' @param row numeric row index
+#' @param col numeric column index
+#' @param comment character comment to add to cell
+#' @examples
+#' library(rhandsontable)
+#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+#'                 small = letters[1:10],
+#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+#'                 stringsAsFactors = FALSE)
+#'
+#' rhandsontable(DF, readOnly = TRUE) %>%
+#'   hot_cell(1, 1, "Test comment")
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
+#' @export
+hot_cell = function(hot, row, col, comment = NULL) {
+  cell = list(row = row - 1, col = col - 1, comment = comment)
+
+  hot$x$cell = c(hot$x$cell, list(cell))
+
+  if (is.null(hot$x$comments))
+    hot = hot %>% hot_table(comments = TRUE)
+
   hot
 }
 
@@ -361,133 +610,6 @@ hot_validate_character = function(hot, cols, choices,
   for (x in cols)
     hot = hot %>% hot_col(x, validator = f,
                           allowInvalid = allowInvalid)
-
-  hot
-}
-
-#' Handsontable widget
-#'
-#' Configure rows.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
-#'
-#' @param hot rhandsontable object
-#' @param rowHeights a scalar or numeric vector of row heights
-#' @param fixedRowsTop a numeric vector indicating which rows should be
-#'  frozen on the top
-#' @examples
-#' library(rhandsontable)
-#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
-#'              letters[1:5]))
-#'
-#' rhandsontable(MAT, width = 300, height = 150) %>%
-#' hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
-#'   hot_rows(rowHeights = 50, fixedRowsTop = 1)
-#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
-#' @export
-hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
-  if (!is.null(rowHeights)) hot$x$rowHeights = rowHeights
-  if (!is.null(fixedRowsTop)) hot$x$fixedRowsTop = fixedRowsTop
-  hot
-}
-
-#' Handsontable widget
-#'
-#' Configure single cell.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
-#'
-#' @param hot rhandsontable object
-#' @param row numeric row index
-#' @param col numeric column index
-#' @param comment character comment to add to cell
-#' @examples
-#' library(rhandsontable)
-#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
-#'                 small = letters[1:10],
-#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
-#'                 stringsAsFactors = FALSE)
-#'
-#' rhandsontable(DF, readOnly = TRUE) %>%
-#'   hot_cell(1, 1, "Test comment")
-#' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
-#' @export
-hot_cell = function(hot, row, col, comment = NULL) {
-  cell = list(row = row, col = col, comment = comment)
-
-  hot$x$cell = c(hot$x$cell, list(cell))
-
-  if (is.null(hot$x$comments))
-    hot = hot %>% hot_table(comments = TRUE, contextMenu = TRUE)
-
-  hot
-}
-
-#' Handsontable widget
-#'
-#' Configure table.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
-#'
-#' @param hot rhandsontable object
-#' @param contextMenu logical enabling the right-click menu
-#' @param stretchH character describing column stretching. Options are 'all', 'right',
-#'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
-#' @param allowRowEdit logical enabling right-click row options
-#' @param allowColEdit logical enabling right-click column options
-#' @param resizeOnRowEdit logical resize table when add/removing rows
-#' @param resizeOnColEdit logical resize table when add/removing rows
-#' @param customBorders json object. See
-#'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
-#' @param groups json object. See
-#'  \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
-#' @param highlightRow logical enabling row highlighting for the selected
-#'  cell
-#' @param highlightCol logical enabling column highlighting for the
-#'  selected cell
-#' @param comments logical enabling comments in the table, including the
-#'  corresponding options in the right-click menu. User comments are not
-#'  currently returned to R.
-#' @param exportToCsv logical adding a context menu option to export the table
-#'  data to a csv file
-#' @param csvFileName character csv file name
-#' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
-#' @examples
-#' library(rhandsontable)
-#' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
-#'                 small = letters[1:10],
-#'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
-#'                 stringsAsFactors = FALSE)
-#'
-#' rhandsontable(DF) %>%
-#' hot_table(highlightCol = TRUE, highlightRow = TRUE,
-#'           allowRowEdit = FALSE, allowColEdit = FALSE)
-#' @seealso \code{\link{rhandsontable}}
-#' @export
-hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
-                     allowRowEdit = TRUE, allowColEdit = TRUE,
-                     resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
-                     customBorders = NULL, groups = NULL, highlightRow = NULL,
-                     highlightCol = NULL, comments = NULL,
-                     exportToCsv = NULL, csvFileName = "download.csv",
-                     ...) {
-  if (!is.null(contextMenu)) hot$x$contextMenu = contextMenu
-  if (!is.null(stretchH)) hot$x$stretchH = stretchH
-  if (!is.null(allowRowEdit)) hot$x$allowRowEdit = allowRowEdit
-  if (!is.null(allowColEdit)) hot$x$allowColEdit = allowColEdit
-  if (!is.null(customBorders)) hot$x$customBorders = customBorders
-  if (!is.null(groups)) hot$x$groups = groups
-  if (!is.null(comments)) hot$x$comments = comments
-  if (!is.null(exportToCsv)) hot$x$exportToCsv = exportToCsv
-  if (!is.null(csvFileName)) hot$x$csvFileName = csvFileName
-
-  if ((!is.null(highlightRow) && highlightRow) ||
-        (!is.null(highlightCol) && highlightCol))
-    hot$x$ishighlight = TRUE
-  if (!is.null(highlightRow) && highlightRow)
-    hot$x$currentRowClassName = "currentRow"
-  if (!is.null(highlightCol) && highlightCol)
-    hot$x$currentColClassName = "currentCol"
-
-  if (!is.null(list(...)))
-    hot$x = c(hot$x, list(...))
 
   hot
 }

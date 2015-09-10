@@ -1,3 +1,20 @@
+rhandsontable 0.2.1
+-------------------------
+
+* Added a new function, hot_context_menu, to better control right-click menu. The option to export to csv has been removed for now, but a new context_menu example has been added that shows how to enable the option. The example also shows how to enable the table search functionality (#38, #41).
+
+* Added a new comments parameter to rhandsontable to allow bulk comment specification.
+
+* Added a new shiny _comment callback to track changes to table comments. See the new rhandsontable_comment example for more details.
+
+* Added dateFormat to hot_col and allow passing additional column parameters. Future updates should hopefully allow more control over date formatting.
+
+* Fixed a table resize bug (#26)
+
+* Fixed hot_to_r to preserve original data classes when useTypes = FALSE (#39). See the rhandsontable_output example for more details.
+
+* Fixed shiny select callback to use 1-based indices (instead of JavaScripts 0-based indices).
+
 rhandsontable 0.2
 -------------------------
 

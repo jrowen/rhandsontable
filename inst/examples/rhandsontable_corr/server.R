@@ -47,8 +47,8 @@ shinyServer(function(input, output, session) {
 
   output$plot = renderMetricsgraphics({
     if (!is.null(input$hot_select)) {
-      x_val = colnames(calc())[input$hot_select$select$c + 1]
-      y_val = colnames(calc())[input$hot_select$select$r + 1]
+      x_val = colnames(calc())[input$hot_select$select$c]
+      y_val = colnames(calc())[input$hot_select$select$r]
 
       DT = returns[Name %in% c(x_val, y_val)]
       DT = dcast.data.table(DT, Date ~ Name, value.var = "Return")

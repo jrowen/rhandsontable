@@ -6,7 +6,8 @@
 \usage{
 hot_col(hot, col, type = NULL, format = NULL, source = NULL,
   strict = NULL, readOnly = NULL, validator = NULL, allowInvalid = NULL,
-  halign = NULL, valign = NULL, renderer = NULL)
+  halign = NULL, valign = NULL, renderer = NULL, copyable = NULL,
+  dateFormat = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -45,6 +46,14 @@ values are htTop, htMiddle, htBottom}
 
 \item{renderer}{character defining a Javascript function to be used
 to format column cells. Can be used to implement conditional formatting.}
+
+\item{copyable}{logical defining whether data in a cell can be copied using
+Ctrl + C}
+
+\item{dateFormat}{character defining the date format. See
+{https://github.com/moment/moment}{Moment.js} for details.}
+
+\item{...}{passed to handsontable}
 }
 \description{
 Configure single column.

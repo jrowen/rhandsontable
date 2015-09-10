@@ -8,14 +8,11 @@ HTMLWidgets.widget({
 
     return {
 
-    }
+    };
 
   },
 
   renderValue: function(el, x, instance) {
-
-    // used to pass color to heatmap
-    hotParams[el.id] = x;
 
     // convert json to array
     x.data = toArray(x.data);
@@ -24,62 +21,12 @@ HTMLWidgets.widget({
     x.beforeChangeRender = this.updateHeatmap;
 
     this.afterChangeCallback(x);
+    this.afterCellMetaCallback(x);
     this.afterRowAndColChange(x);
 
     if (x.selectCallback) {
       this.afterSelectCallback(x);
     }
-
-    menu_items = {};
-
-    if (x.allowRowEdit) {
-      menu_items["row_above"] = {};
-      menu_items["row_below"] = {};
-      menu_items["hsep1"] = "---------";
-    }
-    if (x.allowColEdit) {
-      menu_items["col_left"] = {};
-      menu_items["col_right"] = {};
-      menu_items["hsep2"] = "---------";
-    }
-    if (x.allowRowEdit) {
-      menu_items["remove_row"] = {};
-    }
-    if (x.allowColEdit) {
-      menu_items["remove_col"] = {};
-    }
-    if (x.allowRowEdit || x.allowColEdit) {
-      menu_items["hsep3"] = "---------";
-    }
-
-    menu_items["undo"] = {};
-    menu_items["redo"] = {};
-    menu_items["hsep4"] = "---------";
-    menu_items["make_read_only"] = {};
-    menu_items["alignment"] = {};
-
-    if (x.customBorders) {
-      menu_items["borders"] = {};
-    }
-
-    if (x.comments) {
-      menu_items["commentsAddEdit"] = {};
-      menu_items["commentsRemove"] = {};
-    }
-
-    if (x.exportToCsv && !HTMLWidgets.shinyMode) {
-      menu_items["hsep5"] = "---------";
-      menu_items["csv"] = {"name": "Export to csv"};
-    }
-
-    x.contextMenu = {
-      callback: function (key, options) {
-        if (key === 'csv') {
-          csvDownload(instance.hot, "filename.csv");
-        }
-      },
-      items: menu_items
-    };
 
     if (instance.hot) { // update existing instance
 
@@ -91,6 +38,7 @@ HTMLWidgets.widget({
 
     }
 
+    instance.hot.params = x;
   },
 
   resize: function(el, width, height, instance) {
@@ -116,7 +64,26 @@ HTMLWidgets.widget({
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterChange", changes: c },
-          params: hotParams[this.rootElement.id]
+          params: this.params
+        });
+      }
+
+    };
+  },
+
+  afterCellMetaCallback: function(x) {
+
+    x.afterSetCellMeta = function(r, c, key, val) {
+
+      if (HTMLWidgets.shinyMode && key === "comment") {
+        if (this.sortIndex && this.sortIndex.length !== 0) {
+          r = this.sortIndex[r][0];
+        }
+
+        Shiny.onInputChange(this.rootElement.id + "_comment", {
+          data: this.getData(),
+          comment: { r: r + 1, c: c + 1, key: key, val: val},
+          params: this.params
         });
       }
 
@@ -135,8 +102,8 @@ HTMLWidgets.widget({
 
         Shiny.onInputChange(this.rootElement.id + "_select", {
           data: this.getData(),
-          select: { r: r, c: c, r2: r2, c2: c2},
-          params: hotParams[this.rootElement.id]
+          select: { r: r + 1, c: c + 1, r2: r2 + 1, c2: c2 + 1},
+          params: this.params
         });
       }
 
@@ -147,61 +114,41 @@ HTMLWidgets.widget({
 
     x.afterCreateRow = function(ind, ct) {
 
-      if (this.params.resizeOnRowEdit) {
-        this.updateSettings({ height: $('.wtHider').height() });
-        this.render();
-      }
-
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateRow", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
     x.afterRemoveRow = function(ind, ct) {
 
-      if (this.params.resizeOnRowEdit) {
-        this.updateSettings({ height: $('.wtHider').height() });
-        this.render();
-      }
-
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterRemoveRow", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
     x.afterCreateCol = function(ind, ct) {
 
-      if (this.params.resizeOnColEdit) {
-        this.updateSettings({ width: $('.wtHider').width() });
-        this.render();
-      }
-
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateCol", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
     x.afterRemoveCol = function(ind, ct) {
 
-      if (this.params.resizeOnColEdit) {
-        this.updateSettings({ width: $('.wtHider').width() });
-        this.render();
-      }
-
       if (HTMLWidgets.shinyMode)
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterRemoveCol", ind: ind, ct: ct },
-          params: hotParams[this.rootElement.id]
+          params: this.params
         });
     };
 
@@ -233,8 +180,6 @@ HTMLWidgets.widget({
 
 });
 
-var hotParams = [];
-
 // https://stackoverflow.com/questions/22477612/converting-array-of-objects-into-array-of-arrays
 function toArray(input) {
   var result = input.map(function(obj) {
@@ -265,20 +210,6 @@ function csvString(instance) {
   }
 
   return csv;
-}
-
-function csvDownload(instance, filename) {
-
-  var csv = csvString(instance);
-
-  var link = document.createElement("a");
-  link.setAttribute("href", "data:text/plain;charset=utf-8," +
-    encodeURIComponent(csv));
-  link.setAttribute("download", filename);
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }
 
 function customRenderer(instance, TD, row, col, prop, value, cellProperties) {

@@ -4,11 +4,9 @@
 \alias{hot_table}
 \title{Handsontable widget}
 \usage{
-hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
-  allowColEdit = TRUE, resizeOnRowEdit = TRUE, resizeOnColEdit = TRUE,
+hot_table(hot, contextMenu = TRUE, stretchH = "none",
   customBorders = NULL, groups = NULL, highlightRow = NULL,
-  highlightCol = NULL, comments = NULL, exportToCsv = NULL,
-  csvFileName = "download.csv", ...)
+  highlightCol = NULL, enableComments = FALSE, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -17,14 +15,6 @@ hot_table(hot, contextMenu = TRUE, stretchH = "none", allowRowEdit = TRUE,
 
 \item{stretchH}{character describing column stretching. Options are 'all', 'right',
 and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.}
-
-\item{allowRowEdit}{logical enabling right-click row options}
-
-\item{allowColEdit}{logical enabling right-click column options}
-
-\item{resizeOnRowEdit}{logical resize table when add/removing rows}
-
-\item{resizeOnColEdit}{logical resize table when add/removing rows}
 
 \item{customBorders}{json object. See
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
@@ -38,14 +28,7 @@ cell}
 \item{highlightCol}{logical enabling column highlighting for the
 selected cell}
 
-\item{comments}{logical enabling comments in the table, including the
-corresponding options in the right-click menu. User comments are not
-currently returned to R.}
-
-\item{exportToCsv}{logical adding a context menu option to export the table
-data to a csv file}
-
-\item{csvFileName}{character csv file name}
+\item{enableComments}{logical enabling comments in the table}
 
 \item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
 }
@@ -61,8 +44,7 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 stringsAsFactors = FALSE)
 
 rhandsontable(DF) \%>\%
-hot_table(highlightCol = TRUE, highlightRow = TRUE,
-          allowRowEdit = FALSE, allowColEdit = FALSE)
+hot_table(highlightCol = TRUE, highlightRow = TRUE)
 }
 \seealso{
 \code{\link{rhandsontable}}

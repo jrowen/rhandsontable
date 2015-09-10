@@ -1,5 +1,3 @@
-DATE_FORMAT = "%m/%d/%Y"
-
 # Map R classes to handsontable.js types
 get_col_types = function(data) {
   if (is.matrix(data))  {
@@ -12,7 +10,7 @@ get_col_types = function(data) {
 
   types <- sapply(types, function(type) {
     if (grepl("factor", type)) return("factor")
-  
+
     switch(type,
            integer="integer",
            double="numeric",
@@ -69,7 +67,7 @@ toR = function(data, changes, params, ...) {
     out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
     out = matrix(out, nrow = nr, byrow = TRUE)
     out = colClasses(as.data.frame(out, stringsAsFactors = FALSE),
-                     rColClasses, params$columns)
+                     rColClasses, params$columns, ...)
   } else {
     stop("Conversion not implemented: ", rClass)
   }
@@ -98,15 +96,15 @@ toR = function(data, changes, params, ...) {
 # Coerces data.frame columns to the specified classes
 # see http://stackoverflow.com/questions/9214819/supply-a-vector-to-classes-of-dataframe
 #' @importFrom methods as
-colClasses <- function(d, colClasses, cols) {
+colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
   colClasses <- rep(colClasses, len=length(d))
   for(i in seq_along(d))
     d[[i]] = switch(
       colClasses[i],
       Date = as.Date(d[[i]], origin='1970-01-01',
-                     format = DATE_FORMAT),
+                     format = date_fmt),
       POSIXct = as.POSIXct(d[[i]], origin='1970-01-01',
-                           format = DATE_FORMAT),
+                           format = date_fmt),
       factor = factor(d[[i]],
                       levels = c(unlist(cols[[i]]$source),
                                  unique(d[[i]][!(d[[i]] %in% unlist(cols[[i]]$source))])),

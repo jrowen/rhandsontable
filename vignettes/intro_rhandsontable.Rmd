@@ -178,11 +178,13 @@ For `shiny` apps, use `renderer = htmlwidgets::JS("safeHtmlRenderer")` to displa
 
 ## Right-Click Menu
 
-Right-clicking in a cell will enable a context menu that includes customizable table actions.  For shiny apps, formatting and comment updates made via the context menu are not currently retained.
+Right-clicking in a cell will enable a context menu that includes customizable table actions via the `hot_context_menu` function.  For shiny apps, formatting and comment updates made via the context menu are not currently retained.
+
+To disable the context menu, set `contextMenu = FALSE` in `hot_table` (or `rhandsontable`).
 
 ### Add / Remove Rows & Columns
 
-By default a user can add or remove table rows and columns, but this functionality can be disabled.
+By default a user can add or remove table rows and columns, but this functionality can be disabled.  Note that Handsontable does not allow column be added or deleted to the table if column types are defined (i.e. `useTypes == TRUE` in `rhandsontable`).
 
 ```{r fig.height = 3}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -191,19 +193,63 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 stringsAsFactors = FALSE)
 
 rhandsontable(DF) %>%
-  hot_table(allowRowEdit = FALSE, allowColEdit = FALSE)
+  hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
 ```
 
-### Export to CSV
+### Customizing
 
-Use the `exportToCsv` (experimental) parameter to enable a saving the table data to a csv using a right-click menu option.
+The `customOpts` parameter of `hot_context_menu` can be used to add custom functionality to the context menu.  Below are a couple examples.
+
+#### Export to CSV
+
+This example illustrates how to add an option to export the table to a csv file.
 
 ```{r fig.height = 3}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
 rhandsontable(MAT) %>%
-  hot_table(exportToCsv = TRUE)
+  hot_context_menu(
+    customOpts = list(
+      csv = list(name = "Download to CSV",
+                    callback = htmlwidgets::JS(
+                      "function (key, options) {
+                         var csv = csvString(instance);
+
+                         var link = document.createElement('a');
+                         link.setAttribute('href', 'data:text/plain;charset=utf-8,' +
+                           encodeURIComponent(csv));
+                         link.setAttribute('download', filename);
+
+                         document.body.appendChild(link);
+                         link.click();
+                         document.body.removeChild(link);
+                       }"))))
+```
+
+#### Search
+
+This example illustrates how to enable the search functionality in Handsontable.
+
+```{r fig.height = 3}
+DF = data.frame(val = 1:10,
+                bool = TRUE,
+                big = LETTERS[1:10],
+                small = factor(letters[1:10]),
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF, search = TRUE) %>%
+  hot_context_menu(
+    customOpts = list(
+      search = list(name = "Search",
+                    callback = htmlwidgets::JS(
+                      "function (key, options) {
+                         var srch = prompt('Search criteria');
+
+                         this.search.query(srch);
+                         this.render();
+                       }"))))
 ```
 
 Future enhancements will look to expand export options.
