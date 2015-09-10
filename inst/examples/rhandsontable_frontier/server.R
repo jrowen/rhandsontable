@@ -2,6 +2,7 @@ library(shiny)
 library(rhandsontable)
 library(lpSolve)
 library(quadprog)
+library(data.table)
 library(ggplot2)
 
 tkrs = c("MSFT", "CAT", "AXP", "DIS", "MMM")
