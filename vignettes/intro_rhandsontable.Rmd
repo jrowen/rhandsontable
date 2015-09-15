@@ -96,7 +96,7 @@ rhandsontable(DF) %>%
 
 ### Sparkline
 
-New in version 0.2, [sparkline.js](http://omnipotent.net/jquery.sparkline/) charts can be added to the table.
+New in version 0.2, [sparkline.js](http://omnipotent.net/jquery.sparkline/) charts can be added to the table.  Thanks to the sparkline package and Ramnath Vaidyanathan for inspiration.
 
 ```{r fig.height = 3}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
