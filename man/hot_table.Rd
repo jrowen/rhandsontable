@@ -20,7 +20,7 @@ and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{
 \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
 
 \item{groups}{json object. See
-\href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.}
+\href{http://docs.handsontable.com/0.16.1/demo-grouping-and-ungrouping.html}{Grouping & ungrouping of rows and columns} for details.}
 
 \item{highlightRow}{logical enabling row highlighting for the selected
 cell}

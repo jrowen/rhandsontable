@@ -155,7 +155,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param groups json object. See
-#'  \href{http://handsontable.com/demo/grouping.html}{Grouping & ungrouping of rows and columns} for details.
+#'  \href{http://docs.handsontable.com/0.16.1/demo-grouping-and-ungrouping.html}{Grouping & ungrouping of rows and columns} for details.
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
@@ -207,7 +207,7 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 #' Handsontable widget
 #'
 #' Configure the options for the right-click context menu.  See
-#'  \href{http://handsontable.com/demo/demo-context-menu.html}{Context Menu} and
+#'  \href{http://docs.handsontable.com/0.16.1/demo-context-menu.html}{Context Menu} and
 #'  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
 #'  for details.
 #'
