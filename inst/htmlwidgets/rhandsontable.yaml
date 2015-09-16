@@ -19,7 +19,7 @@ dependencies:
    src: "htmlwidgets/lib/chroma"
    script: chroma.js
  - name: rhandsontable
-   version: 0.1.7
+   version: 0.2.2
    src: "htmlwidgets"
    stylesheet: rhandsontable.css
  - name: jquery
