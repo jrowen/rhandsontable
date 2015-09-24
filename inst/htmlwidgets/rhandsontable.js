@@ -15,7 +15,11 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
 
     // convert json to array
-    x.data = toArray(x.data);
+    x.data = toArray(x.data.map(function(d) {
+      return x.colHeaders.map(function(ky) {
+        return d[ky];
+      });
+    }));
 
     x.afterLoadData = this.updateHeatmap;
     x.beforeChangeRender = this.updateHeatmap;
