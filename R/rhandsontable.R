@@ -530,26 +530,26 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
            %min
            %max
            %choices
-           callback(true);
+           return callback(true);
          }, 500)
        }"
 
   if (!is.null(exclude))
     ex_str = paste0("if ([",
                     paste0(paste0("'", exclude, "'"), collapse = ","),
-                    "].indexOf(value) > -1) { callback(false); }")
+                    "].indexOf(value) > -1) { return callback(false); }")
   else
     ex_str = ""
   f = gsub("%exclude", ex_str, f)
 
   if (!is.null(min))
-    min_str = paste0("if (value < ", min, ") { callback(false); }")
+    min_str = paste0("if (value < ", min, ") { return callback(false); }")
   else
     min_str = ""
   f = gsub("%min", min_str, f)
 
   if (!is.null(max))
-    max_str = paste0("if (value > ", max, ") { callback(false); }")
+    max_str = paste0("if (value > ", max, ") { return callback(false); }")
   else
     max_str = ""
   f = gsub("%max", max_str, f)
@@ -557,7 +557,7 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
   if (!is.null(choices))
     chcs_str = paste0("if ([",
                       paste0(paste0("'", choices, "'"), collapse = ","),
-                      "].indexOf(value) == -1) { callback(false); }")
+                      "].indexOf(value) == -1) { return callback(false); }")
   else
     chcs_str = ""
   f = gsub("%choices", chcs_str, f)
@@ -595,16 +595,16 @@ hot_validate_character = function(hot, cols, choices,
   f = "function (value, callback) {
          setTimeout(function() {
            if (typeof(value) != 'string') {
-             callback(false);
+             return callback(false);
            }
            %choices
-           callback(false);
+           return callback(false);
          }, 500)
        }"
 
   ch_str = paste0("if ([",
                   paste0(paste0("'", choices, "'"), collapse = ","),
-                  "].indexOf(value) > -1) { callback(true); }")
+                  "].indexOf(value) > -1) { return callback(true); }")
   f = gsub("%choices", ch_str, f)
 
   for (x in cols)
