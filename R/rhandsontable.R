@@ -503,7 +503,7 @@ hot_cell = function(hot, row, col, comment = NULL) {
 #' @param max maximum value to accept
 #' @param choices a vector of acceptable numeric choices. It will be evaluated
 #'  after min and max if specified.
-#' @param exclude a vector or unacceptable numeric values
+#' @param exclude a vector of unacceptable numeric values
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @examples
