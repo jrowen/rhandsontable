@@ -122,12 +122,18 @@ HTMLWidgets.widget({
 
     x.afterCreateRow = function(ind, ct) {
 
-      if (HTMLWidgets.shinyMode)
+      if (HTMLWidgets.shinyMode) {
+        
+        for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
+          this.setDataAtCell(ind, i, this.params.columns[i].default);
+        }
+
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateRow", ind: ind, ct: ct },
           params: this.params
         });
+      }
     };
 
     x.afterRemoveRow = function(ind, ct) {
