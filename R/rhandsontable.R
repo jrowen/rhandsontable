@@ -676,7 +676,7 @@ renderer_heatmap = function(color_scale) {
 #' Shiny bindings for rhandsontable
 #'
 #' @param outputId output variable to read from
-#' @param width,height Must be a valid CSS unit in pixels
+#' @param width,height must be a valid CSS unit in pixels
 #'  or a number, which will be coerced to a string and have \code{"px"} appended.
 #' @seealso \code{\link{renderRHandsontable}}
 #' @export
@@ -689,9 +689,9 @@ rHandsontableOutput <- function(outputId, width = "100%", height = "100%"){
 #'
 #' Shiny bindings for rhandsontable
 #'
-#' @param expr An expression that generates threejs graphics.
-#' @param env The environment in which to evaluate \code{expr}.
-#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
+#' @param expr an expression that generates an rhandsontable.
+#' @param env the environment in which to evaluate \code{expr}.
+#' @param quoted is \code{expr} a quoted expression (with \code{quote()})? This
 #'  is useful if you want to save an expression in a variable.
 #' @seealso \code{\link{rHandsontableOutput}}, \code{\link{hot_to_r}}
 #' @export
