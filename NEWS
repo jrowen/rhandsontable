@@ -1,6 +1,8 @@
 rhandsontable 0.2.2
 -------------------------
 
+* Added support for default column values when new row added (#33)
+
 * Fixed bug that jumbled columns when some column names were numeric (#47)
 
 * Fixed a bug in the validation logic that was preventing the call background from changing to red for invalid entries when allowInvalid = TRUE (#48)
