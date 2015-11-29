@@ -18,17 +18,17 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: An R interface to the 'Handsontable' JavaScript library, which is a
-  minimalist Excel-like data grid editor.
+    minimalist Excel-like data grid editor.
 License: MIT + file LICENSE
 URL: http://jrowen.github.io/rhandsontable/
 BugReports: https://github.com/jrowen/rhandsontable/issues
 Imports:
-  jsonlite,
-  htmlwidgets (>= 0.3.3),
-  magrittr,
-  methods
+    jsonlite,
+    htmlwidgets (>= 0.3.3),
+    magrittr,
+    methods
 Suggests:
-  knitr
-Enhances:
-  shiny (>= 0.12)
+    knitr
+Enhances: shiny (>= 0.12)
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

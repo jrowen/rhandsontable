@@ -7,6 +7,7 @@
 #' @docType package
 #' @import htmlwidgets jsonlite
 #' @importFrom methods as
+#' @importFrom utils modifyList
 NULL
 
 #' rhandsontable exported operators
