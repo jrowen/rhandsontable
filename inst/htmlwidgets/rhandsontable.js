@@ -19,7 +19,7 @@ HTMLWidgets.widget({
       x.data = x.data;
     } else {
       x.data = toArray(x.data.map(function(d) {
-        return x.colHeaders.map(function(ky) {
+        return x.rColnames.map(function(ky) {
           return d[ky];
         });
       }));
