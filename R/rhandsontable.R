@@ -383,7 +383,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  Ctrl + C
 #' @param dateFormat character defining the date format. See
 #'  {https://github.com/moment/moment}{Moment.js} for details.
-#' @param default default column value for new rows (NA if not specified)
+#' @param default default column value for new rows (NA if not specified; shiny only)
 #' @param ... passed to handsontable
 #' @examples
 #' library(rhandsontable)
@@ -401,7 +401,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL, readOnly = NULL, validator = NULL,
                    allowInvalid = NULL, halign = NULL, valign = NULL,
-                   renderer = NULL, copyable = NULL, dateFormat = NULL, 
+                   renderer = NULL, copyable = NULL, dateFormat = NULL,
                    default = NULL, ...) {
   cols = hot$x$columns
   if (is.null(cols)) {

@@ -1,7 +1,7 @@
 rhandsontable 0.2.2
 -------------------------
 
-* Added support for default column values when new row added (#33)
+* Added support in shiny for default column values when new row added (#33)
 
 * Fixed bug that jumbled columns when some column names were numeric (#47, #52)
 

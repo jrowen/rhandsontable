@@ -19,7 +19,7 @@ hot_validate_numeric(hot, cols, min = NULL, max = NULL, choices = NULL,
 \item{choices}{a vector of acceptable numeric choices. It will be evaluated
 after min and max if specified.}
 
-\item{exclude}{a vector or unacceptable numeric values}
+\item{exclude}{a vector of unacceptable numeric values}
 
 \item{allowInvalid}{logical specifying whether invalid data will be
 accepted. Invalid data cells will be color red.}

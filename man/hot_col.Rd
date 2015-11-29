@@ -7,7 +7,7 @@
 hot_col(hot, col, type = NULL, format = NULL, source = NULL,
   strict = NULL, readOnly = NULL, validator = NULL, allowInvalid = NULL,
   halign = NULL, valign = NULL, renderer = NULL, copyable = NULL,
-  dateFormat = NULL, ...)
+  dateFormat = NULL, default = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -52,6 +52,8 @@ Ctrl + C}
 
 \item{dateFormat}{character defining the date format. See
 {https://github.com/moment/moment}{Moment.js} for details.}
+
+\item{default}{default column value for new rows (NA if not specified; shiny only)}
 
 \item{...}{passed to handsontable}
 }
