@@ -156,8 +156,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
-#' @param groups json object. See
-#'  \href{http://docs.handsontable.com/0.16.1/demo-grouping-and-ungrouping.html}{Grouping & ungrouping of rows and columns} for details.
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
@@ -176,12 +174,11 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @seealso \code{\link{rhandsontable}}
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
-                     customBorders = NULL, groups = NULL, highlightRow = NULL,
+                     customBorders = NULL, highlightRow = NULL,
                      highlightCol = NULL, enableComments = FALSE,
                      ...) {
   if (!is.null(stretchH)) hot$x$stretchH = stretchH
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
-  if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(enableComments)) hot$x$comments = enableComments
 
   if ((!is.null(highlightRow) && highlightRow) ||
@@ -642,6 +639,8 @@ hot_validate_character = function(hot, cols, choices,
 #' @export
 hot_heatmap = function(hot, cols, color_scale = c("#ED6D47", "#17F556"),
                        renderer = NULL) {
+  hot$x$isHeatmap = TRUE
+
   if (is.null(renderer)) {
     renderer = renderer_heatmap(color_scale)
   }
