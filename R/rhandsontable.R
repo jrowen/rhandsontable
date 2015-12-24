@@ -341,8 +341,8 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 
   if (!is.null(fixedColumnsLeft)) hot$x$fixedColumnsLeft = fixedColumnsLeft
 
-  for (x in hot$x$colHeaders)
-    hot = hot %>% hot_col(x, ...)
+  for (i in seq_len(length(hot$x$columns)))
+    hot = hot %>% hot_col(i, ...)
 
   hot
 }
