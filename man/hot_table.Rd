@@ -14,10 +14,10 @@ hot_table(hot, contextMenu = TRUE, stretchH = "none",
 \item{contextMenu}{logical enabling the right-click menu}
 
 \item{stretchH}{character describing column stretching. Options are 'all', 'right',
-and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.}
+and 'none'. See \href{http://docs.handsontable.com/0.16.1/demo-stretching.html}{Column stretching} for details.}
 
 \item{customBorders}{json object. See
-\href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.}
+\href{http://docs.handsontable.com/0.16.1/demo-custom-borders.html}{Custom borders} for details.}
 
 \item{highlightRow}{logical enabling row highlighting for the selected
 cell}

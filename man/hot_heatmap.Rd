@@ -22,7 +22,7 @@ to determine the cell colors. If missing,
 }
 \description{
 Add heatmap to table.  See
-\href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
+\href{http://docs.handsontable.com/0.16.1/demo-chromajs.html}{Heatmaps for values in a column}
 for details.
 }
 \examples{

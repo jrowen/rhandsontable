@@ -153,7 +153,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param hot rhandsontable object
 #' @param contextMenu logical enabling the right-click menu
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
-#'  and 'none'. See \href{http://docs.handsontable.com/0.15.1/demo-stretching.html}{Column stretching} for details.
+#'  and 'none'. See \href{http://docs.handsontable.com/0.16.1/demo-stretching.html}{Column stretching} for details.
 #' @param customBorders json object. See
 #'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param highlightRow logical enabling row highlighting for the selected
@@ -619,7 +619,7 @@ hot_validate_character = function(hot, cols, choices,
 #' Handsontable widget
 #'
 #' Add heatmap to table.  See
-#' \href{http://handsontable.com/demo/heatmaps.html}{Heatmaps for values in a column}
+#' \href{http://docs.handsontable.com/0.16.1/demo-chromajs.html}{Heatmaps for values in a column}
 #' for details.
 #'
 #' @param hot rhandsontable object
