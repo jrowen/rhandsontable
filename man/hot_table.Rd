@@ -5,8 +5,8 @@
 \title{Handsontable widget}
 \usage{
 hot_table(hot, contextMenu = TRUE, stretchH = "none",
-  customBorders = NULL, groups = NULL, highlightRow = NULL,
-  highlightCol = NULL, enableComments = FALSE, ...)
+  customBorders = NULL, highlightRow = NULL, highlightCol = NULL,
+  enableComments = FALSE, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -18,9 +18,6 @@ and 'none'. See \href{http://docs.handsontable.com/0.16.1/demo-stretching.html}{
 
 \item{customBorders}{json object. See
 \href{http://docs.handsontable.com/0.16.1/demo-custom-borders.html}{Custom borders} for details.}
-
-\item{groups}{json object. See
-\href{http://docs.handsontable.com/0.16.1/demo-grouping-and-ungrouping.html}{Grouping & ungrouping of rows and columns} for details.}
 
 \item{highlightRow}{logical enabling row highlighting for the selected
 cell}

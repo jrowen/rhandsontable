@@ -155,9 +155,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
 #'  and 'none'. See \href{http://docs.handsontable.com/0.16.1/demo-stretching.html}{Column stretching} for details.
 #' @param customBorders json object. See
-#'  \href{http://docs.handsontable.com/0.16.1/demo-custom-borders.html}{Custom borders} for details.
-#' @param groups json object. See
-#'  \href{http://docs.handsontable.com/0.16.1/demo-grouping-and-ungrouping.html}{Grouping & ungrouping of rows and columns} for details.
+#'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
@@ -176,12 +174,11 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @seealso \code{\link{rhandsontable}}
 #' @export
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
-                     customBorders = NULL, groups = NULL, highlightRow = NULL,
+                     customBorders = NULL, highlightRow = NULL,
                      highlightCol = NULL, enableComments = FALSE,
                      ...) {
   if (!is.null(stretchH)) hot$x$stretchH = stretchH
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
-  if (!is.null(groups)) hot$x$groups = groups
   if (!is.null(enableComments)) hot$x$comments = enableComments
 
   if ((!is.null(highlightRow) && highlightRow) ||
@@ -344,8 +341,8 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 
   if (!is.null(fixedColumnsLeft)) hot$x$fixedColumnsLeft = fixedColumnsLeft
 
-  for (x in hot$x$colHeaders)
-    hot = hot %>% hot_col(x, ...)
+  for (i in seq_len(length(hot$x$columns)))
+    hot = hot %>% hot_col(i, ...)
 
   hot
 }
@@ -642,6 +639,8 @@ hot_validate_character = function(hot, cols, choices,
 #' @export
 hot_heatmap = function(hot, cols, color_scale = c("#ED6D47", "#17F556"),
                        renderer = NULL) {
+  hot$x$isHeatmap = TRUE
+
   if (is.null(renderer)) {
     renderer = renderer_heatmap(color_scale)
   }

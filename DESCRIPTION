@@ -1,6 +1,6 @@
 Package: rhandsontable
 Title: Interface to the 'Handsontable.js' Library
-Version: 0.2.3
+Version: 0.3
 Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
                     role = c("aut", "cre", "cph")),
              person("Jeff", "Allen", role = c("ctb")),
@@ -15,7 +15,9 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("Moment.js contributors", role = c("ctb", "cph"), comment = "Moment.js library"),
              person("Bushell", "David", role = c("ctb", "cph"), comment = "Pikaday.js library"),
              person("jQuery Foundation", role = c("ctb", "cph"), comment = "jQuery.js library"),
-             person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"))
+             person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"),
+             person("Rohan", "Jon", role = c("ctb", "cph"), comment = "ZeroClipboard library"),
+             person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: An R interface to the 'Handsontable' JavaScript library, which is a
     minimalist Excel-like data grid editor.

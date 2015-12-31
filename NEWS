@@ -1,3 +1,8 @@
+rhandsontable 0.3
+-------------------------
+
+* Updated to handsontable 0.20.1. (see https://github.com/handsontable/handsontable/releases).  Row and column grouping no longer supported in open source version.
+
 rhandsontable 0.2.2
 -------------------------
 
