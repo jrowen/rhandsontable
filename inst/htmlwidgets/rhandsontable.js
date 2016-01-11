@@ -15,7 +15,7 @@ HTMLWidgets.widget({
   renderValue: function(el, x, instance) {
 
     // convert json to array
-    if (x.data[0].constructor === Array) {
+    if (x.data.length > 0 && x.data[0].constructor === Array) {
       x.data = x.data;
     } else {
       x.data = toArray(x.data.map(function(d) {
