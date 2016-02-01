@@ -20,3 +20,8 @@
 .datepicker {
   z-index: 1000 !important;
 }
+
+.handsontable table thead th {
+  white-space: pre-line;
+  /*max-width: /* enter here your max header width */
+}
