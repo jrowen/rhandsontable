@@ -1,6 +1,12 @@
 rhandsontable 0.3
 -------------------------
 
+* Fixed bug with comments (#66)
+
+
+rhandsontable 0.3
+-------------------------
+
 * Updated to handsontable 0.20.1. (see https://github.com/handsontable/handsontable/releases).  Row and column grouping no longer supported in open source version.
 
 * Fixed a bug that didn't return the changed column and row index when the table is sorted (#56)

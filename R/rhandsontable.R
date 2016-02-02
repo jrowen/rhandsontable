@@ -105,6 +105,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rClass = rClass,
     rColClasses = rColClasses,
     rColnames = colnames(data),
+    rDataDim = dim(data),
     selectCallback = selectCallback,
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
@@ -135,11 +136,12 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
   hot = hot %>% hot_table(enableComments = !is.null(comments), ...)
 
   if (!is.null(comments)) {
-    inds = which(!is.na(comments), arr.ind = TRUE)
+    inds = as.data.frame(which(!is.na(comments), arr.ind = TRUE))
     for (i in 1:nrow(inds))
       hot = hot %>%
-        hot_cell(inds[i, "row"], inds[i, "col"],
-                 comment = comments[inds[i, "row"], inds[i, "col"]])
+        hot_cell(inds$row[i], inds$col[i],
+                 comment = comments[inds$row[i], inds$col[i]])
+    #hot$x$rComments = jsonlite::toJSON(comments)
   }
 
   hot
@@ -248,58 +250,63 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
   else
     opts = hot$x$contextMenu$items
 
-  sep_ct = 1
-  add_opts = function(new, old, sep = TRUE, val = list()) {
-    new_ = lapply(new, function(x) val)
+  add_opts = function(new, old, val = list()) {
+    new_ = lapply(new, function(x) {
+      if (grepl("^hsep", x) && !is.null(val))
+        return(list(name = "---------"))
+      else
+        return(val)
+    })
     names(new_) = new
-    if (length(old) > 0 && sep) {
-      old[[paste0("hsep", sep_ct)]] = list(name = "---------")
-      sep_ct <<- sep_ct + 1
-      modifyList(old, new_)
-    } else if (!sep) {
+    if (length(old) > 0) {
       modifyList(old, new_)
     } else {
       new_
     }
   }
   remove_opts = function(new) {
-    add_opts(new, opts, sep = FALSE, val = NULL)
+    add_opts(new, opts, val = NULL)
   }
 
   if (!is.null(allowRowEdit) && allowRowEdit)
-    opts =  add_opts(c("row_above", "row_below", "remove_row"), opts)
+    opts =  add_opts(c("hsep1", "row_above", "row_below", "remove_row"), opts)
   else
-    opts =  remove_opts(c("row_above", "row_below", "remove_row"))
+    opts =  remove_opts(c("hsep1", "row_above", "row_below", "remove_row"))
 
   if (!is.null(allowColEdit) && allowColEdit)
-    opts = add_opts(c("col_left", "col_right", "remove_col"), opts)
+    opts = add_opts(c("hsep2", "col_left", "col_right", "remove_col"), opts)
   else
-    opts =  remove_opts(c("col_left", "col_right", "remove_col"))
+    opts =  remove_opts(c("hsep2", "col_left", "col_right", "remove_col"))
 
-  opts = add_opts(c("undo", "redo"), opts)
+  opts = add_opts(c("hsep3", "undo", "redo"), opts)
 
-  opts = add_opts(c("alignment"), opts)
+  opts = add_opts(c("hsep4", "alignment"), opts)
 
   if (!is.null(allowReadOnly) && allowReadOnly)
-    opts = add_opts(c("make_read_only"), opts)
+    opts = add_opts(c("hsep5", "make_read_only"), opts)
   else
-    opts =  remove_opts(c("make_read_only"))
+    opts =  remove_opts(c("hsep5", "make_read_only"))
 
   if (!is.null(allowComments) && allowComments)
-    opts = add_opts(c("commentsAddEdit", "commentsRemove"), opts)
+    opts = add_opts(c("hsep6", "commentsAddEdit", "commentsRemove"), opts)
   else
-    opts =  remove_opts(c("commentsAddEdit", "commentsRemove"))
+    opts =  remove_opts(c("hsep6", "commentsAddEdit", "commentsRemove"))
 
   if (!is.null(allowCustomBorders) && allowCustomBorders)
-    opts = add_opts(c("borders"), opts)
+    opts = add_opts(c("hsep7", "borders"), opts)
   else
-    opts =  remove_opts(c("borders"))
+    opts =  remove_opts(c("hsep7", "borders"))
 
   if (!is.null(customOpts)) {
     opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
     sep_ct = sep_ct + 1
     opts = modifyList(opts, customOpts)
   }
+
+  if (grepl("^hsep", names(opts)[1]))
+    opts = opts[-1]
+  if (grepl("^hsep", names(opts)[length(opts)]))
+    opts = opts[-length(opts)]
 
   hot$x$contextMenu = list(items = opts)
 
@@ -489,8 +496,14 @@ hot_cell = function(hot, row, col, comment = NULL) {
 
   hot$x$cell = c(hot$x$cell, list(cell))
 
-  if (is.null(hot$x$comments))
-    hot = hot %>% hot_table(comments = TRUE)
+  hot = hot %>% hot_table(enableComments = TRUE)
+#   if (is.null(hot$x$rComments)) {
+#     cmts = matrix(nrow = hot$x$rDataDim[1], ncol = hot$x$rDataDim[2])
+#   } else {
+#     cmts = jsonlite::fromJSON(hot$x$rComments)
+#   }
+#   cmts[row, col] = comment
+#   hot$x$rComments = jsonlite::toJSON(cmts)
 
   hot
 }
