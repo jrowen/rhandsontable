@@ -9,6 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
 ```{r echo = FALSE}
 library(rhandsontable)
 library(knitr)
@@ -42,7 +43,7 @@ DF = data.frame(integer = 1:10,
                    date = seq(from = Sys.Date(), by = "days", length.out = 10),
                    stringsAsFactors = FALSE)
 
-rhandsontable(DF, width = 550, height = 300) %>%
+rhandsontable(DF, width = 600, height = 300) %>%
   hot_col("factor_allow", allowInvalid = TRUE)
 ```
 
@@ -146,7 +147,7 @@ DF = data.frame(
 )
 
 rhandsontable(DF, allowedTags = "<em><b><strong><a><big>", 
-              width = 800, height = 400, rowHeaders = FALSE) %>%
+              width = 800, height = 450, rowHeaders = FALSE) %>%
   hot_cols(colWidths = c(200, 200, 200, 80)) %>%
   hot_col(1:2, renderer = "html") %>%
   hot_col(1:3, renderer = htmlwidgets::JS("safeHtmlRenderer")) %>%
@@ -447,7 +448,7 @@ MAT = matrix(runif(100, -1, 1), nrow = 10,
              dimnames = list(LETTERS[1:10], LETTERS[1:10]))
 diag(MAT) = 1
 MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
-rhandsontable(MAT, readOnly = TRUE, width = 650, height = 300) %>%
+rhandsontable(MAT, readOnly = TRUE, width = 750, height = 300) %>%
   hot_cols(renderer = "
            function (instance, td, row, col, prop, value, cellProperties) {
              Handsontable.renderers.TextRenderer.apply(this, arguments);
