@@ -8,6 +8,7 @@ apt_packages:
 
 r_packages:
   - shiny
+  - rmarkdown
 
 notifications:
   email:
