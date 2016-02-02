@@ -1,4 +1,15 @@
-sudo: required
 language: r
-github_packages:
-  - rmarkdown
+
+warnings_are_errors: false
+sudo: required
+
+apt_packages:
+  - libv8-dev
+
+r_packages:
+  - shiny
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
