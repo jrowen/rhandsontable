@@ -297,6 +297,7 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
   else
     opts =  remove_opts(c("hsep7", "borders"))
 
+  sep_ct = 20
   if (!is.null(customOpts)) {
     opts[[paste0("hsep", sep_ct)]] = list(name = "---------")
     sep_ct = sep_ct + 1

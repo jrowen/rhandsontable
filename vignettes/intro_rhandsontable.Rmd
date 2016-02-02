@@ -13,7 +13,8 @@ vignette: >
 library(rhandsontable)
 library(knitr)
 
-opts_knit$set(warning = FALSE, error = FALSE, message = FALSE, cache = FALSE)
+opts_knit$set(warning = FALSE, error = FALSE, message = FALSE, cache = FALSE,
+              fig.width=7, fig.height=3)
 ```
 
 ## Introduction
@@ -29,7 +30,7 @@ The table includes support for numeric, logical, character and Date types.  Logi
 
 rhandsontable attempts to map R classes to an appropriate handsontable type.  Factors will be mapped to `dropdown`, with the choices specified by `level` and `allowInvalid` set to `FALSE`.  To allow new levels, set `allowInvalid` to `TRUE` (using `hot_col`; it may also be desirable to set `strict` to `FALSE`).  When running in `shiny`, using `hot_to_r` will preserve custom factor ordering, and if new levels are allowed, they will be added to the end.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(integer = 1:10,
                    numeric = rnorm(10),
                    logical = rep(TRUE, 10), 
@@ -41,13 +42,13 @@ DF = data.frame(integer = 1:10,
                    date = seq(from = Sys.Date(), by = "days", length.out = 10),
                    stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_col("factor_allow", allowInvalid = TRUE)
 ```
 
 To improve readability, `NA` values will be displayed as blank cells.  This requires converting columns containing `NA` to characters, and in the case of factors and Dates, may not display the data in the desired format.  It may be beneficial to concert these type of columns to character before passing to `rhandsontable`.
 
-```{r fig.height = 3}
+```{r}
 DF_na = data.frame(integer = c(NA, 2:10), 
                    logical = c(NA, rep(TRUE, 9)), 
                    character = c(NA, LETTERS[1:9]),
@@ -60,21 +61,21 @@ DF_na$factor_ch = as.character(DF_na$factor)
 DF_na$date_ch = c(NA, as.character(seq(from = Sys.Date(), by = "days", 
                                        length.out = 9)))
 
-rhandsontable(DF_na)
+rhandsontable(DF_na, width = 550, height = 300)
 ```
 
 ### Dropdown / Autocomplete
 
 To control character column values, the column type can be specified as `dropdown` or `autocomplete`.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
 # try updating big to a value not in the dropdown
-rhandsontable(DF, rowHeaders = NULL) %>%
+rhandsontable(DF, rowHeaders = NULL, width = 550, height = 300) %>%
   hot_col(col = "big", type = "dropdown", source = LETTERS) %>%
   hot_col(col = "small", type = "autocomplete", source = letters,
           strict = FALSE)
@@ -84,13 +85,13 @@ rhandsontable(DF, rowHeaders = NULL) %>%
 
 A column can also be specified as a `password` type.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_col("small", "password")
 ```
 
@@ -98,7 +99,7 @@ rhandsontable(DF) %>%
 
 New in version 0.2, [sparkline.js](http://omnipotent.net/jquery.sparkline/) charts can be added to the table.  Thanks to the sparkline package and Ramnath Vaidyanathan for inspiration.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
@@ -111,7 +112,7 @@ DF$chart = c(sapply(1:5,
                     function(x) jsonlite::toJSON(list(values=rnorm(10),
                                                       options = list(type = "line")))))
 
-rhandsontable(DF, rowHeaders = NULL) %>%
+rhandsontable(DF, rowHeaders = NULL, width = 550, height = 300) %>%
   hot_col("chart", renderer = htmlwidgets::JS("renderSparkline"))
 ```
 
@@ -145,7 +146,7 @@ DF = data.frame(
 )
 
 rhandsontable(DF, allowedTags = "<em><b><strong><a><big>", 
-              width = 800, height = 500, rowHeaders = FALSE) %>%
+              width = 800, height = 400, rowHeaders = FALSE) %>%
   hot_cols(colWidths = c(200, 200, 200, 80)) %>%
   hot_col(1:2, renderer = "html") %>%
   hot_col(1:3, renderer = htmlwidgets::JS("safeHtmlRenderer")) %>%
@@ -186,13 +187,13 @@ To disable the context menu, set `contextMenu = FALSE` in `hot_table` (or `rhand
 
 By default a user can add or remove table rows and columns, but this functionality can be disabled.  Note that Handsontable does not allow column be added or deleted to the table if column types are defined (i.e. `useTypes == TRUE` in `rhandsontable`).
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
 ```
 
@@ -204,11 +205,11 @@ The `customOpts` parameter of `hot_context_menu` can be used to add custom funct
 
 This example illustrates how to add an option to export the table to a csv file.
 
-```{r fig.height = 3}
+```{r}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
-rhandsontable(MAT) %>%
+rhandsontable(MAT, width = 550, height = 300) %>%
   hot_context_menu(
     customOpts = list(
       csv = list(name = "Download to CSV",
@@ -231,7 +232,7 @@ rhandsontable(MAT) %>%
 
 This example illustrates how to enable the search functionality in Handsontable.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10,
                 bool = TRUE,
                 big = LETTERS[1:10],
@@ -239,7 +240,7 @@ DF = data.frame(val = 1:10,
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF, search = TRUE) %>%
+rhandsontable(DF, search = TRUE, width = 550, height = 300) %>%
   hot_context_menu(
     customOpts = list(
       search = list(name = "Search",
@@ -258,11 +259,11 @@ Future enhancements will look to expand export options.
 
 Numeric columns are formatted using the [numeral.js](http://numeraljs.com/) library.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(int = 1:10, float = rnorm(10), cur = rnorm(10) * 1E5,
                 lrg = rnorm(10) * 1E8, pct = rnorm(10))
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_col("float", format = "0.0") %>%
   hot_col("cur", format = "$0,0.00") %>%
   hot_col("lrg", format = "0a") %>%
@@ -273,13 +274,13 @@ rhandsontable(DF) %>%
 
 The whole table and individual columns can to set to `readOnly` to prevent the user from making changes.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF, readOnly = TRUE) %>%
+rhandsontable(DF, readOnly = TRUE, width = 550, height = 300) %>%
   hot_col("val", readOnly = FALSE)
 ```
 
@@ -287,13 +288,13 @@ rhandsontable(DF, readOnly = TRUE) %>%
 
 Column sorting can be enabled; sorting only impacts the widget and will not reorder the original data set.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_cols(columnSorting = TRUE)
 ```
 
@@ -301,13 +302,14 @@ rhandsontable(DF) %>%
 
 With larger tables it my be desirable to highlight the row and column for a selected cell.  
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+# click on a cell to see the highlighting
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_table(highlightCol = TRUE, highlightRow = TRUE)
 ```
 
@@ -330,51 +332,50 @@ The table can be streched to the full width by passing `stretchH = "all"` to `rh
 
 For larger data sets, (multiple) top rows and left columns can be frozen.
 
-```{r fig.height = 3}
-MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
-                                                   letters[1:5]))
+```{r}
+MAT = matrix(rnorm(26 * 26), nrow = 26, dimnames = list(LETTERS, letters))
 
-rhandsontable(MAT) %>%
+# scroll through the table to see the fixed row and column
+rhandsontable(MAT, width = 550, height = 300) %>%
   hot_cols(fixedColumnsLeft = 1) %>%
   hot_rows(fixedRowsTop = 1)
 ```
 
 ## Cell Comments
 
-Comments (hover) can also be added to individual cells and will appear as red flags in the upper right of the cell.  Comments can also be added via the right-click context menu, but these updates will not currently be retained by shiny.
+Comments (hover) can also be added to individual cells and will appear as red flags in the upper right of the cell. 
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_cell(1, 1, "Test comment")
 ```
 
-## Grouping
+Additionally, comments can be added via `data.frame` or `matrix`.
 
-It is also possible to group rows and columns.  Note that grouping is not yet supported in markdown documents.
+```{r}
+MAT_comments = matrix(ncol = ncol(DF), nrow = nrow(DF))
+MAT_comments[1, 1] = "Test comment"
+MAT_comments[2, 2] = "Another test comment"
 
-```{r fig.height = 5, results = "hide"}
-MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
-                                                   letters[1:5]))
-
-rhandsontable(MAT) %>%
-  hot_table(groups = list(list(cols = c(0, 1)),
-                          list(rows = c(0, 1))))
+rhandsontable(DF, comments = MAT_comments, width = 550, height = 300)
 ```
+
+Finally, comments can also be added via the right-click context menu, but these updates will not currently be retained by shiny.
 
 ## Borders
 
 Custom borders can be drawn around cells to highlight specific items.  Borders can also be added via the right-click context menu, but these updates will not currently be retained by shiny.
 
-```{r fig.height = 3}
+```{r}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
-rhandsontable(MAT) %>%
+rhandsontable(MAT, width = 550, height = 300) %>%
   hot_table(customBorders = list(list(
     range = list(from = list(row = 1, col = 1),
                  to = list(row = 2, col = 2)),
@@ -393,14 +394,14 @@ Pre-defined validation can be added for numeric columns in two ways:
 * specify a min and max and any values within the range to exclude
 * similar to a `dropdown` column, specify allowed values
 
-```{r fig.height = 3}
+```{r}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
-rhandsontable(MAT * 10) %>%
+rhandsontable(MAT * 10, width = 550, height = 300) %>%
   hot_validate_numeric(col = 1, min = -50, max = 50, exclude = 40)
 
-rhandsontable(MAT * 10) %>%
+rhandsontable(MAT * 10, width = 550, height = 300) %>%
   hot_validate_numeric(col = 1, choices = c(10, 20, 40))
 ```
 
@@ -408,13 +409,13 @@ rhandsontable(MAT * 10) %>%
 
 For character columns, a vector of allowed options can be specified.  A more user-friendly approach may be to use a `dropdown` column with `strict = TRUE`.
 
-```{r fig.height = 3}
+```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 small = letters[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF) %>%
+rhandsontable(DF, width = 550, height = 300) %>%
   hot_validate_character(col = "big", choices = LETTERS[1:10])
 ```
 
@@ -422,12 +423,12 @@ rhandsontable(DF) %>%
 
 It is also possible to create a custom validation function in JavaScript.
 
-```{r fig.height = 3}
+```{r}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
 # try to update any cell to 0
-rhandsontable(MAT * 10) %>%
+rhandsontable(MAT * 10, width = 550, height = 300) %>%
   hot_cols(validator = "
            function (value, callback) {
             setTimeout(function(){
@@ -441,12 +442,12 @@ rhandsontable(MAT * 10) %>%
 
 Conditional formatting can also be specified via custom JavaScript function.  Future enhancements will look to simplify this interface.
 
-```{r fig.height = 3, fig.width = 8}
+```{r, fig.width = 8}
 MAT = matrix(runif(100, -1, 1), nrow = 10,
              dimnames = list(LETTERS[1:10], LETTERS[1:10]))
 diag(MAT) = 1
 MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
-rhandsontable(MAT, readOnly = TRUE) %>%
+rhandsontable(MAT, readOnly = TRUE, width = 650, height = 300) %>%
   hot_cols(renderer = "
            function (instance, td, row, col, prop, value, cellProperties) {
              Handsontable.renderers.TextRenderer.apply(this, arguments);
@@ -467,11 +468,11 @@ rhandsontable(MAT, readOnly = TRUE) %>%
 
 The [chroma.js](http://old.driven-by-data.net/about/chromajs/) library can be used to turn the table into a heatmap.
 
-```{r fig.height = 3}
+```{r}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
-rhandsontable(MAT) %>%
+rhandsontable(MAT, width = 550, height = 300) %>%
   hot_heatmap()
 ```
 
