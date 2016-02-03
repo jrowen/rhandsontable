@@ -30,7 +30,8 @@ Imports:
     magrittr,
     methods
 Suggests:
-    knitr
+    knitr,
+    rmarkdown
 Enhances: shiny (>= 0.12)
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
