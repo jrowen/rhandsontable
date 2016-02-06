@@ -28,10 +28,12 @@ Imports:
     jsonlite,
     htmlwidgets (>= 0.3.3),
     magrittr,
-    methods
+    methods,
+    shiny (>= 0.13),
+    miniUI (>= 0.1.1),
+    rstudioapi (>= 0.5)
 Suggests:
     knitr,
     rmarkdown
-Enhances: shiny (>= 0.12)
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
