@@ -5,9 +5,11 @@
 #' For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
 #' @name rhandsontable-package
 #' @docType package
-#' @import htmlwidgets jsonlite
+#' @import htmlwidgets jsonlite shiny
 #' @importFrom methods as
 #' @importFrom utils modifyList
+#' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
+#' @importFrom rstudioAPI insertText
 NULL
 
 #' rhandsontable exported operators
