@@ -29,23 +29,23 @@ editAddin <- function() {
   fname = gsub("\\\\", "/", tempfile())
 
   # Generate UI for the gadget.
-  ui <- miniPage(
-    gadgetTitleBar("Edit a data.frame"),
-    miniContentPanel(
+  ui <- miniUI::miniPage(
+    miniUI::gadgetTitleBar("Edit a data.frame"),
+    miniUI::miniContentPanel(
       stableColumnLayout(
-        textInput("data", "Data", value = defaultData)
+        shiny::textInput("data", "Data", value = defaultData)
       ),
-      uiOutput("pending"),
+      shiny::uiOutput("pending"),
       rHandsontableOutput("hot")
     )
   )
 
   # Server code for the gadget.
   server <- function(input, output, session) {
-    values = reactiveValues()
+    values = shiny::reactiveValues()
     setHot = function(x) values[["hot"]] = x
 
-    reactiveData <- reactive({
+    reactiveData <- shiny::reactive({
 
       # Collect inputs.
       dataString <- input$data
@@ -63,7 +63,7 @@ editAddin <- function() {
       data
     })
 
-    output$pending <- renderUI({
+    output$pending <- shiny::renderUI({
       data <- reactiveData()
       if (isErrorMessage(data))
         h4(style = "color: #AA7732;", data$message)
@@ -74,7 +74,7 @@ editAddin <- function() {
       if (isErrorMessage(data))
         return(NULL)
 
-      if (is.null(inout$hot))
+      if (is.null(input$hot))
         DF = data
       else
         DF = hot_to_r(input$hot)
@@ -85,7 +85,7 @@ editAddin <- function() {
     })
 
     # Listen for 'done'.
-    observeEvent(input$done, {
+    shiny::observeEvent(input$done, {
 
       # Emit a call to reload using rds
       if (nzchar(input$data) && !is.null(values[["hot"]])) {
@@ -94,13 +94,13 @@ editAddin <- function() {
         rstudioapi::insertText(Inf, text = code)
       }
 
-      invisible(stopApp())
+      invisible(shiny::stopApp())
     })
   }
 
   # Use a modal dialog as a viewr.
-  viewer <- dialogViewer("Edit", width = 1000, height = 800)
-  runGadget(ui, server, viewer = viewer)
+  viewer <- shiny::dialogViewer("Edit", width = 1000, height = 800)
+  shiny::runGadget(ui, server, viewer = viewer)
 
 }
 
@@ -110,9 +110,9 @@ stableColumnLayout <- function(...) {
   n <- length(dots)
   width <- 12 / n
   class <- sprintf("col-xs-%s col-md-%s", width, width)
-  fluidRow(
+  shiny::fluidRow(
     lapply(dots, function(el) {
-      div(class = class, el)
+      shiny::div(class = class, el)
     })
   )
 }
