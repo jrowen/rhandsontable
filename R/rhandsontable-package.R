@@ -9,7 +9,7 @@
 #' @importFrom methods as
 #' @importFrom utils modifyList
 #' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
-#' @importFrom rstudioAPI insertText
+#' @importFrom rstudioapi insertText
 NULL
 
 #' rhandsontable exported operators
