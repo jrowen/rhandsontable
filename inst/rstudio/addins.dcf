@@ -1,4 +1,4 @@
 Name: Edit a Data Frame
 Description: Interactively edit a data frame.
-Binding: editDfAddin
+Binding: editAddin
 Interactive: true
