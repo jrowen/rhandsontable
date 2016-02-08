@@ -26,7 +26,7 @@ editAddin <- function() {
   defaultData <- text
 
   # create a temp file
-  fname = tempfile()
+  fname = gsub("\\\\", "/", tempfile())
 
   # Generate UI for the gadget.
   ui <- miniPage(
@@ -36,7 +36,7 @@ editAddin <- function() {
         textInput("data", "Data", value = defaultData)
       ),
       uiOutput("pending"),
-      rHandsontableOutput("output")
+      rHandsontableOutput("hot")
     )
   )
 
@@ -69,12 +69,15 @@ editAddin <- function() {
         h4(style = "color: #AA7732;", data$message)
     })
 
-    output$output <- renderRHandsontable({
+    output$hot <- renderRHandsontable({
       data <- reactiveData()
       if (isErrorMessage(data))
         return(NULL)
 
-      DF = hot_to_r(input$hot)
+      if (is.null(inout$hot))
+        DF = data
+      else
+        DF = hot_to_r(input$hot)
 
       setHot(DF)
       rhandsontable(DF) %>%
@@ -84,16 +87,11 @@ editAddin <- function() {
     # Listen for 'done'.
     observeEvent(input$done, {
 
-      # Emit a call to reload a rds
-      if (nzchar(input$data)) {
-        code <- paste("subset(", input$data, ", ", input$subset, ")", sep = "")
-        rstudioapi::insertText(text = code)
-      }
-
+      # Emit a call to reload using rds
       if (nzchar(input$data) && !is.null(values[["hot"]])) {
         saveRDS(values[["hot"]], fname)
-        code <- paste(input$data, " = readRDS(", fname, ")", sep = "")
-        rstudioapi::insertText(text = code)
+        code <- paste(input$data, " = readRDS('", fname, "')", sep = "")
+        rstudioapi::insertText(Inf, text = code)
       }
 
       invisible(stopApp())
@@ -104,4 +102,28 @@ editAddin <- function() {
   viewer <- dialogViewer("Edit", width = 1000, height = 800)
   runGadget(ui, server, viewer = viewer)
 
+}
+
+# these functions come from rstudio/addinexamples
+stableColumnLayout <- function(...) {
+  dots <- list(...)
+  n <- length(dots)
+  width <- 12 / n
+  class <- sprintf("col-xs-%s col-md-%s", width, width)
+  fluidRow(
+    lapply(dots, function(el) {
+      div(class = class, el)
+    })
+  )
+}
+
+isErrorMessage <- function(object) {
+  inherits(object, "error_message")
+}
+
+errorMessage <- function(type, message) {
+  structure(
+    list(type = type, message = message),
+    class = "error_message"
+  )
 }
