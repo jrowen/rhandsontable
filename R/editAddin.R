@@ -91,7 +91,7 @@ editAddin <- function() {
       if (nzchar(input$data) && !is.null(values[["hot"]])) {
         saveRDS(values[["hot"]], fname)
         code <- paste(input$data, " = readRDS('", fname, "')", sep = "")
-        rstudioapi::insertText(Inf, text = code)
+        rstudioapi::sendToConsole(code)
       }
 
       invisible(shiny::stopApp())
