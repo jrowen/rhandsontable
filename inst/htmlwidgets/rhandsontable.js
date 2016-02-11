@@ -53,10 +53,10 @@ HTMLWidgets.widget({
 
   resize: function(el, width, height, instance) {
 
-    instance.hot.updateSettings({ width: width,
-                                  height: height
-    });
-    instance.hot.render();
+    //instance.hot.updateSettings({ width: width,
+    //                              height: height
+    //});
+    //instance.hot.render();
 
   },
 
