@@ -3,6 +3,7 @@ rhandsontable 0.3
 
 * Fixed bug with comments (#66)
 
+* Fixed bug with single column table (#69)
 
 rhandsontable 0.3
 -------------------------
