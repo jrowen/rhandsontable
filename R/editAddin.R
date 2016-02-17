@@ -33,7 +33,11 @@ editAddin <- function() {
     miniUI::gadgetTitleBar("Edit a data.frame"),
     miniUI::miniContentPanel(
       stableColumnLayout(
-        shiny::textInput("data", "Data", value = defaultData)
+        shiny::textInput("data", "Data", value = defaultData),
+        shiny::radioButtons("outType", "Output type",
+                            choices = c("Update original data" = "update",
+                                        "Print updates to script (no update)" = "print")
+        )
       ),
       shiny::uiOutput("pending"),
       rHandsontableOutput("hot")
@@ -87,11 +91,16 @@ editAddin <- function() {
     # Listen for 'done'.
     shiny::observeEvent(input$done, {
 
-      # Emit a call to reload using rds
-      if (nzchar(input$data) && !is.null(values[["hot"]])) {
-        saveRDS(values[["hot"]], fname)
-        code <- paste(input$data, " = readRDS('", fname, "')", sep = "")
-        rstudioapi::sendToConsole(code)
+      if (input$outType == "print") {
+        rslt <- capture.output(dput(values[["hot"]]))
+        rstudioapi::insertText(Inf, paste0(input$data, " = ",
+                                           paste(rslt, collapse = "\n")))
+      } else {
+        if (nzchar(input$data) && !is.null(values[["hot"]])) {
+          saveRDS(values[["hot"]], fname)
+          code <- paste(input$data, " = readRDS('", fname, "')", sep = "")
+          rstudioapi::sendToConsole(code)
+        }
       }
 
       invisible(shiny::stopApp())
