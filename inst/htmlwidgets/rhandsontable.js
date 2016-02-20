@@ -30,6 +30,10 @@ HTMLWidgets.widget({
       x.beforeChangeRender = this.updateHeatmap;
     }
 
+    if (x.overflow) {
+      $("#" + el.id).css('overflow', x.overflow);
+    }
+
     this.afterChangeCallback(x);
     this.afterCellMetaCallback(x);
     this.afterRowAndColChange(x);

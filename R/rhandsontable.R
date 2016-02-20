@@ -163,6 +163,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param highlightCol logical enabling column highlighting for the
 #'  selected cell
 #' @param enableComments logical enabling comments in the table
+#' @param overflow character setting the css overflow behavior. Options are
+#'  auto (default), hidden and visible
 #' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
 #' @examples
 #' library(rhandsontable)
@@ -178,10 +180,11 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
                      customBorders = NULL, highlightRow = NULL,
                      highlightCol = NULL, enableComments = FALSE,
-                     ...) {
+                     overflow = NULL, ...) {
   if (!is.null(stretchH)) hot$x$stretchH = stretchH
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(enableComments)) hot$x$comments = enableComments
+  if (!is.null(overflow)) hot$x$overflow = overflow
 
   if ((!is.null(highlightRow) && highlightRow) ||
       (!is.null(highlightCol) && highlightCol))

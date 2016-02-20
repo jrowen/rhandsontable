@@ -6,7 +6,7 @@
 \usage{
 hot_table(hot, contextMenu = TRUE, stretchH = "none",
   customBorders = NULL, highlightRow = NULL, highlightCol = NULL,
-  enableComments = FALSE, ...)
+  enableComments = FALSE, overflow = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -26,6 +26,9 @@ cell}
 selected cell}
 
 \item{enableComments}{logical enabling comments in the table}
+
+\item{overflow}{character setting the css overflow behavior. Options are
+auto (default), hidden and visible}
 
 \item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
 }

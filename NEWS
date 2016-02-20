@@ -5,6 +5,8 @@ rhandsontable 0.3
 
 * Fixed bug with single column table (#69)
 
+* Added overflow parameter to hot_table
+
 rhandsontable 0.3
 -------------------------
 
