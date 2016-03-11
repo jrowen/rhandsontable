@@ -1,4 +1,4 @@
-rhandsontable 0.3
+rhandsontable 0.3.1
 -------------------------
 
 * Fixed bug with comments (#66)
@@ -7,10 +7,12 @@ rhandsontable 0.3
 
 * Added overflow parameter to hot_table
 
+* Updates to handsontable 0.23.0 (see https://github.com/handsontable/handsontable/releases).
+
 rhandsontable 0.3
 -------------------------
 
-* Updated to handsontable 0.20.1. (see https://github.com/handsontable/handsontable/releases).  Row and column grouping no longer supported in open source version.
+* Updated to handsontable 0.20.1 (see https://github.com/handsontable/handsontable/releases).  Row and column grouping no longer supported in open source version.
 
 * Fixed a bug that didn't return the changed column and row index when the table is sorted (#56)
 
