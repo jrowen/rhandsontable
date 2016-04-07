@@ -19,10 +19,7 @@ For the latest development version use
 ```R
 devtools::install_github("jrowen/rhandsontable")
 ```
-<sup>Beta</sup>Test out the experimental RStudio Addin, which was inspired by the Subset Addin from [rstudio/addinexamples](https://github.com/rstudio/addinexamples). Please file an issue if you run into problems or have suggestions.
-```R
-devtools::install_github("jrowen/rhandsontable", ref="addin")
-```
+<sup><b>NEW </b></sup>Test out the experimental RStudio Addin, which was inspired by the Subset Addin from [rstudio/addinexamples](https://github.com/rstudio/addinexamples).  It's only currently available in the development version.  Please file an issue if you run into problems or have suggestions.
 
 A simple example
 ```R
