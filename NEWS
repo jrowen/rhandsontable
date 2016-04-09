@@ -3,6 +3,10 @@ rhandsontable 0.3.1.1
 
 * Updates to handsontable 0.24.1 (see https://github.com/handsontable/handsontable/releases).
 
+* Added Edit a Data Frame addin
+
+* Added a language parameter to hot_col that supports changing the column formatting locale
+
 rhandsontable 0.3.1
 -------------------------
 
