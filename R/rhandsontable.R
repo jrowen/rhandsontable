@@ -392,6 +392,8 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @param dateFormat character defining the date format. See
 #'  {https://github.com/moment/moment}{Moment.js} for details.
 #' @param default default column value for new rows (NA if not specified; shiny only)
+#' @param language locale passed to \href{http://numeraljs.com}{Numeral.js};
+#'  default is 'en'.
 #' @param ... passed to handsontable
 #' @examples
 #' library(rhandsontable)
@@ -410,7 +412,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
                    strict = NULL, readOnly = NULL, validator = NULL,
                    allowInvalid = NULL, halign = NULL, valign = NULL,
                    renderer = NULL, copyable = NULL, dateFormat = NULL,
-                   default = NULL, ...) {
+                   default = NULL, language = NULL, ...) {
   cols = hot$x$columns
   if (is.null(cols)) {
     # create a columns list
@@ -432,6 +434,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
     if (!is.null(copyable)) cols[[i]]$copyable = copyable
     if (!is.null(default)) cols[[i]]$default = default
+    if (!is.null(language)) cols[[i]]$language = language
 
     if (!is.null(validator)) cols[[i]]$validator = JS(validator)
     if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid

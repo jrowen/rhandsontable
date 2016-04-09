@@ -5,6 +5,10 @@ dependencies:
    src: "htmlwidgets/lib/handsontable"
    script: handsontable.full.min.js
    stylesheet: handsontable.full.min.css
+ - name: numeral
+   version: 1.5.3
+   src: "htmlwidgets/lib/numeral"
+   script: languages.js
  - name: chroma
    version: 1.1.0
    src: "htmlwidgets/lib/chroma"
