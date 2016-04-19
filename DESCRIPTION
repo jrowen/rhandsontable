@@ -27,14 +27,13 @@ BugReports: https://github.com/jrowen/rhandsontable/issues
 Imports:
     jsonlite,
     htmlwidgets (>= 0.3.3),
-    magrittr,
-    methods,
+    magrittr
+Suggests:
+    knitr,
+    rmarkdown,
     shiny (>= 0.13),
     miniUI (>= 0.1.1),
     rstudioapi (> 0.5),
     htmltools
-Suggests:
-    knitr,
-    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
