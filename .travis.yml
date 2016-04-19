@@ -1,8 +1,15 @@
 language: r
-sudo: true
 cache: packages
+
+r:
+  - oldrel
+  - release
+  - devel
 
 addons:
   apt:
     packages:
       - libv8-dev
+
+r_github_packages:
+  rstudio/rstudioapi
