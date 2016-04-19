@@ -6,7 +6,6 @@
 #' @name rhandsontable-package
 #' @docType package
 #' @import htmlwidgets jsonlite
-#' @importFrom methods as
 #' @importFrom utils modifyList capture.output
 NULL
 
