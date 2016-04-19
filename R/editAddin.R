@@ -70,7 +70,7 @@ editAddin <- function() {
     output$pending <- shiny::renderUI({
       data <- reactiveData()
       if (isErrorMessage(data))
-        h4(style = "color: #AA7732;", data$message)
+        htmltools::h4(style = "color: #AA7732;", data$message)
     })
 
     output$hot <- renderRHandsontable({
