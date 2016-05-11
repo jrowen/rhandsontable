@@ -27,9 +27,9 @@ get_col_types = function(data) {
 # Convert handsontable to R object
 toR = function(data, changes, params, ...) {
   rClass = params$rClass
-  rColClasses = unlist(params$rColClasses)
   colHeaders = unlist(params$colHeaders)
   rowHeaders = unlist(params$rowHeaders)
+  rColClasses = unlist(params$rColClasses)[colHeaders]
 
   out = data
 
