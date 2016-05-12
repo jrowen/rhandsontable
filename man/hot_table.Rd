@@ -6,7 +6,7 @@
 \usage{
 hot_table(hot, contextMenu = TRUE, stretchH = "none",
   customBorders = NULL, highlightRow = NULL, highlightCol = NULL,
-  enableComments = FALSE, overflow = NULL, ...)
+  enableComments = FALSE, overflow = NULL, rowHeaderWidth = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -29,6 +29,8 @@ selected cell}
 
 \item{overflow}{character setting the css overflow behavior. Options are
 auto (default), hidden and visible}
+
+\item{rowHeaderWidth}{numeric width (in px) for the rowHeader column}
 
 \item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
 }
