@@ -34,6 +34,10 @@ HTMLWidgets.widget({
       $("#" + el.id).css('overflow', x.overflow);
     }
 
+    if (x.rowHeaderWidth) {
+      $("#" + el.id).css('col.rowHeader', x.rowHeaderWidth + 'px');
+    }
+
     this.afterChangeCallback(x);
     this.afterCellMetaCallback(x);
     this.afterRowAndColChange(x);
