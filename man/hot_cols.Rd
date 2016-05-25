@@ -14,7 +14,8 @@ hot_cols(hot, colWidths = NULL, columnSorting = NULL,
 \item{colWidths}{a scalar or numeric vector of column widths}
 
 \item{columnSorting}{logical enabling row sorting. Sorting only alters the
-table presentation and the original dataset row order is maintained.}
+table presentation and the original dataset row order is maintained. 
+The sorting will be done when a user click on column name}
 
 \item{manualColumnMove}{logical enabling column drag-and-drop reordering}
 
