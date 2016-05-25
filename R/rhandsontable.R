@@ -327,6 +327,7 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
 #' @param colWidths a scalar or numeric vector of column widths
 #' @param columnSorting logical enabling row sorting. Sorting only alters the
 #'  table presentation and the original dataset row order is maintained.
+#'  The sorting will be done when a user click on column name
 #' @param manualColumnMove logical enabling column drag-and-drop reordering
 #' @param manualColumnResize logical enabline column width resizing
 #' @param fixedColumnsLeft a numeric vector indicating which columns should be
