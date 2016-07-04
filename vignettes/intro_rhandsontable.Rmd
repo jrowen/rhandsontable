@@ -6,9 +6,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{rhandsontable Introduction}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
-
 
 ```{r echo = FALSE}
 library(rhandsontable)
@@ -271,6 +270,19 @@ rhandsontable(DF, width = 550, height = 300) %>%
   hot_col("pct", format = "0%")
 ```
 
+### Specify Locale
+
+The `language` parameter for `hot_col` can be used to change the locale.  See the [numeral.js](http://numeraljs.com/) library for language options.
+
+```{r}
+DF = data.frame(dollar = rnorm(10), euro = rnorm(10), yen = rnorm(10))
+
+rhandsontable(DF * 1000, width = 550, height = 300) %>%
+  hot_col("dollar", format = "$0,000.00", language = "en") %>%
+  hot_col("euro", format = "0,000.00 $", language = "de") %>%
+  hot_col("yen", format = "$0,000.00", language = "ja")
+```
+
 ## Read Only
 
 The whole table and individual columns can to set to `readOnly` to prevent the user from making changes.
@@ -327,7 +339,24 @@ rhandsontable(MAT, width = 600, height = 600) %>%
   hot_rows(rowHeights = 50)
 ```
 
-The table can be streched to the full width by passing `stretchH = "all"` to `rhandsontable` (or `hot_table`).
+### Row Header Width
+
+The width of the row header column can be customized using `rowHeaderWidth`.
+
+```{r fig.height = 6, fig.width = 6}
+rhandsontable(mtcars, rowHeaderWidth = 200)
+```
+
+### Streching
+
+The table can be streched to the full width by using `stretchH`.
+
+```{r fig.height = 6, fig.width = 6}
+MAT = matrix(rnorm(30), nrow = 10, dimnames = list(LETTERS[1:10],
+                                                   letters[1:3]))
+
+rhandsontable(MAT, width = 600, height = 300, stretchH = "all")
+```
 
 ## Fixed Rows / Columns
 
