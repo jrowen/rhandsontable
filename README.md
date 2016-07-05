@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/jrowen/rhandsontable.svg?branch=master)](https://travis-ci.org/jrowen/rhandsontable)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jrowen/rhandsontable?branch=master&svg=true)](https://ci.appveyor.com/project/jrowen/rhandsontable)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
+[![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
 
 **See the [project website](http://jrowen.github.io/rhandsontable/) for more details and live examples.**
 
