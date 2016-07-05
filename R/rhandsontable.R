@@ -18,6 +18,7 @@
 #'  This can be used with shiny to tie updates to a selected table cell.
 #' @param width numeric table width
 #' @param height numeric table height
+#' @param digits numeric passed to \code{jsonlite::toJSON}
 #' @param ... passed to hot_table
 #' @examples
 #' library(rhandsontable)
@@ -32,7 +33,7 @@
 rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
                           useTypes = TRUE, readOnly = NULL,
                           selectCallback = FALSE,
-                          width = NULL, height = NULL, ...) {
+                          width = NULL, height = NULL, digits = 4, ...) {
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
@@ -101,7 +102,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
   }
 
   x = list(
-    data = jsonlite::toJSON(data, na = "string", rownames = FALSE),
+    data = jsonlite::toJSON(data, na = "string", rownames = FALSE,
+                            digits = digits),
     rClass = rClass,
     rColClasses = rColClasses,
     rColnames = as.list(colnames(data)),
@@ -186,7 +188,7 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
   if (!is.null(customBorders)) hot$x$customBorders = customBorders
   if (!is.null(enableComments)) hot$x$comments = enableComments
   if (!is.null(overflow)) hot$x$overflow = overflow
-  if (!is.null(rowHeaderWidth)) hot$x$rowHeaderWidth = rowHeaderWidth  
+  if (!is.null(rowHeaderWidth)) hot$x$rowHeaderWidth = rowHeaderWidth
 
   if ((!is.null(highlightRow) && highlightRow) ||
       (!is.null(highlightCol) && highlightCol))

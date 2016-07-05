@@ -6,7 +6,7 @@
 \usage{
 rhandsontable(data, colHeaders, rowHeaders, comments = NULL,
   useTypes = TRUE, readOnly = NULL, selectCallback = FALSE,
-  width = NULL, height = NULL, ...)
+  width = NULL, height = NULL, digits = 4, ...)
 }
 \arguments{
 \item{data}{a \code{data.table}, \code{data.frame} or \code{matrix}}
@@ -32,6 +32,8 @@ This can be used with shiny to tie updates to a selected table cell.}
 \item{width}{numeric table width}
 
 \item{height}{numeric table height}
+
+\item{digits}{numeric passed to \code{jsonlite::toJSON}}
 
 \item{...}{passed to hot_table}
 }
