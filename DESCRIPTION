@@ -28,7 +28,8 @@ BugReports: https://github.com/jrowen/rhandsontable/issues
 Imports:
     jsonlite,
     htmlwidgets (>= 0.3.3),
-    magrittr
+    magrittr,
+    methods
 Suggests:
     knitr,
     rmarkdown,
