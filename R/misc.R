@@ -90,6 +90,9 @@ toR = function(data, changes, params, ...) {
   colnames(out) = colHeaders
   rownames(out) = rowHeaders
 
+  if ("data.table" %in% rClass)
+    data.table::setDT(out)
+
   out
 }
 
