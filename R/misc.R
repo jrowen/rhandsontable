@@ -91,7 +91,7 @@ toR = function(data, changes, params, ...) {
   rownames(out) = rowHeaders
 
   if ("data.table" %in% rClass)
-    data.table::setDT(out)
+    out = as(out, "data.table")
 
   out
 }

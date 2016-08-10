@@ -1,3 +1,10 @@
+rhandsontable 0.3.3
+-------------------------
+
+* POSSIBLE BREAKING CHANGE: Updated shiny logic to fire an afterChange event when the table is first populated.  This should not initialize the table input when first loaded and simplify shiny logic.
+
+* Updated toR parser to support data.table.
+
 rhandsontable 0.3.2
 -------------------------
 
