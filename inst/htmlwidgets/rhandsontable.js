@@ -46,25 +46,16 @@ HTMLWidgets.widget({
       this.afterSelectCallback(x);
     }
 
-    if (instance.hot) { // update existing instance
-
-      instance.hot.updateSettings(x);
-
-    } else {  // create new instance
-
-      instance.hot = new Handsontable(el, x);
-
+    // will fire a afterChange event after updating data
+    if (!instance.hot) {
+      instance.hot = new Handsontable(el);
     }
-
     instance.hot.params = x;
+    instance.hot.updateSettings(x);
+
   },
 
   resize: function(el, width, height, instance) {
-
-    //instance.hot.updateSettings({ width: width,
-    //                              height: height
-    //});
-    //instance.hot.render();
 
   },
 
@@ -72,18 +63,26 @@ HTMLWidgets.widget({
 
     x.afterChange = function(changes, source) {
 
-      if (HTMLWidgets.shinyMode && changes) {
-        if (this.sortIndex && this.sortIndex.length !== 0) {
-          c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
-        } else {
-          c = changes;
-        }
+      if (HTMLWidgets.shinyMode) {
+        if (changes) {
+          if (this.sortIndex && this.sortIndex.length !== 0) {
+            c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+          } else {
+            c = changes;
+          }
 
-        Shiny.onInputChange(this.rootElement.id, {
-          data: this.getData(),
-          changes: { event: "afterChange", changes: c },
-          params: this.params
-        });
+          Shiny.onInputChange(this.rootElement.id, {
+            data: this.getData(),
+            changes: { event: "afterChange", changes: c },
+            params: this.params
+          });
+        } else if (source == "loadData") {
+          Shiny.onInputChange(this.rootElement.id, {
+            data: this.getData(),
+            changes: { event: "afterChange", changes: null },
+            params: this.params
+          });
+        }
       }
 
     };
@@ -292,9 +291,9 @@ function strip_tags(input, allowed) {
 function safeHtmlRenderer(instance, td, row, col, prop, value, cellProperties) {
   var escaped = Handsontable.helper.stringify(value);
   if (instance.getSettings().allowedTags) {
-    tags = instance.getSettings().allowedTags
+    tags = instance.getSettings().allowedTags;
   } else {
-    tags = '<em><b><strong><a><big>'
+    tags = '<em><b><strong><a><big>';
   }
   escaped = strip_tags(escaped, tags); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
   td.innerHTML = escaped;
