@@ -47,10 +47,10 @@ A more involved `shiny` example
 shiny::runGitHub("rhandsontable", "jrowen", subdir = "inst/examples/rhandsontable_corr")
 ```
 
-**Important note on shiny use:** The `htmlwidgets` package creates widgets as shiny output bindings.  The `rhandsontable` package also attempts to expose the table as a *pseudo* shiny input binding using handsontable change events (see [here](https://github.com/jrowen/rhandsontable/blob/master/inst/htmlwidgets/rhandsontable.js) for the supported events).  **This means the table (e.g. named `hot`) can be accessed in shiny using either input$hot or output$hot, but these values may not be in-sync.**  The timing of updates will depend on the particular reactive path followed by your shiny application.  
+**Important note on shiny use:** The `htmlwidgets` package creates widgets as shiny output bindings.  The `rhandsontable` package also attempts to expose the table as a *pseudo* shiny input binding using handsontable change events (see [here](https://github.com/jrowen/rhandsontable/blob/master/inst/htmlwidgets/rhandsontable.js) for the supported events).  **This means the table (e.g. named `hot`) can be accessed in shiny using either `input$hot` or `output$hot`, but these values may not be in-sync.**  The timing of updates will depend on the particular reactive path followed by your shiny application.  
 
 Since the widget is not currently able to use the standard shiny input binding functionality, you will need to explicitly call the `hot_to_r` function to convert the handsontable data to an R object.
 
-Two additional inputs are also enabled, input$hot_select and input$hot_comment, which will fire when a cell selection or a comment changes, respectively (if you would like to see more options, please post an issue or create a PR).
+Two additional inputs are also enabled, `input$hot_select` and `input$hot_comment`, which will fire when a cell selection or a comment changes, respectively (if you would like to see more options, please post an issue or create a PR).
 
 This functionality is still evolving, so please don't hesitate to share suggestions and PRs.
