@@ -3,7 +3,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
 
-**See the [project website](http://jrowen.github.io/rhandsontable/) for more details and live examples.**
+**See the [project website](http://jrowen.github.io/rhandsontable/) for more details and live examples, ans see below for important details on use in shiny apps.**
 
 An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](http://http://handsontable.com/).  Per the website:
 
