@@ -49,6 +49,7 @@ HTMLWidgets.widget({
     // will fire a afterChange event after updating data
     if (!instance.hot) {
       instance.hot = new Handsontable(el);
+      x.initInput = true;
     }
     instance.hot.params = x;
     instance.hot.updateSettings(x);
@@ -76,7 +77,8 @@ HTMLWidgets.widget({
             changes: { event: "afterChange", changes: c },
             params: this.params
           });
-        } else if (source == "loadData") {
+        } else if (source == "loadData" && this.params.initInput) {
+          this.params.initInput = false;
           Shiny.onInputChange(this.rootElement.id, {
             data: this.getData(),
             changes: { event: "afterChange", changes: null },
