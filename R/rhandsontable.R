@@ -400,7 +400,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @param copyable logical defining whether data in a cell can be copied using
 #'  Ctrl + C
 #' @param dateFormat character defining the date format. See
-#'  {https://github.com/moment/moment}{Moment.js} for details.
+#'  \href{https://github.com/moment/moment}{Moment.js} for details.
 #' @param default default column value for new rows (NA if not specified; shiny only)
 #' @param language locale passed to \href{http://numeraljs.com}{Numeral.js};
 #'  default is 'en'.

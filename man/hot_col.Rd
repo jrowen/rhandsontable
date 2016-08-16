@@ -51,7 +51,7 @@ to format column cells. Can be used to implement conditional formatting.}
 Ctrl + C}
 
 \item{dateFormat}{character defining the date format. See
-{https://github.com/moment/moment}{Moment.js} for details.}
+\href{https://github.com/moment/moment}{Moment.js} for details.}
 
 \item{default}{default column value for new rows (NA if not specified; shiny only)}
 
