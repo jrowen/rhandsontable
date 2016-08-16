@@ -34,6 +34,9 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
                           useTypes = TRUE, readOnly = NULL,
                           selectCallback = FALSE,
                           width = NULL, height = NULL, digits = 4, ...) {
+  rColHeaders = colnames(data)
+  rRowHeaders = rownames(data)
+
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
@@ -107,6 +110,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rClass = rClass,
     rColClasses = rColClasses,
     rColnames = as.list(colnames(data)),
+    rColHeaders = rColHeaders,
+    rRowHeaders = rRowHeaders,
     rDataDim = dim(data),
     selectCallback = selectCallback,
     colHeaders = colHeaders,
@@ -395,7 +400,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @param copyable logical defining whether data in a cell can be copied using
 #'  Ctrl + C
 #' @param dateFormat character defining the date format. See
-#'  {https://github.com/moment/moment}{Moment.js} for details.
+#'  \href{https://github.com/moment/moment}{Moment.js} for details.
 #' @param default default column value for new rows (NA if not specified; shiny only)
 #' @param language locale passed to \href{http://numeraljs.com}{Numeral.js};
 #'  default is 'en'.

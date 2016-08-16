@@ -63,9 +63,8 @@ HTMLWidgets.widget({
   afterChangeCallback: function(x) {
 
     x.afterChange = function(changes, source) {
-
       if (HTMLWidgets.shinyMode) {
-        if (changes) {
+        if (changes && changes[0][2] !== null && changes[0][3] !== null) {
           if (this.sortIndex && this.sortIndex.length !== 0) {
             c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
           } else {
@@ -74,7 +73,7 @@ HTMLWidgets.widget({
 
           Shiny.onInputChange(this.rootElement.id, {
             data: this.getData(),
-            changes: { event: "afterChange", changes: c },
+            changes: { event: "afterChange", changes: c, source: source },
             params: this.params
           });
         } else if (source == "loadData" && this.params.initInput) {

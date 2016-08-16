@@ -27,15 +27,23 @@ get_col_types = function(data) {
 # Convert handsontable to R object
 toR = function(data, changes, params, ...) {
   rClass = params$rClass
-  colHeaders = unlist(params$colHeaders)
-  rowHeaders = unlist(params$rowHeaders)
+  colHeaders = unlist(params$rColHeaders)
+  rowHeaders = unlist(params$rRowHeaders)
   rColClasses = unlist(params$rColClasses)[colHeaders]
 
   out = data
 
-  # copy/paste may add rows without firing an afterCreateRow event
-  if (length(out) != length(rowHeaders))
-    changes$event = "afterCreateRow"
+  # copy/paste may add rows without firing an afterCreateRow event (still needed?)
+  # if (length(out) != length(rowHeaders))
+  #   changes$event = "afterCreateRow"
+
+  # remove spare empty rows; autofill fix (not working)
+  # if (!is.null(changes$source) && changes$source == "autofill") {
+  #   rm_inds = sapply(out, function(x) all(unlist(x) == "NA"))
+  #   rm_inds = suppressWarnings(min(which(diff(rm_inds) == -1)))
+  #   if (rm_inds != Inf)
+  #     out = out[-(length(out) - rm_inds + 1)]
+  # }
 
   # pre-conversion updates; afterCreateCol moved to end of function
   if (changes$event == "afterCreateRow") {
