@@ -402,8 +402,8 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @param dateFormat character defining the date format. See
 #'  \href{https://github.com/moment/moment}{Moment.js} for details.
 #' @param default default column value for new rows (NA if not specified; shiny only)
-#' @param language locale passed to \href{http://numeraljs.com}{Numeral.js};
-#'  default is 'en'.
+#' @param language locale passed to \href{http://numbrojs.com}{Numbro.js};
+#'  default is 'en-US'.
 #' @param ... passed to handsontable
 #' @examples
 #' library(rhandsontable)
