@@ -34,6 +34,9 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
                           useTypes = TRUE, readOnly = NULL,
                           selectCallback = FALSE,
                           width = NULL, height = NULL, digits = 4, ...) {
+  rColHeaders = colnames(data)
+  rRowHeaders = rownames(data)
+
   if (missing(colHeaders))
     colHeaders = colnames(data)
   if (missing(rowHeaders))
@@ -107,6 +110,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rClass = rClass,
     rColClasses = rColClasses,
     rColnames = as.list(colnames(data)),
+    rColHeaders = rColHeaders,
+    rRowHeaders = rRowHeaders,
     rDataDim = dim(data),
     selectCallback = selectCallback,
     colHeaders = colHeaders,
