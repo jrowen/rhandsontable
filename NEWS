@@ -5,6 +5,8 @@ rhandsontable 0.3.3
 
 * Updated toR parser to support data.table.
 
+* Fixed bug with toR when table column names differ from data column names (#100)
+
 rhandsontable 0.3.2
 -------------------------
 
