@@ -17,6 +17,7 @@ Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
              person("Bushell", "David", role = c("ctb", "cph"), comment = "Pikaday.js library"),
              person("jQuery Foundation", role = c("ctb", "cph"), comment = "jQuery.js library"),
              person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"),
+             person("Russell", "Kent", role = c("ctb", "cph"), comment = "Sparkline.js library"),
              person("Rohan", "Jon", role = c("ctb", "cph"), comment = "ZeroClipboard library"),
              person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
