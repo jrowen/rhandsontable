@@ -46,6 +46,8 @@ HTMLWidgets.widget({
       this.afterSelectCallback(x);
     }
 
+    this.afterRender(x);
+
     // will fire a afterChange event after updating data
     if (!instance.hot) {
       instance.hot = new Handsontable(el);
@@ -58,6 +60,20 @@ HTMLWidgets.widget({
 
   resize: function(el, width, height, instance) {
 
+  },
+
+  afterRender: function(x) {
+    x.afterRender = function(isForced) {
+      var plugin = this.getPlugin('autoColumnSize');
+      if (plugin.isEnabled()) {
+        wdths = plugin.widths;
+        for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
+          if (this.params.columns[i].renderer.name != "customRenderer") {
+            plugin.calculateColumnsWidth(i, 300, true);
+          }
+        }
+      }
+    };
   },
 
   afterChangeCallback: function(x) {
