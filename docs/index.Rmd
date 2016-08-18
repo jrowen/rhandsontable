@@ -8,7 +8,7 @@ output:
     #toc_depth: 3
     self_contained: false
     lib_dir: libs
-    #theme: paper
+    #theme: default
     includes:
       before_body: include/before_body.html
 ---
@@ -116,7 +116,7 @@ DF$chart = c(sapply(1:5,
                     function(x) jsonlite::toJSON(list(values=rnorm(10),
                                                       options = list(type = "line")))))
 
-rhandsontable(DF, rowHeaders = NULL, width = 550, height = 300) %>%
+rhandsontable(DF, rowHeaders = NULL, width = 550, height = 500) %>%
   hot_col("chart", renderer = htmlwidgets::JS("renderSparkline"))
 ```
 
@@ -282,9 +282,9 @@ The `language` parameter for `hot_col` can be used to change the locale.  See th
 DF = data.frame(dollar = rnorm(10), euro = rnorm(10), yen = rnorm(10))
 
 rhandsontable(DF * 1000, width = 550, height = 300) %>%
-  hot_col("dollar", format = "$0,000.00", language = "en") %>%
-  hot_col("euro", format = "0,000.00 $", language = "de") %>%
-  hot_col("yen", format = "$0,000.00", language = "ja")
+  hot_col("dollar", format = "$0,000.00", language = "en-US") %>%
+  hot_col("euro", format = "0,000.00 $", language = "de-DE") %>%
+  hot_col("yen", format = "$0,000.00", language = "ja-JP")
 ```
 
 ## Read Only
@@ -512,9 +512,15 @@ rhandsontable(MAT, width = 550, height = 300) %>%
 
 ## Shiny
 
-The data grid will be editable by default and can be used as input to a `shiny` app.  A few `shiny` and `shinydashboard` example links are listed below.  Note that the shinyapps.io links may not work if the has hit the monthly usage limit.
+**Important note on shiny use:** The `htmlwidgets` package creates widgets as shiny output bindings.  The `rhandsontable` package also attempts to expose the table as a *pseudo* shiny input binding using handsontable change events (see [here](https://github.com/jrowen/rhandsontable/blob/master/inst/htmlwidgets/rhandsontable.js) for the supported events).  **This means the table (e.g. `hot`) can be accessed in shiny using either `input$hot` or `output$hot`, but these values may not be in-sync.**  The timing of updates will depend on the particular reactive path followed by your shiny application.  
 
-When using `rhandsontable` and an input, these apps generally use the `hot_to_r` function to convert data to an R data.frame and `shiny::reactiveValues` to store a cached version of the data (see the *Data file editor* example below).  The `rhandsontable` function also includes the `selectCallback ` parameter, which will fire a callback event when a table cell is selected (see the *Table callback linked to chart* example below).
+Since the widget is not currently able to use the standard shiny input binding functionality, you will need to explicitly call the `hot_to_r` function to convert the handsontable data to an R object.
+
+Two additional inputs are also enabled, `input$hot_select` and `input$hot_comment`, which will fire when a cell selection or a comment changes, respectively (if you would like to see more options, please post an issue or create a PR).
+
+This functionality is still evolving, so please don't hesitate to share suggestions and PRs.
+
+The data grid will be editable by default and can be used as input to a `shiny` app.  A few `shiny` and `shinydashboard` example links are listed below.  Note that the shinyapps.io links may not work if the has hit the monthly usage limit.
 
 * [Output only](https://jrowen.shinyapps.io/rhandsontable_output)
 ```
