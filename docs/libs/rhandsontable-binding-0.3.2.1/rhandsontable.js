@@ -48,14 +48,19 @@ HTMLWidgets.widget({
 
     this.afterRender(x);
 
-    // will fire a afterChange event after updating data
-    if (!instance.hot) {
-      instance.hot = new Handsontable(el);
-      x.initInput = true;
-    }
-    instance.hot.params = x;
-    instance.hot.updateSettings(x);
+    if (instance.hot) { // update existing instance
 
+      instance.hot.updateSettings(x);
+      console.log("updating hot");
+
+    } else {  // create new instance
+
+      instance.hot = new Handsontable(el, x);
+      x.initInput = true;
+      console.log("creating hot");
+    }
+
+    instance.hot.params = x;
   },
 
   resize: function(el, width, height, instance) {
@@ -65,7 +70,7 @@ HTMLWidgets.widget({
   afterRender: function(x) {
     x.afterRender = function(isForced) {
       var plugin = this.getPlugin('autoColumnSize');
-      if (plugin.isEnabled()) {
+      if (plugin.isEnabled() && this.params) {
         wdths = plugin.widths;
         for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
           if (this.params.columns[i].renderer.name != "customRenderer") {

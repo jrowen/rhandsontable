@@ -510,6 +510,14 @@ rhandsontable(MAT, width = 550, height = 300) %>%
   hot_heatmap()
 ```
 
+# Big Data
+
+```{r}
+MAT = matrix(rnorm(10000 * 100), nrow = 100, dimnames= list(1:100, 1:10000))
+
+rhandsontable(MAT, width = 550, height = 550)
+```
+
 ## Shiny
 
 **Important note on shiny use:** The `htmlwidgets` package creates widgets as shiny output bindings.  The `rhandsontable` package also attempts to expose the table as a *pseudo* shiny input binding using handsontable change events (see [here](https://github.com/jrowen/rhandsontable/blob/master/inst/htmlwidgets/rhandsontable.js) for the supported events).  **This means the table (e.g. `hot`) can be accessed in shiny using either `input$hot` or `output$hot`, but these values may not be in-sync.**  The timing of updates will depend on the particular reactive path followed by your shiny application.  
