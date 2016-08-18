@@ -4,3 +4,4 @@
 inst/examples
 README.md
 ^appveyor\.yml$
+docs/

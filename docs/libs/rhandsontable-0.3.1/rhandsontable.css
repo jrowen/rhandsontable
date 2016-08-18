@@ -1,0 +1,27 @@
+.handsontable .currentRow {
+  background-color: #E7E8EF;
+}
+
+.handsontable .currentCol {
+  background-color: #F9F9FB;
+}
+
+.handsontable {
+  overflow: auto;
+}
+
+/* fix for sparkline hover */
+.jqstooltip{
+  width: auto !important;
+  height: auto !important;
+}
+
+/* fix for shiny datepicker */
+.datepicker {
+  z-index: 1000 !important;
+}
+
+.handsontable table thead th {
+  white-space: pre-line;
+  /*max-width: /* enter here your max header width */
+}
