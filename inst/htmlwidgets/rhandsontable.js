@@ -48,14 +48,16 @@ HTMLWidgets.widget({
 
     this.afterRender(x);
 
-    // will fire a afterChange event after updating data
-    if (!instance.hot) {
-      instance.hot = new Handsontable(el);
-      x.initInput = true;
+    if (instance.hot) { // update existing instance
+      x.rInitInput = false;
+      instance.hot.params = x;
+      instance.hot.updateSettings(x);
+    } else {  // create new instance
+      instance.hot = new Handsontable(el, x);
+      x.rInitInput = true;
+      instance.hot.params = x;
+      instance.hot.updateSettings(x);
     }
-    instance.hot.params = x;
-    instance.hot.updateSettings(x);
-
   },
 
   resize: function(el, width, height, instance) {
@@ -65,7 +67,7 @@ HTMLWidgets.widget({
   afterRender: function(x) {
     x.afterRender = function(isForced) {
       var plugin = this.getPlugin('autoColumnSize');
-      if (plugin.isEnabled()) {
+      if (plugin.isEnabled() && this.params) {
         wdths = plugin.widths;
         for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
           if (this.params.columns[i].renderer.name != "customRenderer") {
@@ -79,8 +81,10 @@ HTMLWidgets.widget({
   afterChangeCallback: function(x) {
 
     x.afterChange = function(changes, source) {
+      console.log(source);
       if (HTMLWidgets.shinyMode) {
         if (changes && changes[0][2] !== null && changes[0][3] !== null) {
+          console.log("change");
           if (this.sortIndex && this.sortIndex.length !== 0) {
             c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
           } else {
@@ -92,8 +96,9 @@ HTMLWidgets.widget({
             changes: { event: "afterChange", changes: c, source: source },
             params: this.params
           });
-        } else if (source == "loadData" && this.params.initInput) {
-          this.params.initInput = false;
+        } else if (source == "loadData" && this.params && this.params.rInitInput) {
+          this.rInitInput = false;
+
           Shiny.onInputChange(this.rootElement.id, {
             data: this.getData(),
             changes: { event: "afterChange", changes: null },

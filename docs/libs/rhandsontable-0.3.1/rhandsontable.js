@@ -46,44 +46,65 @@ HTMLWidgets.widget({
       this.afterSelectCallback(x);
     }
 
+    this.afterRender(x);
+
     if (instance.hot) { // update existing instance
-
+      x.rInitInput = false;
+      instance.hot.params = x;
       instance.hot.updateSettings(x);
-
     } else {  // create new instance
-
       instance.hot = new Handsontable(el, x);
-
+      x.rInitInput = true;
+      instance.hot.params = x;
+      instance.hot.updateSettings(x);
     }
-
-    instance.hot.params = x;
   },
 
   resize: function(el, width, height, instance) {
 
-    //instance.hot.updateSettings({ width: width,
-    //                              height: height
-    //});
-    //instance.hot.render();
+  },
 
+  afterRender: function(x) {
+    x.afterRender = function(isForced) {
+      var plugin = this.getPlugin('autoColumnSize');
+      if (plugin.isEnabled() && this.params) {
+        wdths = plugin.widths;
+        for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
+          if (this.params.columns[i].renderer.name != "customRenderer") {
+            plugin.calculateColumnsWidth(i, 300, true);
+          }
+        }
+      }
+    };
   },
 
   afterChangeCallback: function(x) {
 
     x.afterChange = function(changes, source) {
+      console.log(source);
+      if (HTMLWidgets.shinyMode) {
+        if (changes && changes[0][2] !== null && changes[0][3] !== null) {
+          console.log("change");
+          if (this.sortIndex && this.sortIndex.length !== 0) {
+            c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+          } else {
+            c = changes;
+          }
 
-      if (HTMLWidgets.shinyMode && changes) {
-        if (this.sortIndex && this.sortIndex.length !== 0) {
-          c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
-        } else {
-          c = changes;
+          Shiny.onInputChange(this.rootElement.id, {
+            data: this.getData(),
+            changes: { event: "afterChange", changes: c, source: source },
+            params: this.params
+          });
+        } else if (source == "loadData" && this.params && this.params.rInitInput) {
+          this.rInitInput = false;
+
+          Shiny.onInputChange(this.rootElement.id, {
+            data: this.getData(),
+            changes: { event: "afterChange", changes: null },
+            params: this.params
+          });
         }
-
-        Shiny.onInputChange(this.rootElement.id, {
-          data: this.getData(),
-          changes: { event: "afterChange", changes: c },
-          params: this.params
-        });
       }
 
     };
@@ -292,9 +313,9 @@ function strip_tags(input, allowed) {
 function safeHtmlRenderer(instance, td, row, col, prop, value, cellProperties) {
   var escaped = Handsontable.helper.stringify(value);
   if (instance.getSettings().allowedTags) {
-    tags = instance.getSettings().allowedTags
+    tags = instance.getSettings().allowedTags;
   } else {
-    tags = '<em><b><strong><a><big>'
+    tags = '<em><b><strong><a><big>';
   }
   escaped = strip_tags(escaped, tags); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
   td.innerHTML = escaped;

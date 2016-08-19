@@ -55,8 +55,8 @@ Ctrl + C}
 
 \item{default}{default column value for new rows (NA if not specified; shiny only)}
 
-\item{language}{locale passed to \href{http://numeraljs.com}{Numeral.js};
-default is 'en'.}
+\item{language}{locale passed to \href{http://numbrojs.com}{Numbro.js};
+default is 'en-US'.}
 
 \item{...}{passed to handsontable}
 }
