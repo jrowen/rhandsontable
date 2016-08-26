@@ -70,7 +70,7 @@ HTMLWidgets.widget({
       if (plugin.isEnabled() && this.params) {
         wdths = plugin.widths;
         for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
-          if (this.params.columns[i].renderer.name != "customRenderer") {
+          if (this.params.columns && this.params.columns[i].renderer.name != "customRenderer") {
             plugin.calculateColumnsWidth(i, 300, true);
           }
         }

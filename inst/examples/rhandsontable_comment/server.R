@@ -15,8 +15,6 @@ shinyServer(function(input, output, session) {
       MAT = hot_to_r(input$hot)
     }
 
-    # this would be used as a function input
-    values[["MAT"]] = MAT
     MAT
   })
 
@@ -38,9 +36,10 @@ shinyServer(function(input, output, session) {
   })
 
   observe({
+    hot = data()
     if (input$exportData != 0) {
-      if (!is.null(values[["MAT"]])) {
-        write.csv(values[["MAT"]], "data.csv")
+      if (!is.null(hot)) {
+        write.csv(hot, "data.csv")
       }
     }
   })

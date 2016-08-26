@@ -3,19 +3,13 @@ library(rhandsontable)
 shinyServer(function(input, output, session) {
   fname = tempfile()
 
-  # uncomment lines below if action button is used to commit changes
-  # values = list()
-  # setHot = function(x) values[["hot"]] <<- x
-
-  # comment lines below if action button is used to commit changes
-  values = reactiveValues()
-  setHot = function(x) values[["hot"]] = x
-
   observe({
+    # remove button and isolate to update file automatically
+    # after each table change
     input$saveBtn
-
-    if (!is.null(values[["hot"]])) {
-      write.csv(values[["hot"]], fname)
+    hot = isolate(input$hot)
+    if (!is.null(hot)) {
+      write.csv(hot, fname)
       print(fname)
     }
   })
@@ -26,7 +20,7 @@ shinyServer(function(input, output, session) {
     } else {
       DF = read.csv("mtcars.csv", stringsAsFactors = FALSE)
     }
-    
+
     setHot(DF)
     rhandsontable(DF) %>%
         hot_table(highlightCol = TRUE, highlightRow = TRUE)
