@@ -1,0 +1,43 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    social: menu
+    source_code: embed
+---
+
+```{r setup, include=FALSE}
+library(rhandsontable)
+```
+
+Column {data-width=400}
+-------------------------------------
+    
+### Table 1
+    
+```{r}
+MAT = matrix(rnorm(10000 * 100), nrow = 100, dimnames= list(1:100, 1:10000))
+
+rhandsontable(MAT, width = "100%", height = "100%")
+```
+   
+Column {data-width=600}
+-------------------------------------
+   
+### Table 2
+
+```{r}
+MAT = matrix(rnorm(10 * 10), nrow = 10, dimnames= list(1:10, 1:10))
+
+rhandsontable(MAT)
+```   
+ 
+### Table 3
+    
+```{r}
+MAT = matrix(rnorm(10 * 10), nrow = 10, dimnames= list(1:10, 1:10))
+
+rhandsontable(MAT)
+```
+

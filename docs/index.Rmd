@@ -116,7 +116,7 @@ DF$chart = c(sapply(1:5,
                     function(x) jsonlite::toJSON(list(values=rnorm(10),
                                                       options = list(type = "line")))))
 
-rhandsontable(DF, rowHeaders = NULL, width = 550, height = 500) %>%
+rhandsontable(DF, rowHeaders = NULL, width = 550, height = 300) %>%
   hot_col("chart", renderer = htmlwidgets::JS("renderSparkline"))
 ```
 

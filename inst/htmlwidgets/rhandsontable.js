@@ -46,7 +46,7 @@ HTMLWidgets.widget({
       this.afterSelectCallback(x);
     }
 
-    this.afterRender(x);
+    //this.afterRender(x);
 
     if (instance.hot) { // update existing instance
       x.rInitInput = false;
@@ -68,7 +68,7 @@ HTMLWidgets.widget({
     x.afterRender = function(isForced) {
       var plugin = this.getPlugin('autoColumnSize');
       if (plugin.isEnabled() && this.params) {
-        wdths = plugin.widths;
+        var wdths = plugin.widths;
         for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
           if (this.params.columns && this.params.columns[i].renderer.name != "customRenderer") {
             plugin.calculateColumnsWidth(i, 300, true);
