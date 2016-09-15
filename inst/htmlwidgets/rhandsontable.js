@@ -53,7 +53,6 @@ HTMLWidgets.widget({
         console.log("rhandsontable: update table");
       }
 
-      x.rInitInput = false;
       instance.hot.params = x;
       instance.hot.updateSettings(x);
     } else {  // create new instance
@@ -62,7 +61,6 @@ HTMLWidgets.widget({
       }
 
       instance.hot = new Handsontable(el, x);
-      x.rInitInput = true;
       instance.hot.params = x;
       instance.hot.updateSettings(x);
     }
@@ -123,8 +121,7 @@ HTMLWidgets.widget({
             changes: { event: "afterChange", changes: c, source: source },
             params: this.params
           });
-        } else if (source == "loadData" && this.params && this.params.rInitInput) {
-          this.rInitInput = false;
+        } else if (source == "loadData" && this.params) {
 
           if (this.params && this.params.debug) {
             if (this.params.debug > 0) {
