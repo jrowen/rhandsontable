@@ -1,27 +1,28 @@
 Package: rhandsontable
 Type: Package
 Title: Interface to the 'Handsontable.js' Library
-Version: 0.3.3
-Authors@R: c(person("Jonathan", "Owen", email = "jonathanro@gmail.com",
-                    role = c("aut", "cre", "cph")),
-             person("Jeff", "Allen", role = c("ctb")),
-             person("Yihui", "Xie", role = c("ctb")),
-             person("Enzo", "Martoglio",
-                    email = "enzo@smartinsightsfromdata.com", role = c("ctb")),
-             person("Warpechowski", "Marcin", role = c("ctb", "cph"), comment = "Handsontable.js library"),
-             person("Handsoncode sp. z o.o.", role = c("ctb", "cph"), comment = "Handsontable.js library"),
-             person("Aisch", "Gregor", role = c("ctb", "cph"), comment = "Chroma.js library"),
-             person("Företagsplatsen", role = c("ctb", "cph"), comment = "Numbro.js library"),
-             person("Draper", "Adam", role = c("ctb", "cph"), comment = "Numeral.js library"),
-             person("Wood", "Tim", role = c("ctb", "cph"), comment = "Moment.js library"),
-             person("Chernev", "Iskren", role = c("ctb", "cph"), comment = "Moment.js library"),
-             person("Moment.js contributors", role = c("ctb", "cph"), comment = "Moment.js library"),
-             person("Bushell", "David", role = c("ctb", "cph"), comment = "Pikaday.js library"),
-             person("jQuery Foundation", role = c("ctb", "cph"), comment = "jQuery.js library"),
-             person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"),
-             person("Russell", "Kent", role = c("ctb", "cph"), comment = "Sparkline.js library"),
-             person("Rohan", "Jon", role = c("ctb", "cph"), comment = "ZeroClipboard library"),
-             person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"))
+Version: 0.3.3.1
+Authors@R: c(
+  person("Jonathan", "Owen", email = "jonathanro@gmail.com",
+         role = c("aut", "cre", "cph")),
+  person("Jeff", "Allen", role = c("ctb")),
+  person("Yihui", "Xie", role = c("ctb")),
+  person("Enzo", "Martoglio",
+         email = "enzo@smartinsightsfromdata.com", role = c("ctb")),
+  person("Warpechowski", "Marcin", role = c("ctb", "cph"), comment = "Handsontable.js library"),
+  person("Handsoncode sp. z o.o.", role = c("ctb", "cph"), comment = "Handsontable.js library"),
+  person("Aisch", "Gregor", role = c("ctb", "cph"), comment = "Chroma.js library"),
+  person("Företagsplatsen", role = c("ctb", "cph"), comment = "Numbro.js library"),
+  person("Draper", "Adam", role = c("ctb", "cph"), comment = "Numeral.js library"),
+  person("Wood", "Tim", role = c("ctb", "cph"), comment = "Moment.js library"),
+  person("Chernev", "Iskren", role = c("ctb", "cph"), comment = "Moment.js library"),
+  person("Moment.js contributors", role = c("ctb", "cph"), comment = "Moment.js library"),
+  person("Bushell", "David", role = c("ctb", "cph"), comment = "Pikaday.js library"),
+  person("jQuery Foundation", role = c("ctb", "cph"), comment = "jQuery.js library"),
+  person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"),
+  person("Russell", "Kent", role = c("ctb", "cph"), comment = "Sparkline.js library"),
+  person("Rohan", "Jon", role = c("ctb", "cph"), comment = "ZeroClipboard library"),
+  person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: An R interface to the 'Handsontable' JavaScript library, which is a
     minimalist Excel-like data grid editor.

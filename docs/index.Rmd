@@ -510,7 +510,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
   hot_heatmap()
 ```
 
-# Big Data
+## Big Data
 
 ```{r}
 MAT = matrix(rnorm(10000 * 100), nrow = 100, dimnames= list(1:100, 1:10000))
