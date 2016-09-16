@@ -49,18 +49,12 @@ HTMLWidgets.widget({
     //this.afterRender(x);
 
     if (instance.hot) { // update existing instance
-      if (x.debug && x.debug > 0) {
-        console.log("rhandsontable: update table");
-      }
-
+      x.rInitInput = false;
       instance.hot.params = x;
       instance.hot.updateSettings(x);
     } else {  // create new instance
-      if (x.debug && x.debug > 0) {
-        console.log("rhandsontable: new table");
-      }
-
       instance.hot = new Handsontable(el, x);
+      x.rInitInput = true;
       instance.hot.params = x;
       instance.hot.updateSettings(x);
     }
@@ -74,12 +68,6 @@ HTMLWidgets.widget({
     x.afterRender = function(isForced) {
       var plugin = this.getPlugin('autoColumnSize');
       if (plugin.isEnabled() && this.params) {
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("rhandsontable: resizing column widths");
-          }
-        }
-
         var wdths = plugin.widths;
         for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
           if (this.params.columns && this.params.columns[i].renderer.name != "customRenderer") {
@@ -93,41 +81,24 @@ HTMLWidgets.widget({
   afterChangeCallback: function(x) {
 
     x.afterChange = function(changes, source) {
-      if (this.params && this.params.debug) {
-        if (this.params.debug > 0) {
-          console.log("afterChange: " + source);
-        }
-        if (this.params.debug > 1) {
-          console.log("afterChange:");
-          console.log(changes);
-        }
-      }
-
+      console.log(source);
       if (HTMLWidgets.shinyMode) {
         if (changes && changes[0][2] !== null && changes[0][3] !== null) {
+          console.log("change");
           if (this.sortIndex && this.sortIndex.length !== 0) {
             c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
           } else {
             c = changes;
           }
 
-          if (this.params && this.params.debug) {
-            if (this.params.debug > 0) {
-              console.log("afterChange: Shiny.onInputChange: " + this.rootElement.id);
-            }
-          }
           Shiny.onInputChange(this.rootElement.id, {
             data: this.getData(),
             changes: { event: "afterChange", changes: c, source: source },
             params: this.params
           });
-        } else if (source == "loadData" && this.params) {
+        } else if (source == "loadData" && this.params && this.params.rInitInput) {
+          this.rInitInput = false;
 
-          if (this.params && this.params.debug) {
-            if (this.params.debug > 0) {
-              console.log("afterChange: Shiny.onInputChange: " + this.rootElement.id);
-            }
-          }
           Shiny.onInputChange(this.rootElement.id, {
             data: this.getData(),
             changes: { event: "afterChange", changes: null },
@@ -136,30 +107,6 @@ HTMLWidgets.widget({
         }
       }
 
-    };
-
-    x.afterLoadData = function(firstTime) {
-      if (this.params && this.params.debug) {
-        if (this.params.debug > 0) {
-          console.log("afterLoadData: " + firstTime);
-        }
-      }
-    };
-
-    x.afterChangesObserved = function(firstTime) {
-      if (this.params && this.params.debug) {
-        if (this.params.debug > 0) {
-          console.log("afterChangesObserved");
-        }
-      }
-    };
-
-    x.afterInit = function() {
-      if (this.params && this.params.debug) {
-        if (this.params.debug > 0) {
-          console.log("afterInit");
-        }
-      }
     };
   },
 
@@ -172,11 +119,6 @@ HTMLWidgets.widget({
           r = this.sortIndex[r][0];
         }
 
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("afterSetCellMeta: Shiny.onInputChange: " + this.rootElement.id);
-          }
-        }
         Shiny.onInputChange(this.rootElement.id + "_comment", {
           data: this.getData(),
           comment: { r: r + 1, c: c + 1, key: key, val: val},
@@ -197,11 +139,6 @@ HTMLWidgets.widget({
           r2 = this.sortIndex[r2][0];
         }
 
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("afterSelectionEnd: Shiny.onInputChange: " + this.rootElement.id);
-          }
-        }
         Shiny.onInputChange(this.rootElement.id + "_select", {
           data: this.getData(),
           select: { r: r + 1, c: c + 1, r2: r2 + 1, c2: c2 + 1},
@@ -222,11 +159,6 @@ HTMLWidgets.widget({
           this.setDataAtCell(ind, i, this.params.columns[i].default);
         }
 
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("afterCreateRow: Shiny.onInputChange: " + this.rootElement.id);
-          }
-        }
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateRow", ind: ind, ct: ct },
@@ -238,11 +170,6 @@ HTMLWidgets.widget({
     x.afterRemoveRow = function(ind, ct) {
 
       if (HTMLWidgets.shinyMode)
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("afterRemoveRow: Shiny.onInputChange: " + this.rootElement.id);
-          }
-        }
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterRemoveRow", ind: ind, ct: ct },
@@ -253,11 +180,6 @@ HTMLWidgets.widget({
     x.afterCreateCol = function(ind, ct) {
 
       if (HTMLWidgets.shinyMode)
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("afterCreateCol: Shiny.onInputChange: " + this.rootElement.id);
-          }
-        }
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterCreateCol", ind: ind, ct: ct },
@@ -268,11 +190,6 @@ HTMLWidgets.widget({
     x.afterRemoveCol = function(ind, ct) {
 
       if (HTMLWidgets.shinyMode)
-        if (this.params && this.params.debug) {
-          if (this.params.debug > 0) {
-            console.log("afterRemoveCol: Shiny.onInputChange: " + this.rootElement.id);
-          }
-        }
         Shiny.onInputChange(this.rootElement.id, {
           data: this.getData(),
           changes: { event: "afterRemoveCol", ind: ind, ct: ct },
@@ -327,8 +244,8 @@ function csvString(instance) {
   for (var i = 0; i < instance.countRows(); i++) {
       var row = [];
       for (var h in headers) {
-          var prop = instance.colToProp(h);
-          var value = instance.getDataAtRowProp(i, prop);
+          var col = instance.propToCol(h);
+          var value = instance.getDataAtRowProp(i, col);
           row.push(value);
       }
 

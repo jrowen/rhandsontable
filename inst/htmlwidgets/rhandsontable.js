@@ -244,8 +244,8 @@ function csvString(instance) {
   for (var i = 0; i < instance.countRows(); i++) {
       var row = [];
       for (var h in headers) {
-          var prop = instance.colToProp(h);
-          var value = instance.getDataAtRowProp(i, prop);
+          var col = instance.propToCol(h);
+          var value = instance.getDataAtRowProp(i, col);
           row.push(value);
       }
 
