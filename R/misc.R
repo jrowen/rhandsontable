@@ -50,7 +50,7 @@ toR = function(data, changes, params, ...) {
     # rename to numeric index
     rowHeaders = genRowHeaders(length(out))
   } else if (changes$event == "afterRemoveRow") {
-    inds = seq(changes$ind + 1, 1, length.out = changes$ct)
+    inds = seq(changes$ind + 1, length.out = changes$ct)
     rowHeaders = rowHeaders[-inds]
   } else if (changes$event == "afterRemoveCol") {
     # colHeaders already reflects removal
