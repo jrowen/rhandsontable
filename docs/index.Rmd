@@ -561,6 +561,10 @@ shiny::runGitHub("rhandsontable", "jrowen",
                  subdir="inst/examples/rhandsontable_dash")
 ```
 
+### Bookmarks
+
+Version 0.14 of `shiny` includes new bookmarking functionality.  This willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
+
 ## Suggestions & Contributions
 
 Please file a issue if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
