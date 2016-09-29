@@ -37,7 +37,7 @@ This can be used with shiny to tie updates to a selected table cell.}
 
 \item{debug}{numeric Javascript log level}
 
-\item{...}{passed to hot_table}
+\item{...}{passed to \code{hot_table} and to the \code{params} property of the widget}
 }
 \description{
 Create a \href{http://handsontable.com}{Handsontable.js} widget.

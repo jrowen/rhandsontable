@@ -20,7 +20,7 @@
 #' @param height numeric table height
 #' @param digits numeric passed to \code{jsonlite::toJSON}
 #' @param debug numeric Javascript log level
-#' @param ... passed to hot_table
+#' @param ... passed to \code{hot_table} and to the \code{params} property of the widget
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],

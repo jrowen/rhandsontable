@@ -4,6 +4,8 @@ HTMLWidgets.widget({
 
   type: 'output',
 
+  params: null,
+
   initialize: function(el, width, height) {
 
     return {
@@ -47,6 +49,8 @@ HTMLWidgets.widget({
     }
 
     //this.afterRender(x);
+
+    this.params = x;
 
     if (instance.hot) { // update existing instance
       if (x.debug && x.debug > 0) {
