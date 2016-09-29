@@ -21,7 +21,6 @@ shinyServer(function(input, output, session) {
       DF = read.csv("mtcars.csv", stringsAsFactors = FALSE)
     }
 
-    setHot(DF)
     rhandsontable(DF) %>%
         hot_table(highlightCol = TRUE, highlightRow = TRUE)
   })
