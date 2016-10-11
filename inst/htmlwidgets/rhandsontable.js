@@ -40,14 +40,6 @@ HTMLWidgets.widget({
       $("#" + el.id).css('col.rowHeader', x.rowHeaderWidth + 'px');
     }
 
-    this.afterChangeCallback(x);
-    this.afterCellMetaCallback(x);
-    this.afterRowAndColChange(x);
-
-    if (x.selectCallback) {
-      this.afterSelectCallback(x);
-    }
-
     //this.afterRender(x);
 
     this.params = x;
@@ -65,6 +57,15 @@ HTMLWidgets.widget({
       }
 
       instance.hot = new Handsontable(el, x);
+
+      this.afterChangeCallback(x);
+      this.afterCellMetaCallback(x);
+      this.afterRowAndColChange(x);
+
+      if (x.selectCallback) {
+        this.afterSelectCallback(x);
+      }
+
       instance.hot.params = x;
       instance.hot.updateSettings(x);
     }
