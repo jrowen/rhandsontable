@@ -177,6 +177,56 @@ rhandsontable(DF, allowedTags = "<em><b><strong><a><big>",
 
 For `shiny` apps, use `renderer = htmlwidgets::JS("safeHtmlRenderer")` to display columns with html data.  The allowed html tags default to `<em><b><strong><a><big>`, but the (hidden) `allowedTags` parameter can in `rhandsontable` can be used to customize this list.
 
+#### Custom Renderer using an R Parameter {#custom_renderer_using_r}
+
+Additional parameters passed to `rhandsontable` will be available to the JavaScript widget via the `params` property.
+
+```{r}
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+col_highlight = 2
+row_highlight = c(5, 7)
+
+rhandsontable(DF, col_highlight = col_highlight, 
+              row_highlight = row_highlight,
+              width = 550, height = 300) %>%
+  hot_cols(renderer = "
+    function(instance, td, row, col, prop, value, cellProperties) {
+      Handsontable.TextCell.renderer.apply(this, arguments);
+      
+      tbl = this.HTMLWidgets.widgets[0]
+
+      hcols = tbl.params.col_highlight
+      hcols = hcols instanceof Array ? hcols : [hcols] 
+      hrows = tbl.params.row_highlight
+      hrows = hrows instanceof Array ? hrows : [hrows] 
+
+      if (hcols.includes(col) && hrows.includes(row)) {
+        td.style.background = 'red';
+      }
+      else if (hcols.includes(col)) {
+        td.style.background = 'lightgreen';
+      }
+      else if (hrows.includes(row)) {
+        td.style.background = 'pink';
+      }
+      
+      return td;
+  }")
+```
+
+When using this approach in a shiny app or in a document with more than one widget, the widget search logic will need to be more robust.
+
+```
+HTMLWidgets.widgets.filter(function(widget) {
+  // this should match the table id specified in the shiny app
+  return widget.name === "hot"
+})[0];
+```
+
 ## Right-Click Menu
 
 Right-clicking in a cell will enable a context menu that includes customizable table actions via the `hot_context_menu` function.  For shiny apps, formatting and comment updates made via the context menu are not currently retained.
@@ -215,12 +265,12 @@ rhandsontable(MAT, width = 550, height = 300) %>%
       csv = list(name = "Download to CSV",
                     callback = htmlwidgets::JS(
                       "function (key, options) {
-                         var csv = csvString(instance);
+                         var csv = csvString(this);
 
                          var link = document.createElement('a');
                          link.setAttribute('href', 'data:text/plain;charset=utf-8,' +
                            encodeURIComponent(csv));
-                         link.setAttribute('download', filename);
+                         link.setAttribute('download', 'data.csv');
 
                          document.body.appendChild(link);
                          link.click();
@@ -325,6 +375,8 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 rhandsontable(DF, width = 550, height = 300) %>%
   hot_table(highlightCol = TRUE, highlightRow = TRUE)
 ```
+
+See [Custom Renderer using an R Parameter](#custom_renderer_using_r) for a static highlighting example.
 
 ## Sizing
 
@@ -494,6 +546,8 @@ rhandsontable(MAT, readOnly = TRUE, width = 750, height = 300) %>%
            }")
 ```
 
+See [Custom Renderer using an R Parameter](#custom_renderer_using_r) for anotehr example.
+
 ## Heatmap
 
 The [chroma.js](http://old.driven-by-data.net/about/chromajs/) library can be used to turn the table into a heatmap.
@@ -506,7 +560,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
   hot_heatmap()
 ```
 
-# Big Data
+## Big Data
 
 ```{r}
 MAT = matrix(rnorm(10000 * 100), nrow = 100, dimnames= list(1:100, 1:10000))
@@ -556,6 +610,10 @@ shiny::runGitHub("rhandsontable", "jrowen",
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir="inst/examples/rhandsontable_dash")
 ```
+
+### Bookmarks
+
+Version 0.14 of `shiny` includes new bookmarking functionality.  This willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
 
 ## Suggestions & Contributions
 
