@@ -1,6 +1,8 @@
 library(rhandsontable)
 
 shinyServer(function(input, output, session) {
+  # this caching step is no longer necessary
+  # it was left as an example
   values = reactiveValues()
 
   data = reactive({
@@ -14,7 +16,6 @@ shinyServer(function(input, output, session) {
       else
         DF = values[["DF"]]
     }
-
 
     values[["DF"]] = DF
     DF

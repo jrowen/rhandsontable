@@ -1,9 +1,24 @@
+rhandsontable 0.3.4
+-------------------------
+
+* Added the ability to pass custom parameters to the table.  A good example of their use can be found in the row Custom Renderer Using an R Parameter example (http://jrowen.github.io/rhandsontable/#custom_renderer) and rhandsontable_highlight shiny app.
+
+* Updated to handsontable 0.28.4 (see https://github.com/handsontable/handsontable/releases).
+
+* Fixed an issue with the auto column width (#109)
+
+* Fixed an issues with row.names (#112)
+
+* Fixed an issue with update event order (#111, #113)
+
+* Fixed an issue with the rhandsontable_datafile example (#117)
+
 rhandsontable 0.3.3
 -------------------------
 
 * POSSIBLE BREAKING CHANGE: Updated shiny logic to fire an afterChange event when the table is first populated.  This should not initialize the table input when first loaded and simplify shiny logic.
 
-* Updates to handsontable 0.26.1 (see https://github.com/handsontable/handsontable/releases).  Note the the number formatting library has switched to numbro.js (http://numbrojs.com/languages.html), and the format for the language parameter has changed slightly (e.g. en-US, de-DE, ja-JP, etc.)
+* Updated to handsontable 0.26.1 (see https://github.com/handsontable/handsontable/releases).  Note the the number formatting library has switched to numbro.js (http://numbrojs.com/languages.html), and the format for the language parameter has changed slightly (e.g. en-US, de-DE, ja-JP, etc.)
 
 * Updated toR parser to support data.table.
 
