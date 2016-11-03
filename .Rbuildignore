@@ -1,7 +1,8 @@
+^\.gitignore
 ^.*\.Rproj$
 ^\.Rproj\.user$
-.travis.yml
-inst/examples
 README.md
+^\.travis\.yml$
 ^appveyor\.yml$
-docs/
+docs$
+inst/examples$
