@@ -25,7 +25,7 @@ Authors@R: c(
   person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: An R interface to the 'Handsontable' JavaScript library, which is a
-    minimalist Excel-like data grid editor.
+    minimalist Excel-like data grid editor.  See <https://handsontable.com/> for details.
 License: MIT + file LICENSE
 URL: http://jrowen.github.io/rhandsontable/
 BugReports: https://github.com/jrowen/rhandsontable/issues
