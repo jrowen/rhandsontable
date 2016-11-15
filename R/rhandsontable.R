@@ -37,7 +37,10 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
                           width = NULL, height = NULL, digits = 4,
                           debug = NULL, ...) {
   rColHeaders = colnames(data)
-  rRowHeaders = rownames(data)
+  if (.row_names_info(data) > 0L)
+    rRowHeaders = rownames(data)
+  else
+    rRowHeaders = NULL
 
   if (missing(colHeaders))
     colHeaders = colnames(data)
