@@ -1,3 +1,8 @@
+rhandsontable 0.3.5
+-------------------------
+
+* Fixed an issue with copying data into the table (#124)
+
 rhandsontable 0.3.4
 -------------------------
 
