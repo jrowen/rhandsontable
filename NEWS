@@ -3,6 +3,8 @@ rhandsontable 0.3.5
 
 * Fixed an issue with copying data into the table (#124)
 
+* Fixed and issues with shiny updates when new row are added (#125)
+
 rhandsontable 0.3.4
 -------------------------
 
