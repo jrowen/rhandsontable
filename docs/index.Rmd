@@ -536,7 +536,7 @@ MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
 rhandsontable(MAT, readOnly = TRUE, width = 750, height = 300) %>%
   hot_cols(renderer = "
            function (instance, td, row, col, prop, value, cellProperties) {
-             Handsontable.renderers.TextRenderer.apply(this, arguments);
+             Handsontable.renderers.NumericRenderer.apply(this, arguments);
              if (row == col) {
               td.style.background = 'lightgrey';
              } else if (col > row) {
