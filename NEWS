@@ -1,6 +1,8 @@
 rhandsontable 0.3.5
 -------------------------
 
+* Updated to handsontable 0.30.1 (see https://github.com/handsontable/handsontable/releases).
+
 * Fixed an issue with copying data into the table (#124)
 
 * Fixed and issues with shiny updates when new row are added (#125)

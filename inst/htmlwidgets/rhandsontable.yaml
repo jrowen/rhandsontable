@@ -1,12 +1,12 @@
 # (uncomment to add a dependency)
 dependencies:
  - name: handsontable
-   version: 0.28.4
+   version: 0.30.1
    src: "htmlwidgets/lib/handsontable"
    script: handsontable.full.min.js
    stylesheet: handsontable.full.min.css
  - name: numbro.languages
-   version: 1.9.2
+   version: 1.9.3
    src: "htmlwidgets/lib/numbro"
    script: languages.js
  - name: chroma
@@ -22,6 +22,6 @@ dependencies:
    src: "htmlwidgets/lib/sparkline"
    script: jquery.sparkline.min.js
  - name: rhandsontable
-   version: 0.3.4
+   version: 0.3.5
    src: "htmlwidgets"
    stylesheet: rhandsontable.css
