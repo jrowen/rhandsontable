@@ -485,10 +485,10 @@ MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
 rhandsontable(MAT * 10, width = 550, height = 300) %>%
-  hot_validate_numeric(col = 1, min = -50, max = 50, exclude = 40)
+  hot_validate_numeric(cols = 1, min = -50, max = 50, exclude = 40)
 
 rhandsontable(MAT * 10, width = 550, height = 300) %>%
-  hot_validate_numeric(col = 1, choices = c(10, 20, 40))
+  hot_validate_numeric(cols = 1, choices = c(10, 20, 40))
 ```
 
 ### Character Columns
@@ -502,7 +502,7 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 stringsAsFactors = FALSE)
 
 rhandsontable(DF, width = 550, height = 300) %>%
-  hot_validate_character(col = "big", choices = LETTERS[1:10])
+  hot_validate_character(cols = "big", choices = LETTERS[1:10])
 ```
 
 ### Custom
