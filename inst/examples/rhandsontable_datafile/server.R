@@ -1,7 +1,7 @@
 library(rhandsontable)
 
 shinyServer(function(input, output, session) {
-  fname = tempfile()
+  fname = tempfile(fileext = ".csv")
 
   observe({
     # remove button and isolate to update file automatically
@@ -9,7 +9,7 @@ shinyServer(function(input, output, session) {
     input$saveBtn
     hot = isolate(input$hot)
     if (!is.null(hot)) {
-      write.csv(hot, fname)
+      write.csv(hot_to_r(input$hot), fname)
       print(fname)
     }
   })
