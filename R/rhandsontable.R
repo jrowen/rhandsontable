@@ -110,7 +110,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
   }
 
   x = list(
-    data = jsonlite::toJSON(data, na = "string", rownames = FALSE,
+    data = jsonlite::toJSON(data, na = "null", rownames = FALSE,
                             digits = digits),
     rClass = rClass,
     rColClasses = rColClasses,
