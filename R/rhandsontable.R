@@ -515,7 +515,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
 #' @export
 hot_cell = function(hot, row, col, comment = NULL) {
-  cell = list(row = row - 1, col = col - 1, comment = comment)
+  cell = list(row = row - 1, col = col - 1, comment = list(value = comment))
 
   hot$x$cell = c(hot$x$cell, list(cell))
 
