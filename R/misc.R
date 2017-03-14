@@ -47,8 +47,14 @@ toR = function(data, changes, params, ...) {
 
   # pre-conversion updates; afterCreateCol moved to end of function
   if (changes$event == "afterCreateRow") {
-    # rename to numeric index
-    rowHeaders = genRowHeaders(length(out))
+    inds = seq(changes$ind + 1, length.out = changes$ct)
+    # prevent duplicates
+    nm = 1
+    while (nm %in% rowHeaders) {
+      nm = nm + 1
+    }
+    rowHeaders = c(head(rowHeaders, inds - 1), nm,
+                   tail(rowHeaders, length(rowHeaders) - inds + 1))
   } else if (changes$event == "afterRemoveRow") {
     inds = seq(changes$ind + 1, length.out = changes$ct)
     rowHeaders = rowHeaders[-inds]
@@ -120,7 +126,7 @@ colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
                                  unique(d[[i]][!(d[[i]] %in% unlist(cols[[i]]$source))])),
                       ordered = TRUE),
       json = jsonlite::toJSON(d[[i]]),
-      as(d[[i]], colClasses[i]))
+      suppressWarnings(as(d[[i]], colClasses[i])))
   d
 }
 
@@ -131,8 +137,4 @@ genColHeaders <- function(changes, colHeaders) {
   # insert into vector
   inds = seq(changes$ind + 1, 1, length.out = changes$ct)
   c(colHeaders, new_cols)[order(c(seq_along(colHeaders), inds - 0.5))]
-}
-
-genRowHeaders <- function(ct) {
-  seq_len(ct)
 }
