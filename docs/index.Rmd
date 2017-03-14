@@ -2,15 +2,12 @@
 title: "rhandsontable"
 output:
   html_document:
-    #css: custom.css
     toc: true
     toc_float: true
-    #toc_depth: 3
     self_contained: false
     lib_dir: libs
-    #theme: default
-    includes:
-      before_body: include/before_body.html
+    include:
+      after_body: include/footer.html
 ---
 
 ```{r echo = FALSE}
@@ -23,7 +20,7 @@ opts_knit$set(warning = FALSE, error = FALSE, message = FALSE, cache = FALSE,
 
 ## Introduction
 
-  rhandsontable is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
+rhandsontable is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
 
 > Handsontable is a data grid component with an Excel-like appearance. Built in JavaScript, it integrates with any data source with peak efficiency. It comes with powerful features like data validation, sorting, grouping, data binding, formula support or column ordering.
 ([via](https://www.handsontable.com))
@@ -621,4 +618,6 @@ Version 0.14 of `shiny` includes new bookmarking functionality.  This willl work
 
 ## Suggestions & Contributions
 
-Please file a issue if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
+Please [file a issue](https://github.com/jrowen/rhandsontable/issues) if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
+
+
