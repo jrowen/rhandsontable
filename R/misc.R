@@ -132,9 +132,16 @@ colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
 
 genColHeaders <- function(changes, colHeaders) {
   ind_ct = length(which(grepl("V[0-9]{1,}", colHeaders)))
-  # create new column names
-  new_cols = paste0("V", changes$ct + ind_ct)
-  # insert into vector
-  inds = seq(changes$ind + 1, 1, length.out = changes$ct)
-  c(colHeaders, new_cols)[order(c(seq_along(colHeaders), inds - 0.5))]
+
+  if (changes$event == "afterRemoveCol") {
+    colHeaders[-(seq(changes$ind, length = changes$ct) + 1)]
+  } else if (changes$event == "afterCreateCol") {
+    # create new column names
+    new_cols = paste0("V", changes$ct + ind_ct)
+    # insert into vector
+    inds = seq(changes$ind + 1, 1, length.out = changes$ct)
+    c(colHeaders, new_cols)[order(c(seq_along(colHeaders), inds - 0.5))]
+  } else {
+    stop("Change no recognized:", changes$event)
+  }
 }
