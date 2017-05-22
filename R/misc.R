@@ -98,7 +98,7 @@ toR = function(data, changes, params, ...) {
   if (ncol(out) != length(colHeaders))
     colHeaders = genColHeaders(changes, colHeaders)
 
-  if (nrow(out) != length(rowHeaders))
+  if (nrow(out) != length(rowHeaders) && !is.null(rowHeaders))
     rowHeaders = genRowHeaders(changes, rowHeaders)
 
   colnames(out) = colHeaders
@@ -156,7 +156,7 @@ genRowHeaders <- function(changes, rowHeaders) {
       nm = nm + 1
     }
     c(head(rowHeaders, inds - 1), nm,
-                   tail(rowHeaders, length(rowHeaders) - inds + 1))
+      tail(rowHeaders, length(rowHeaders) - inds + 1))
   } else if (changes$event == "afterRemoveRow") {
     rowHeaders[-inds]
   }
