@@ -78,4 +78,3 @@ rhandsontable(DF, rowHeaders = NULL) \%>\%
 \seealso{
 \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 }
-

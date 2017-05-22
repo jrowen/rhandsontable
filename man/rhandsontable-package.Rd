@@ -10,4 +10,3 @@ R interface for creating tables using Handsontable, url{http://http://handsontab
 \details{
 For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
 }
-

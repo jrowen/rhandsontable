@@ -11,8 +11,8 @@ hot_rows(hot, rowHeights = NULL, fixedRowsTop = NULL)
 
 \item{rowHeights}{a scalar or numeric vector of row heights}
 
-\item{fixedRowsTop}{a numeric vector indicating which rows should be
-frozen on the top}
+\item{fixedRowsTop}{a scaler indicating the number of rows to
+freeze on the top}
 }
 \description{
 Configure rows.  See
@@ -30,4 +30,3 @@ hot_cols(colWidths = 100, fixedColumnsLeft = 1) \%>\%
 \seealso{
 \code{\link{hot_cols}}, \code{\link{hot_cell}}
 }
-

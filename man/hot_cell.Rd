@@ -32,4 +32,3 @@ rhandsontable(DF, readOnly = TRUE) \%>\%
 \seealso{
 \code{\link{hot_cols}}, \code{\link{hot_rows}}
 }
-

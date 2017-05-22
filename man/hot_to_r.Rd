@@ -16,4 +16,3 @@ Convert handsontable data to R object. Can be used in a \code{shiny} app
 \seealso{
 \code{\link{rHandsontableOutput}}
 }
-

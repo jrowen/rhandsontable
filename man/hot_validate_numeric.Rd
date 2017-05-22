@@ -41,4 +41,3 @@ rhandsontable(MAT * 10) \%>\%
 \seealso{
 \code{\link{hot_validate_character}}
 }
-

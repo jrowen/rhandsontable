@@ -18,4 +18,3 @@ Shiny bindings for rhandsontable
 \seealso{
 \code{\link{renderRHandsontable}}
 }
-

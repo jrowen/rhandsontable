@@ -51,4 +51,3 @@ hot_table(highlightCol = TRUE, highlightRow = TRUE)
 \seealso{
 \code{\link{rhandsontable}}
 }
-
