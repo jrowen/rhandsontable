@@ -20,4 +20,3 @@ Shiny bindings for rhandsontable
 \seealso{
 \code{\link{rHandsontableOutput}}, \code{\link{hot_to_r}}
 }
-

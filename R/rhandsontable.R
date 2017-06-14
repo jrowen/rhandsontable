@@ -343,8 +343,8 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
 #'  The sorting will be done when a user click on column name
 #' @param manualColumnMove logical enabling column drag-and-drop reordering
 #' @param manualColumnResize logical enabline column width resizing
-#' @param fixedColumnsLeft a numeric vector indicating which columns should be
-#'  frozen on the left
+#' @param fixedColumnsLeft a scalar indicating the number of columns to
+#'  freeze on the left
 #' @param ... passed to hot_col
 #' @examples
 #' library(rhandsontable)
@@ -476,8 +476,8 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #'
 #' @param hot rhandsontable object
 #' @param rowHeights a scalar or numeric vector of row heights
-#' @param fixedRowsTop a numeric vector indicating which rows should be
-#'  frozen on the top
+#' @param fixedRowsTop a scaler indicating the number of rows to
+#'  freeze on the top
 #' @examples
 #' library(rhandsontable)
 #' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],

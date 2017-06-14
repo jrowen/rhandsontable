@@ -33,4 +33,3 @@ rhandsontable(DF) \%>\%
 \seealso{
 \code{\link{hot_validate_numeric}}
 }
-

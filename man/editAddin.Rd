@@ -23,4 +23,3 @@ at the cursor position.
 
 This function borrows heavily from \href{rstudio/addinexamples/subsetAddin}{https://github.com/rstudio/addinexamples/blob/master/R/subsetAddin.R}
 }
-
