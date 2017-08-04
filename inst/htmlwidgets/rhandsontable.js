@@ -109,8 +109,9 @@ HTMLWidgets.widget({
       }
 
       if (HTMLWidgets.shinyMode) {
-        if (changes && (changes[0][2] !== null || changes[0][3] !== null)) {
+        if (changes && (changes[0][2] !== null || changes[0][3] !== null) && (changes[0][2] != changes[0][3])) {
           c = new Array ();
+          console.log("Length of changes: " + changes.length);
           if (changes.length > 1){
             if (this.sortIndex && this.sortIndex.length !== 0) {
               for(i=0;i<changes.length;i++){
@@ -118,8 +119,7 @@ HTMLWidgets.widget({
                 console.log("sortIndex navtest2: " + this.sortIndex[i][0]);
                 console.log("sortIndex navtest3: " + [this.sortIndex[i][0]][0]);
                 console.log("sortIndex navtest4: " + [this.sortIndex[i][0]][1]);
-                c[i] = [this.sortIndex[changes[i][0]][0]];
-                c[i] = c[i].concat(changes[i].slice(1, 1+3));
+                c[i] = [this.sortIndex[changes[i][0]][0], changes[i][1], changes[i][2], changes[i][3]];
               }
             } else {
               c = changes
@@ -128,10 +128,11 @@ HTMLWidgets.widget({
             if (this.sortIndex && this.sortIndex.length !== 0) {
               console.log("First condition met.");
               console.log("changes length: " + changes.length);
-              c[0] = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
-              console.log("Brent Bugtesting - c at point 1: " + c);
-              c[0] = [this.sortIndex[changes[0][0]][0]];
-              c[0] = c[1].concat(changes[0].slice(1, 1 + 3));
+              //c[0] = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+              //console.log("Brent Bugtesting - c at point 1: " + c);
+              //c[0] = [this.sortIndex[changes[0][0]][0]];
+              //c[0] = c[1].concat(changes[0].slice(1, 1 + 3));
+              c[0] = [this.sortIndex[changes[0][0]][0], changes[0][1], changes[0][2], changes[0][3]];
               console.log("Brent Bugtesting - c at point 2: " + c);
               console.log("Brent Bugtesting - sortIndex[changes]: " + this.sortIndex[changes]);
               console.log("Brent Bugtesting - this.sortIndex: " + this.sortIndex);
