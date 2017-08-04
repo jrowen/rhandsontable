@@ -109,17 +109,23 @@ HTMLWidgets.widget({
       }
 
       if (HTMLWidgets.shinyMode) {
-        if (changes && (changes[0][2] !== null || changes[0][3] !== null) && (changes[0][2] !== changes[0][3])) {
+        if (changes && (changes[0][2] !== null || changes[0][3] !== null)) {
           if (this.sortIndex && this.sortIndex.length !== 0) {
-            c = [this.sortIndex[changes[0][0]][0]];
+            console.log("First condition met.");
+            c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+            console.log("Brent Bugtesting - c at point 1: " + c);
+            d = [this.sortIndex[changes[0][0]][0]];
+            d = d.concat(changes[0].slice(1, 1 + 3));
+            c = [c, d];
             console.log("Brent Bugtesting - c: " + c);
             console.log("Brent Bugtesting - sortIndex[changes]: " + this.sortIndex[changes]);
             console.log("Brent Bugtesting - this.sortIndex: " + this.sortIndex);
             console.log("Brent Bugtesting - type of c: " + typeof(c));
-            c = c.concat(changes[0].slice(1, 1 + 3));
           } else {
+            console.log("Second condition met.");
             c = changes;
           }
+        
           
           if (this.params && this.params.debug) {
             if (this.params.debug > 0) {
