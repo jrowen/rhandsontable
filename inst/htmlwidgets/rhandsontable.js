@@ -112,10 +112,10 @@ HTMLWidgets.widget({
         if (changes && (changes[0][2] !== null || changes[0][3] !== null) && (changes[0][2] !== changes[0][3])) {
           if (this.sortIndex && this.sortIndex.length !== 0) {
             c = [this.sortIndex[changes[0][0]][0]];
-            console.log("c: " + c);
-            console.log("sortIndex[changes]: " + this.sortIndex[changes]);
-            console.log("this.sortIndex: " + this.sortIndex);
-            console.log("type of c: " + typeof(c));
+            console.log("Brent Bugtesting - c: " + c);
+            console.log("Brent Bugtesting - sortIndex[changes]: " + this.sortIndex[changes]);
+            console.log("Brent Bugtesting - this.sortIndex: " + this.sortIndex);
+            console.log("Brent Bugtesting - type of c: " + typeof(c));
             c = c.concat(changes[0].slice(1, 1 + 3));
           } else {
             c = changes;
