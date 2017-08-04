@@ -114,6 +114,7 @@ HTMLWidgets.widget({
             c = this.sortIndex[changes[0][0]][0];
             console.log(c);
             console.log(this.sortIndex[changes]);
+            console.log(this.sortIndex);
             c = c.concat(changes[0].slice(1, 1 + 3));
           } else {
             c = changes;
