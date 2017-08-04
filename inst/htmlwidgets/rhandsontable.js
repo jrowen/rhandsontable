@@ -128,17 +128,17 @@ HTMLWidgets.widget({
             if (this.sortIndex && this.sortIndex.length !== 0) {
               console.log("First condition met.");
               console.log("changes length: " + changes.length);
-              c[1] = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+              c[0] = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
               console.log("Brent Bugtesting - c at point 1: " + c);
-              c[1] = [this.sortIndex[changes[0][0]][0]];
-              c[1] = c[1].concat(changes[0].slice(1, 1 + 3));
+              c[0] = [this.sortIndex[changes[0][0]][0]];
+              c[0] = c[1].concat(changes[0].slice(1, 1 + 3));
               console.log("Brent Bugtesting - c at point 2: " + c);
               console.log("Brent Bugtesting - sortIndex[changes]: " + this.sortIndex[changes]);
               console.log("Brent Bugtesting - this.sortIndex: " + this.sortIndex);
               console.log("Brent Bugtesting - type of c: " + typeof(c));
             } else {
               console.log("Second condition met.");
-              c[1] = changes;
+              c[0] = changes;
             }
           }
         
