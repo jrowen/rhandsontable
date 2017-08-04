@@ -109,13 +109,14 @@ HTMLWidgets.widget({
       }
 
       if (HTMLWidgets.shinyMode) {
-        if (changes && (changes[0][2] !== null || changes[0][3] !== null)) {
+        if (changes && (changes[0][2] !== null || changes[0][3] !== null) && (changes[0][2] !== changes[0][3])) {
           if (this.sortIndex && this.sortIndex.length !== 0) {
-            c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+            c = this.sortIndex[changes[0][0]][0];
+            c = c.concat(changes[0].slice(1, 1 + 3));
           } else {
             c = changes;
           }
-
+          
           if (this.params && this.params.debug) {
             if (this.params.debug > 0) {
               console.log("afterChange: Shiny.onInputChange: " + this.rootElement.id);
