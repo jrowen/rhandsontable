@@ -35,7 +35,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
                           useTypes = TRUE, readOnly = NULL,
                           selectCallback = FALSE,
                           width = NULL, height = NULL, digits = 4,
-                          debug = NULL, ...) {
+                          debug = NULL, persistentState = TRUE, ...) {
   rColHeaders = colnames(data)
   if (.row_names_info(data) > 0L)
     rRowHeaders = rownames(data)
@@ -119,6 +119,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rRowHeaders = rRowHeaders,
     rDataDim = dim(data),
     selectCallback = selectCallback,
+    persistentState = persistentState,
     colHeaders = colHeaders,
     rowHeaders = rowHeaders,
     columns = cols,
