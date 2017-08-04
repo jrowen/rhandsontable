@@ -111,7 +111,15 @@ HTMLWidgets.widget({
       if (HTMLWidgets.shinyMode) {
         if (changes && (changes[0][2] !== null || changes[0][3] !== null)) {
           if (changes.length > 1){
-            c = changes
+            if (this.sortIndex && this.sortIndex.length !== 0) {
+              c = new Array ();
+              for(i=0;i<changes.length;i++){
+                c[i] = [this.sortIndex[changes[i][0]][0]];
+                c[i] = c[i].concat(changes[i].slice(1, 1+3));
+              }
+            } else {
+              c = changes
+            }
           } else {
             if (this.sortIndex && this.sortIndex.length !== 0) {
               console.log("First condition met.");
