@@ -110,10 +110,14 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode) {
         if (changes && (changes[0][2] !== null || changes[0][3] !== null)) {
+          c = new Array ();
           if (changes.length > 1){
             if (this.sortIndex && this.sortIndex.length !== 0) {
-              c = new Array ();
               for(i=0;i<changes.length;i++){
+                console.log("sortIndex navtest1: " + this.sortIndex[i]);
+                console.log("sortIndex navtest2: " + this.sortIndex[i][0]);
+                console.log("sortIndex navtest3: " + [this.sortIndex[i][0]][0]);
+                console.log("sortIndex navtest4: " + [this.sortIndex[i][0]][1]);
                 c[i] = [this.sortIndex[changes[i][0]][0]];
                 c[i] = c[i].concat(changes[i].slice(1, 1+3));
               }
@@ -124,17 +128,17 @@ HTMLWidgets.widget({
             if (this.sortIndex && this.sortIndex.length !== 0) {
               console.log("First condition met.");
               console.log("changes length: " + changes.length);
-              c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
+              c[1] = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
               console.log("Brent Bugtesting - c at point 1: " + c);
-              c = [this.sortIndex[changes[0][0]][0]];
-              c = c.concat(changes[0].slice(1, 1 + 3));
+              c[1] = [this.sortIndex[changes[0][0]][0]];
+              c[1] = c[1].concat(changes[0].slice(1, 1 + 3));
               console.log("Brent Bugtesting - c at point 2: " + c);
               console.log("Brent Bugtesting - sortIndex[changes]: " + this.sortIndex[changes]);
               console.log("Brent Bugtesting - this.sortIndex: " + this.sortIndex);
               console.log("Brent Bugtesting - type of c: " + typeof(c));
             } else {
               console.log("Second condition met.");
-              c = changes;
+              c[1] = changes;
             }
           }
         
