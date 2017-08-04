@@ -112,6 +112,7 @@ HTMLWidgets.widget({
         if (changes && (changes[0][2] !== null || changes[0][3] !== null)) {
           if (this.sortIndex && this.sortIndex.length !== 0) {
             console.log("First condition met.");
+            console.log("changes length: " + changes.length);
             c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
             console.log("Brent Bugtesting - c at point 1: " + c);
             c = [this.sortIndex[changes[0][0]][0]];
