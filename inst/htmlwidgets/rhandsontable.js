@@ -114,10 +114,9 @@ HTMLWidgets.widget({
             console.log("First condition met.");
             c = [this.sortIndex[changes[0][0]][0], changes[0].slice(1, 1 + 3)];
             console.log("Brent Bugtesting - c at point 1: " + c);
-            d = [this.sortIndex[changes[0][0]][0]];
-            d = d.concat(changes[0].slice(1, 1 + 3));
-            c = [c, d];
-            console.log("Brent Bugtesting - c: " + c);
+            c = [this.sortIndex[changes[0][0]][0]];
+            c = c.concat(changes[0].slice(1, 1 + 3));
+            console.log("Brent Bugtesting - c at point 2: " + c);
             console.log("Brent Bugtesting - sortIndex[changes]: " + this.sortIndex[changes]);
             console.log("Brent Bugtesting - this.sortIndex: " + this.sortIndex);
             console.log("Brent Bugtesting - type of c: " + typeof(c));
