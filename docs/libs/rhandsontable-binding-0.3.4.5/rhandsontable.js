@@ -173,10 +173,6 @@ HTMLWidgets.widget({
     x.afterSetCellMeta = function(r, c, key, val) {
 
       if (HTMLWidgets.shinyMode && key === "comment") {
-        if (this.sortIndex && this.sortIndex.length !== 0) {
-          r = this.sortIndex[r][0];
-        }
-
         if (this.params && this.params.debug) {
           if (this.params.debug > 0) {
             console.log("afterSetCellMeta: Shiny.onInputChange: " + this.rootElement.id);
