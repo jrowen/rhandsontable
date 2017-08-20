@@ -160,11 +160,11 @@ rhandsontable(DF, allowedTags = "<em><b><strong><a><big>",
         img = document.createElement('IMG');
         img.src = value;
   
-        Handsontable.Dom.addEvent(img, 'mousedown', function (e){
+        Handsontable.dom.addEvent(img, 'mousedown', function (e){
           e.preventDefault(); // prevent selection quirk
         });
   
-        Handsontable.Dom.empty(td);
+        Handsontable.dom.empty(td);
         td.appendChild(img);
       }
       else {
@@ -196,7 +196,7 @@ rhandsontable(DF, col_highlight = col_highlight,
               width = 550, height = 300) %>%
   hot_cols(renderer = "
     function(instance, td, row, col, prop, value, cellProperties) {
-      Handsontable.TextCell.renderer.apply(this, arguments);
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
       
       tbl = this.HTMLWidgets.widgets[0]
 

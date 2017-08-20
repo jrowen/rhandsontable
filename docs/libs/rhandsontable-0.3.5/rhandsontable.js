@@ -223,8 +223,10 @@ HTMLWidgets.widget({
 
       if (HTMLWidgets.shinyMode) {
 
-        for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
-          this.setDataAtCell(ind, i, this.params.columns[i].default);
+        if (this.params && this.params.columns) {
+          for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
+            this.setDataAtCell(ind, i, this.params.columns[i].default);
+          }
         }
 
         if (this.params && this.params.debug) {
