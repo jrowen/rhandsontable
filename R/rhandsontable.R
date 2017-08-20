@@ -141,7 +141,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     )
   )
 
-  if (!is.null(readOnly)) {
+  if (!is.null(readOnly) && !is.logical(hot$x$colHeaders)) {
     for (x in hot$x$colHeaders)
       hot = hot %>% hot_col(x, readOnly = readOnly)
   }
