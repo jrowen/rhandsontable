@@ -71,19 +71,36 @@ toR = function(data, changes, params, ...) {
     out = unlist(out, recursive = FALSE)
     # replace NULL with NA
     out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
-    out = matrix(out, nrow = nr, byrow = TRUE)
+
+    # If there is no data create empty matrix
+    if (length(out) == 0) {
+      out = matrix(nrow = 0, ncol = length(colHeaders))
+    } else {
+      out = matrix(out, nrow = nr, byrow = TRUE)
+    }
+
     class(out) = params$rColClasses
+
   } else if ("data.frame" %in% rClass) {
     nr = length(out)
+
     out = unlist(out, recursive = FALSE)
     # replace NULL with NA
     out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
-    out = matrix(out, nrow = nr, byrow = TRUE)
+
+    # If there is no data create empty matrix
+    if (length(out) == 0) {
+      out = matrix(nrow = 0, ncol = length(colHeaders))
+    } else {
+      out = matrix(out, nrow = nr, byrow = TRUE)
+    }
+
     out = colClasses(as.data.frame(out, stringsAsFactors = FALSE),
                      rColClasses, params$columns, ...)
   } else {
     stop("Conversion not implemented: ", rClass)
   }
+
 
   # post-conversion updates
   if (changes$event == "afterCreateRow") {
