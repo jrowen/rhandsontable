@@ -28,7 +28,7 @@ shinyServer(function(input, output, session) {
       new = input$hot_comment$comment
 
       CMTS = values[["CMTS"]]
-      CMTS[new$r, new$c] = new$val
+      CMTS[new$r, new$c] = as.character(new$val)
     }
 
     values[["CMTS"]] = CMTS
