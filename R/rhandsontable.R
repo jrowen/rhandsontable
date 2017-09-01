@@ -78,16 +78,9 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     cols = lapply(seq_along(col_typs), function(i) {
       type = col_typs[i]
       if (type == "factor") {
-#         data_fact = data.frame(level = levels(data[, i]),
-#                                label = labels(data[, i]))
         res = list(type = "dropdown",
                    source = levels(data[, i]),
                    allowInvalid = FALSE
-#                    handsontable = list(
-#                      colHeaders = FALSE, #c("Label", "Level"),
-#                      data = levels(data[, i]) #jsonlite::toJSON(data_fact, na = "string",
-#                                               #rownames = FALSE)
-#                    )
         )
       } else if (type == "numeric") {
         res = list(type = "numeric",
@@ -110,7 +103,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
   }
 
   x = list(
-    data = jsonlite::toJSON(data, na = "string", rownames = FALSE,
+    data = jsonlite::toJSON(data, na = "null", rownames = FALSE,
                             digits = digits),
     rClass = rClass,
     rColClasses = rColClasses,

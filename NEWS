@@ -7,6 +7,16 @@ rhandsontable 0.3.5
 
 * Fixed and issues with shiny updates when new row are added (#125, #160)
 
+* Updated documentation to refer to Numbro.js and fixed renderer examples
+
+* Changed NA behavior to null (#153, thanks to @marciz for submitting)
+
+* Add support for empty tables (#171, thanks to Tim Jones for submitting)
+
+* Fixed a bug when not specifying headers on a read-only table (#174)
+
+* Fixed comment callback index for sorted tables (#183, thanks to Ryan Kennedy for submitting)
+
 rhandsontable 0.3.4
 -------------------------
 

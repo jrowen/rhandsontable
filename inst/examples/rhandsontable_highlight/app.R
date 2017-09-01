@@ -20,11 +20,11 @@ app <- shinyApp(
 
     output$hot <- renderRHandsontable({
       DF = data()
-      myindex = input$myindex
+      myindex = input$myindex - 1
       if (!is.null(DF)) {
         rhandsontable(DF, myindex = myindex) %>%
           hot_cols(renderer = "function(instance, td, row, col, prop, value, cellProperties) {
-            Handsontable.TextCell.renderer.apply(this, arguments);
+            Handsontable.renderers.TextRenderer.apply(this, arguments);
             if (instance.params && instance.params.myindex == row) td.style.background = 'lightblue';
           }
         ")
@@ -32,5 +32,3 @@ app <- shinyApp(
     })
   }
 )
-
-runApp(app)
