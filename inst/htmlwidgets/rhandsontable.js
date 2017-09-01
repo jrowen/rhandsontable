@@ -343,17 +343,12 @@ function csvString(instance) {
 }
 
 function customRenderer(instance, TD, row, col, prop, value, cellProperties) {
-  if (value === 'NA') {
-    value = '';
-    Handsontable.renderers.getRenderer('text')(instance, TD, row, col, prop, value, cellProperties);
-  } else {
     if (['date', 'handsontable', 'dropdown'].indexOf(cellProperties.type) > -1) {
       type = 'autocomplete';
     } else {
       type = cellProperties.type;
     }
     Handsontable.renderers.getRenderer(type)(instance, TD, row, col, prop, value, cellProperties);
-  }
 }
 
 function renderSparkline(instance, td, row, col, prop, value, cellProperties) {
