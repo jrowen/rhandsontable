@@ -386,7 +386,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @param format characer specifying column format. See Cell Types at
 #'  \href{http://handsontable.com}{Handsontable.js} for the formatting
 #'  options for each data type. Numeric columns are formatted using
-#'  \href{http://numeraljs.com}{Numeral.js}.
+#'  \href{http://numbrojs.com}{Numbro.js}.
 #' @param source a vector of choices for select, dropdown and autocomplete
 #'  column types
 #' @param strict logical specifying whether values not in the \code{source}
