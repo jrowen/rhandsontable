@@ -6,7 +6,7 @@
 \usage{
 rhandsontable(data, colHeaders, rowHeaders, comments = NULL,
   useTypes = TRUE, readOnly = NULL, selectCallback = FALSE,
-  width = NULL, height = NULL, digits = 4, debug = NULL, ...)
+  width = NULL, height = NULL, digits = 4, debug = NULL, search = FALSE, ...)
 }
 \arguments{
 \item{data}{a \code{data.table}, \code{data.frame} or \code{matrix}}
