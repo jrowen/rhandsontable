@@ -37,6 +37,8 @@ This can be used with shiny to tie updates to a selected table cell.}
 
 \item{debug}{numeric Javascript log level}
 
+\item{search}{logical specifying if the data can be searched}
+
 \item{...}{passed to \code{hot_table} and to the \code{params} property of the widget}
 }
 \description{
