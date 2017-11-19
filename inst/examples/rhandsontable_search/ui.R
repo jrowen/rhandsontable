@@ -1,21 +1,13 @@
 library(rhandsontable)
-library(dygraphs)
 
 shinyUI(fluidPage(
-  titlePanel("130/30 Portfolio Returns"),
+  titlePanel("Edit Data File"),
+  helpText("Changes to the table will be automatically saved to the source file."),
+  
+  # uncomment line below to use action button to commit changes
   fluidRow(
-    column(12,
-           helpText("Change the position type and weights to recalculate the ",
-                    "return stream."))
+    column(width=2, textInput("searchField", "Search")),
+    column(width=2, uiOutput("saveText"), actionButton("saveBtn", "Save"))
   ),
-  fluidRow(
-    column(4,
-           textInput("searchField", "Search"),
-           rHandsontableOutput("hot"),
-           checkboxInput("reweight", "Reweight?")
-    ),
-    column(6,
-           dygraphOutput("plot")
-    )
-  )
+  rHandsontableOutput("hot")
 ))

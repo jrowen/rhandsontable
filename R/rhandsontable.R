@@ -20,6 +20,7 @@
 #' @param height numeric table height
 #' @param digits numeric passed to \code{jsonlite::toJSON}
 #' @param debug numeric Javascript log level
+#' @param search logical specifying if the data can be searched
 #' @param ... passed to \code{hot_table} and to the \code{params} property of the widget
 #' @examples
 #' library(rhandsontable)
