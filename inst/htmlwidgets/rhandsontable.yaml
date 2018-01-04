@@ -6,7 +6,7 @@ dependencies:
    script: handsontable.full.min.js
    stylesheet: handsontable.full.min.css
  - name: numbro.languages
-   version: 1.10.1
+   version: 1.11.1
    src: "htmlwidgets/lib/numbro"
    script: languages.js
  - name: chroma

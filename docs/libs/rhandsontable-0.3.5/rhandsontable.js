@@ -133,11 +133,11 @@ HTMLWidgets.widget({
               console.log("afterChange: Shiny.onInputChange: " + this.rootElement.id);
             }
           }
-          Shiny.onInputChange(this.rootElement.id, {
-            data: this.getData(),
-            changes: { event: "afterChange", changes: null },
-            params: this.params
-          });
+          //Shiny.onInputChange(this.rootElement.id, {
+          //  data: this.getData(),
+          //  changes: { event: "afterChange", changes: null },
+          //  params: this.params
+          //});
         }
       }
 
