@@ -43,3 +43,4 @@ Suggests:
     htmltools
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
+Encoding: UTF-8
