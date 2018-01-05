@@ -1,172 +1,172 @@
-"","country","region","population","female","male"
-"1","Afghanistan","Asia",32526562,61.9,59.3
-"2","Albania","Europe",2896679,80.7,75.1
-"3","Algeria","Africa",39666519,77.5,73.8
-"4","Angola","Africa",25021974,54,50.9
-"5","Antigua and Barbuda","Americas",91818,78.6,74.1
-"6","Argentina","Americas",43416755,79.9,72.7
-"7","Armenia","Asia",3017712,77.7,71.6
-"8","Australia","Oceania",23968973,84.8,80.9
-"9","Austria","Europe",8544586,83.9,79
-"10","Azerbaijan","Asia",9753968,75.8,69.6
-"11","Bahamas","Americas",388019,79.1,72.9
-"12","Bahrain","Asia",1377237,77.9,76.2
-"13","Bangladesh","Asia",160995642,73.1,70.6
-"14","Barbados","Americas",284215,77.9,73.1
-"15","Belarus","Europe",9495826,78,66.5
-"16","Belgium","Europe",11299192,83.5,78.6
-"17","Belize","Americas",359287,73.1,67.5
-"18","Benin","Africa",10879829,61.1,58.8
-"19","Bhutan","Asia",774830,70.1,69.5
-"20","Bolivia","Americas",10724705,73.3,68.2
-"21","Bosnia and Herzegovina","Europe",3810416,79.7,75
-"22","Botswana","Africa",2262485,68.1,63.3
-"23","Brazil","Americas",207847528,78.7,71.4
-"24","Bulgaria","Europe",7149787,78,71.1
-"25","Burkina Faso","Africa",18105570,60.5,59.1
-"26","Burundi","Africa",11178921,61.6,57.7
-"27","Cabo Verde","Africa",520502,75,71.3
-"28","Cambodia","Asia",15577899,70.7,66.6
-"29","Cameroon","Africa",23344179,58.6,55.9
-"30","Canada","Americas",35939927,84.1,80.2
-"31","Central African Republic","Africa",4900274,54.1,50.9
-"32","Chad","Africa",14037472,54.5,51.7
-"33","Chile","Americas",17948141,83.4,77.4
-"34","China","Asia",1376048943,77.6,74.6
-"35","Colombia","Americas",48228704,78.4,71.2
-"36","Comoros","Africa",788474,65.2,61.9
-"37","Congo","Africa",4620330,66.3,63.2
-"38","Costa Rica","Americas",4807850,82.2,77.1
-"39","Croatia","Europe",4240317,81.2,74.7
-"40","Cuba","Americas",11389562,81.4,76.9
-"41","Cyprus","Asia",1165300,82.7,78.3
-"42","Czech Republic","Europe",10543186,81.7,75.9
-"43","Democratic Republic of the Congo","Africa",77266814,61.5,58.3
-"44","Denmark","Europe",5669081,82.5,78.6
-"45","Djibouti","Africa",887861,65.3,61.8
-"46","Dominican Republic","Americas",10528391,77.1,70.9
-"47","Ecuador","Americas",16144363,79,73.5
-"48","Egypt","Africa",91508084,73.2,68.8
-"49","El Salvador","Americas",6126583,77.9,68.8
-"50","Equatorial Guinea","Africa",845060,60,56.6
-"51","Eritrea","Africa",5227791,67,62.4
-"52","Estonia","Europe",1312558,82,72.7
-"53","Ethiopia","Africa",99390750,66.8,62.8
-"54","Fiji","Oceania",892145,73.1,67
-"55","Finland","Europe",5503457,83.8,78.3
-"56","France","Europe",64395345,85.4,79.4
-"57","Gabon","Africa",1725292,67.2,64.7
-"58","Gambia","Africa",1990924,62.5,59.8
-"59","Georgia","Asia",3999812,78.3,70.3
-"60","Germany","Europe",80688545,83.4,78.7
-"61","Ghana","Africa",27409893,63.9,61
-"62","Greece","Europe",10954617,83.6,78.3
-"63","Grenada","Americas",106825,76.1,71.2
-"64","Guatemala","Americas",16342897,75.2,68.5
-"65","Guinea","Africa",12608590,59.8,58.2
-"66","Guinea-Bissau","Africa",1844325,60.5,57.2
-"67","Guyana","Americas",767085,68.5,63.9
-"68","Haiti","Americas",10711067,65.5,61.5
-"69","Honduras","Americas",8075060,77,72.3
-"70","Hungary","Europe",9855023,79.1,72.3
-"71","Iceland","Europe",329425,84.1,81.2
-"72","India","Asia",1311050527,69.9,66.9
-"73","Indonesia","Asia",257563815,71.2,67.1
-"74","Iran","Asia",79109272,76.6,74.5
-"75","Iraq","Asia",36423395,71.8,66.2
-"76","Ireland","Europe",4688465,83.4,79.4
-"77","Israel","Asia",8064036,84.3,80.6
-"78","Italy","Europe",59797685,84.8,80.5
-"79","Jamaica","Americas",2793335,78.6,73.9
-"80","Japan","Asia",126573481,86.8,80.5
-"81","Jordan","Asia",7594547,75.9,72.5
-"82","Kazakhstan","Asia",17625226,74.7,65.7
-"83","Kenya","Africa",46050302,65.8,61.1
-"84","Kiribati","Oceania",112423,68.8,63.7
-"85","Kuwait","Asia",3892115,76,73.7
-"86","Kyrgyzstan","Asia",5939962,75.1,67.2
-"87","Latvia","Europe",1970503,79.2,69.6
-"88","Lebanon","Asia",5850743,76.5,73.5
-"89","Lesotho","Africa",2135022,55.4,51.7
-"90","Liberia","Africa",4503438,62.9,59.8
-"91","Libya","Africa",6278438,75.6,70.1
-"92","Lithuania","Europe",2878405,79.1,68.1
-"93","Luxembourg","Europe",567110,84,79.8
-"94","Madagascar","Africa",24235390,67,63.9
-"95","Malawi","Africa",17215232,59.9,56.7
-"96","Malaysia","Asia",30331007,77.3,72.7
-"97","Maldives","Asia",363657,80.2,76.9
-"98","Mali","Africa",17599694,58.3,58.2
-"99","Malta","Europe",418670,83.7,79.7
-"100","Mauritania","Africa",4067564,64.6,61.6
-"101","Mauritius","Africa",1273212,77.8,71.4
-"102","Mexico","Americas",127017224,79.5,73.9
-"103","Mongolia","Asia",2959134,73.2,64.7
-"104","Montenegro","Europe",625781,78.1,74.1
-"105","Morocco","Africa",34377511,75.4,73.3
-"106","Mozambique","Africa",27977863,59.4,55.7
-"107","Myanmar","Asia",53897154,68.5,64.6
-"108","Namibia","Africa",2458830,68.3,63.1
-"109","Nepal","Asia",28513700,70.8,67.7
-"110","Netherlands","Europe",16924929,83.6,80
-"111","New Zealand","Oceania",4528526,83.3,80
-"112","Nicaragua","Americas",6082032,77.9,71.5
-"113","Niger","Africa",19899120,62.8,60.9
-"114","Nigeria","Africa",182201962,55.6,53.4
-"115","Norway","Europe",5210967,83.7,79.8
-"116","Oman","Asia",4490541,79.2,75
-"117","Pakistan","Asia",188924874,67.5,65.5
-"118","Panama","Americas",3929141,81.1,74.7
-"119","Papua New Guinea","Oceania",7619321,65.4,60.6
-"120","Paraguay","Americas",6639123,76,72.2
-"121","Peru","Americas",31376670,78,73.1
-"122","Philippines","Asia",100699395,72,65.3
-"123","Poland","Europe",38611794,81.3,73.6
-"124","Portugal","Europe",10349803,83.9,78.2
-"125","Qatar","Asia",2235355,80,77.4
-"126","Romania","Europe",19511324,78.8,71.4
-"127","Rwanda","Africa",11609666,71.1,60.9
-"128","Saint Lucia","Americas",184999,77.9,72.6
-"129","Saint Vincent and the Grenadines","Americas",109462,75.2,71.3
-"130","Samoa","Oceania",193228,77.5,70.9
-"131","Sao Tome and Principe","Africa",190344,69.4,65.6
-"132","Saudi Arabia","Asia",31540372,76,73.2
-"133","Senegal","Africa",15129273,68.6,64.6
-"134","Serbia","Europe",8850975,78.4,72.9
-"135","Seychelles","Africa",96471,78,69.1
-"136","Sierra Leone","Africa",6453184,50.8,49.3
-"137","Singapore","Asia",5603740,86.1,80
-"138","Slovakia","Europe",5426258,80.2,72.9
-"139","Slovenia","Europe",2067526,83.7,77.9
-"140","Solomon Islands","Oceania",583591,70.8,67.9
-"141","Somalia","Africa",10787104,56.6,53.5
-"142","South Africa","Africa",54490406,66.2,59.3
-"143","South Sudan","Africa",12339812,58.6,56.1
-"144","Spain","Europe",46121699,85.5,80.1
-"145","Sri Lanka","Asia",20715010,78.3,71.6
-"146","Sudan","Africa",40234882,65.9,62.4
-"147","Suriname","Americas",542975,74.7,68.6
-"148","Swaziland","Africa",1286970,61.1,56.6
-"149","Sweden","Europe",9779426,84,80.7
-"150","Switzerland","Europe",8298663,85.3,81.3
-"151","Syrian Arab Republic","Asia",18502413,69.9,59.9
-"152","Tajikistan","Asia",8481855,73.6,66.6
-"153","Thailand","Asia",67959359,78,71.9
-"154","Timor-Leste","Asia",1184765,70.1,66.6
-"155","Togo","Africa",7304578,61.1,58.6
-"156","Tonga","Oceania",106170,76.4,70.6
-"157","Trinidad and Tobago","Americas",1360088,74.8,67.9
-"158","Tunisia","Africa",11253554,77.8,73
-"159","Turkey","Asia",78665830,78.9,72.6
-"160","Turkmenistan","Asia",5373502,70.5,62.2
-"161","Uganda","Africa",39032383,64.3,60.3
-"162","Ukraine","Europe",44823765,76.1,66.3
-"163","United Arab Emirates","Asia",9156963,78.6,76.4
-"164","United Kingdom","Europe",64715810,83,79.4
-"165","Uruguay","Americas",3431555,80.4,73.3
-"166","Uzbekistan","Asia",29893488,72.7,66.1
-"167","Vanuatu","Oceania",264652,74,70.1
-"168","Venezuela","Americas",31108083,78.5,70
-"169","Yemen","Asia",26832215,67.2,64.3
-"170","Zambia","Africa",16211767,64.7,59
-"171","Zimbabwe","Africa",15602751,62.3,59
+country,region,population,female,male
+Afghanistan,Asia,32526562,61.9,59.3
+Albania,Europe,2896679,80.7,75.1
+Algeria,Africa,39666519,77.5,73.8
+Angola,Africa,25021974,54,50.9
+Antigua and Barbuda,Americas,91818,78.6,74.1
+Argentina,Americas,43416755,79.9,72.7
+Armenia,Asia,3017712,77.7,71.6
+Australia,Oceania,23968973,84.8,80.9
+Austria,Europe,8544586,83.9,79
+Azerbaijan,Asia,9753968,75.8,69.6
+Bahamas,Americas,388019,79.1,72.9
+Bahrain,Asia,1377237,77.9,76.2
+Bangladesh,Asia,160995642,73.1,70.6
+Barbados,Americas,284215,77.9,73.1
+Belarus,Europe,9495826,78,66.5
+Belgium,Europe,11299192,83.5,78.6
+Belize,Americas,359287,73.1,67.5
+Benin,Africa,10879829,61.1,58.8
+Bhutan,Asia,774830,70.1,69.5
+Bolivia,Americas,10724705,73.3,68.2
+Bosnia and Herzegovina,Europe,3810416,79.7,75
+Botswana,Africa,2262485,68.1,63.3
+Brazil,Americas,207847528,78.7,71.4
+Bulgaria,Europe,7149787,78,71.1
+Burkina Faso,Africa,18105570,60.5,59.1
+Burundi,Africa,11178921,61.6,57.7
+Cabo Verde,Africa,520502,75,71.3
+Cambodia,Asia,15577899,70.7,66.6
+Cameroon,Africa,23344179,58.6,55.9
+Canada,Americas,35939927,84.1,80.2
+Central African Republic,Africa,4900274,54.1,50.9
+Chad,Africa,14037472,54.5,51.7
+Chile,Americas,17948141,83.4,77.4
+China,Asia,1376048943,77.6,74.6
+Colombia,Americas,48228704,78.4,71.2
+Comoros,Africa,788474,65.2,61.9
+Congo,Africa,4620330,66.3,63.2
+Costa Rica,Americas,4807850,82.2,77.1
+Croatia,Europe,4240317,81.2,74.7
+Cuba,Americas,11389562,81.4,76.9
+Cyprus,Asia,1165300,82.7,78.3
+Czech Republic,Europe,10543186,81.7,75.9
+Democratic Republic of the Congo,Africa,77266814,61.5,58.3
+Denmark,Europe,5669081,82.5,78.6
+Djibouti,Africa,887861,65.3,61.8
+Dominican Republic,Americas,10528391,77.1,70.9
+Ecuador,Americas,16144363,79,73.5
+Egypt,Africa,91508084,73.2,68.8
+El Salvador,Americas,6126583,77.9,68.8
+Equatorial Guinea,Africa,845060,60,56.6
+Eritrea,Africa,5227791,67,62.4
+Estonia,Europe,1312558,82,72.7
+Ethiopia,Africa,99390750,66.8,62.8
+Fiji,Oceania,892145,73.1,67
+Finland,Europe,5503457,83.8,78.3
+France,Europe,64395345,85.4,79.4
+Gabon,Africa,1725292,67.2,64.7
+Gambia,Africa,1990924,62.5,59.8
+Georgia,Asia,3999812,78.3,70.3
+Germany,Europe,80688545,83.4,78.7
+Ghana,Africa,27409893,63.9,61
+Greece,Europe,10954617,83.6,78.3
+Grenada,Americas,106825,76.1,71.2
+Guatemala,Americas,16342897,75.2,68.5
+Guinea,Africa,12608590,59.8,58.2
+Guinea-Bissau,Africa,1844325,60.5,57.2
+Guyana,Americas,767085,68.5,63.9
+Haiti,Americas,10711067,65.5,61.5
+Honduras,Americas,8075060,77,72.3
+Hungary,Europe,9855023,79.1,72.3
+Iceland,Europe,329425,84.1,81.2
+India,Asia,1311050527,69.9,66.9
+Indonesia,Asia,257563815,71.2,67.1
+Iran,Asia,79109272,76.6,74.5
+Iraq,Asia,36423395,71.8,66.2
+Ireland,Europe,4688465,83.4,79.4
+Israel,Asia,8064036,84.3,80.6
+Italy,Europe,59797685,84.8,80.5
+Jamaica,Americas,2793335,78.6,73.9
+Japan,Asia,126573481,86.8,80.5
+Jordan,Asia,7594547,75.9,72.5
+Kazakhstan,Asia,17625226,74.7,65.7
+Kenya,Africa,46050302,65.8,61.1
+Kiribati,Oceania,112423,68.8,63.7
+Kuwait,Asia,3892115,76,73.7
+Kyrgyzstan,Asia,5939962,75.1,67.2
+Latvia,Europe,1970503,79.2,69.6
+Lebanon,Asia,5850743,76.5,73.5
+Lesotho,Africa,2135022,55.4,51.7
+Liberia,Africa,4503438,62.9,59.8
+Libya,Africa,6278438,75.6,70.1
+Lithuania,Europe,2878405,79.1,68.1
+Luxembourg,Europe,567110,84,79.8
+Madagascar,Africa,24235390,67,63.9
+Malawi,Africa,17215232,59.9,56.7
+Malaysia,Asia,30331007,77.3,72.7
+Maldives,Asia,363657,80.2,76.9
+Mali,Africa,17599694,58.3,58.2
+Malta,Europe,418670,83.7,79.7
+Mauritania,Africa,4067564,64.6,61.6
+Mauritius,Africa,1273212,77.8,71.4
+Mexico,Americas,127017224,79.5,73.9
+Mongolia,Asia,2959134,73.2,64.7
+Montenegro,Europe,625781,78.1,74.1
+Morocco,Africa,34377511,75.4,73.3
+Mozambique,Africa,27977863,59.4,55.7
+Myanmar,Asia,53897154,68.5,64.6
+Namibia,Africa,2458830,68.3,63.1
+Nepal,Asia,28513700,70.8,67.7
+Netherlands,Europe,16924929,83.6,80
+New Zealand,Oceania,4528526,83.3,80
+Nicaragua,Americas,6082032,77.9,71.5
+Niger,Africa,19899120,62.8,60.9
+Nigeria,Africa,182201962,55.6,53.4
+Norway,Europe,5210967,83.7,79.8
+Oman,Asia,4490541,79.2,75
+Pakistan,Asia,188924874,67.5,65.5
+Panama,Americas,3929141,81.1,74.7
+Papua New Guinea,Oceania,7619321,65.4,60.6
+Paraguay,Americas,6639123,76,72.2
+Peru,Americas,31376670,78,73.1
+Philippines,Asia,100699395,72,65.3
+Poland,Europe,38611794,81.3,73.6
+Portugal,Europe,10349803,83.9,78.2
+Qatar,Asia,2235355,80,77.4
+Romania,Europe,19511324,78.8,71.4
+Rwanda,Africa,11609666,71.1,60.9
+Saint Lucia,Americas,184999,77.9,72.6
+Saint Vincent and the Grenadines,Americas,109462,75.2,71.3
+Samoa,Oceania,193228,77.5,70.9
+Sao Tome and Principe,Africa,190344,69.4,65.6
+Saudi Arabia,Asia,31540372,76,73.2
+Senegal,Africa,15129273,68.6,64.6
+Serbia,Europe,8850975,78.4,72.9
+Seychelles,Africa,96471,78,69.1
+Sierra Leone,Africa,6453184,50.8,49.3
+Singapore,Asia,5603740,86.1,80
+Slovakia,Europe,5426258,80.2,72.9
+Slovenia,Europe,2067526,83.7,77.9
+Solomon Islands,Oceania,583591,70.8,67.9
+Somalia,Africa,10787104,56.6,53.5
+South Africa,Africa,54490406,66.2,59.3
+South Sudan,Africa,12339812,58.6,56.1
+Spain,Europe,46121699,85.5,80.1
+Sri Lanka,Asia,20715010,78.3,71.6
+Sudan,Africa,40234882,65.9,62.4
+Suriname,Americas,542975,74.7,68.6
+Swaziland,Africa,1286970,61.1,56.6
+Sweden,Europe,9779426,84,80.7
+Switzerland,Europe,8298663,85.3,81.3
+Syrian Arab Republic,Asia,18502413,69.9,59.9
+Tajikistan,Asia,8481855,73.6,66.6
+Thailand,Asia,67959359,78,71.9
+Timor-Leste,Asia,1184765,70.1,66.6
+Togo,Africa,7304578,61.1,58.6
+Tonga,Oceania,106170,76.4,70.6
+Trinidad and Tobago,Americas,1360088,74.8,67.9
+Tunisia,Africa,11253554,77.8,73
+Turkey,Asia,78665830,78.9,72.6
+Turkmenistan,Asia,5373502,70.5,62.2
+Uganda,Africa,39032383,64.3,60.3
+Ukraine,Europe,44823765,76.1,66.3
+United Arab Emirates,Asia,9156963,78.6,76.4
+United Kingdom,Europe,64715810,83,79.4
+Uruguay,Americas,3431555,80.4,73.3
+Uzbekistan,Asia,29893488,72.7,66.1
+Vanuatu,Oceania,264652,74,70.1
+Venezuela,Americas,31108083,78.5,70
+Yemen,Asia,26832215,67.2,64.3
+Zambia,Africa,16211767,64.7,59
+Zimbabwe,Africa,15602751,62.3,59

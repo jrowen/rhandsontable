@@ -5,8 +5,8 @@ account: ginberg
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 237393
-bundleId: 1084060
+bundleId: 1162619
 url: https://ginberg.shinyapps.io/rhandsontable_search/
-when: 1511092066.53787
+when: 1515119291.23049
 asMultiple: FALSE
 asStatic: FALSE
