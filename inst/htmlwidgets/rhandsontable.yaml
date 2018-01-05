@@ -1,12 +1,12 @@
 # (uncomment to add a dependency)
 dependencies:
  - name: handsontable
-   version: 0.34.5
+   version: 0.35.0
    src: "htmlwidgets/lib/handsontable"
    script: handsontable.full.min.js
    stylesheet: handsontable.full.min.css
  - name: numbro.languages
-   version: 1.10.1
+   version: 1.11.1
    src: "htmlwidgets/lib/numbro"
    script: languages.js
  - name: chroma
