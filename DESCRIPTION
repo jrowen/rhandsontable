@@ -9,6 +9,7 @@ Authors@R: c(
   person("Yihui", "Xie", role = c("ctb")),
   person("Enzo", "Martoglio",
          email = "enzo@smartinsightsfromdata.com", role = c("ctb")),
+  person("Ger", "Inberg", role = c("ctb")),
   person("Warpechowski", "Marcin", role = c("ctb", "cph"), comment = "Handsontable.js library"),
   person("Handsoncode sp. z o.o.", role = c("ctb", "cph"), comment = "Handsontable.js library"),
   person("Aisch", "Gregor", role = c("ctb", "cph"), comment = "Chroma.js library"),

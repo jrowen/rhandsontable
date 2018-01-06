@@ -20,6 +20,7 @@
 #' @param height numeric table height
 #' @param digits numeric passed to \code{jsonlite::toJSON}
 #' @param debug numeric Javascript log level
+#' @param search logical specifying if the data can be searched
 #' @param ... passed to \code{hot_table} and to the \code{params} property of the widget
 #' @examples
 #' library(rhandsontable)
@@ -35,7 +36,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
                           useTypes = TRUE, readOnly = NULL,
                           selectCallback = FALSE,
                           width = NULL, height = NULL, digits = 4,
-                          debug = NULL, ...) {
+                          debug = NULL, search = FALSE, ...) {
   rColHeaders = colnames(data)
   if (.row_names_info(data) > 0L)
     rRowHeaders = rownames(data)
@@ -117,7 +118,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     columns = cols,
     width = width,
     height = height,
-    debug = ifelse(is.null(debug) || is.na(debug) || !is.numeric(debug), 0, debug)
+    debug = ifelse(is.null(debug) || is.na(debug) || !is.numeric(debug), 0, debug),
+    search = search
   )
 
   # create widget

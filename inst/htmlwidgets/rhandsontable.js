@@ -68,6 +68,14 @@ HTMLWidgets.widget({
 
       instance.hot.params = x;
       instance.hot.updateSettings(x);
+      
+      var searchField = document.getElementById('searchField');
+      if (typeof(searchField) != 'undefined' && searchField != null) {
+        Handsontable.dom.addEvent(searchField, 'keyup', function (event) {
+          var queryResult = instance.hot.search.query(this.value);
+          instance.hot.render();
+        });
+      }
     }
   },
 
