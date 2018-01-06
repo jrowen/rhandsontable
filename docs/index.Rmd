@@ -612,6 +612,11 @@ shiny::runGitHub("rhandsontable", "jrowen",
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir="inst/examples/rhandsontable_dash")
 ```
+* [Table with Search](https://ginberg.shinyapps.io/rhandsontable_search/)
+```
+shiny::runGitHub("rhandsontable", "jrowen", 
+                 subdir="inst/examples/rhandsontable_search")
+```
 
 ### Bookmarks
 

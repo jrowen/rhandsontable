@@ -68,6 +68,14 @@ HTMLWidgets.widget({
 
       instance.hot.params = x;
       instance.hot.updateSettings(x);
+      
+      var searchField = document.getElementById('searchField');
+      if (typeof(searchField) != 'undefined' && searchField != null) {
+        Handsontable.dom.addEvent(searchField, 'keyup', function (event) {
+          var queryResult = instance.hot.search.query(this.value);
+          instance.hot.render();
+        });
+      }
     }
   },
 
@@ -321,21 +329,24 @@ function toArray(input) {
 }
 
 // csv logic adapted from https://github.com/juantascon/jquery-handsontable-csv
-function csvString(instance) {
+function csvString(instance,sep=",",dec=".") {
 
   var headers = instance.getColHeader();
 
-  var csv = headers.join(",") + "\n";
+  var csv = headers.join(sep) + "\n";
 
   for (var i = 0; i < instance.countRows(); i++) {
       var row = [];
       for (var h in headers) {
           var col = instance.propToCol(h);
           var value = instance.getDataAtRowProp(i, col);
+          if ( !isNaN(value) ) {
+            value = value.toString().replace(".",dec)
+          }
           row.push(value);
       }
 
-      csv += row.join(",");
+      csv += row.join(sep);
       csv += "\n";
   }
 
