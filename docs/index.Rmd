@@ -266,7 +266,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
       csv = list(name = "Download to CSV",
                     callback = htmlwidgets::JS(
                       "function (key, options) {
-                         var csv = csvString(this);
+                         var csv = csvString(this, sep=',', dec='.');
 
                          var link = document.createElement('a');
                          link.setAttribute('href', 'data:text/plain;charset=utf-8,' +
