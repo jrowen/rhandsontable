@@ -1,11 +1,15 @@
 rhandsontable 0.3.5
 -------------------------
 
+* Improved data.table and tibble handing (#115, #186)
+
+* Improved NA handling (#189, thanks to marciz for submitting)
+
 * Added search functionality to Shiny (#203, thanks to Ger Inburg for submitting)
 
 * Updated csvString to support additional file formats (#209, thanks to camold for submitting)
 
-* Made some changes to prevent double table loading in shiny (#188, #137)
+* Made some changes to prevent double table loading in shiny (#188, #137, thanks to marciz for suggesting)
 
 * Added encoding to DESCRIPTION and updated LICENSE files
 

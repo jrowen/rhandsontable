@@ -58,6 +58,14 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rColClasses[grepl("factor", rColClasses)] = "factor"
   }
 
+  if ("tbl_df" %in% rClass) {
+    # temp fix for tibbles
+    data = as.data.frame(data)
+  } else if ("data.table" %in% rClass) {
+    # temp fix for data.table with S3 class
+    data = as.data.table(data)
+  }
+
   if (!useTypes) {
     data = do.call(cbind, lapply(data, function(x) {
       if (class(x) == "Date")
