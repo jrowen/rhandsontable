@@ -63,7 +63,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     data = as.data.frame(data)
   } else if ("data.table" %in% rClass) {
     # temp fix for data.table with S3 class
-    data = as.data.table(data)
+    data = as.data.frame(data)
   }
 
   if (!useTypes) {
