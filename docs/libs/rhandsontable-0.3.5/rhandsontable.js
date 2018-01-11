@@ -68,7 +68,7 @@ HTMLWidgets.widget({
 
       instance.hot.params = x;
       instance.hot.updateSettings(x);
-      
+
       var searchField = document.getElementById('searchField');
       if (typeof(searchField) != 'undefined' && searchField != null) {
         Handsontable.dom.addEvent(searchField, 'keyup', function (event) {
@@ -329,7 +329,7 @@ function toArray(input) {
 }
 
 // csv logic adapted from https://github.com/juantascon/jquery-handsontable-csv
-function csvString(instance,sep=",",dec=".") {
+function csvString(instance, sep, dec) {
 
   var headers = instance.getColHeader();
 
@@ -341,7 +341,7 @@ function csvString(instance,sep=",",dec=".") {
           var col = instance.propToCol(h);
           var value = instance.getDataAtRowProp(i, col);
           if ( !isNaN(value) ) {
-            value = value.toString().replace(".",dec)
+            value = value.toString().replace(".", dec);
           }
           row.push(value);
       }

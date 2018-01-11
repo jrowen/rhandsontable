@@ -620,7 +620,7 @@ shiny::runGitHub("rhandsontable", "jrowen",
 
 ### Bookmarks
 
-Version 0.14 of `shiny` includes new bookmarking functionality.  This willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
+Shiny bookmarks willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
 
 ## Feedback
 
