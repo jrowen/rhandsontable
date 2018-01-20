@@ -95,10 +95,10 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
         )
       } else if (type == "numeric") {
         res = list(type = "numeric",
-                   format = "0.00")
+                   numericFormat = list(pattern = "0.00"))
       } else if (type == "integer") {
         res = list(type = "numeric",
-                   format = "0")
+                   numericFormat = list(pattern = "0"))
       } else if (type == "date") {
         res = list(type = "date",
                    correctFormat = TRUE,
@@ -448,14 +448,16 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     if (is.character(i)) i = which(hot$x$colHeaders == i)
 
     if (!is.null(type)) cols[[i]]$type = type
-    if (!is.null(format)) cols[[i]]$format = format
     if (!is.null(dateFormat)) cols[[i]]$dateFormat = dateFormat
     if (!is.null(source)) cols[[i]]$source = source
     if (!is.null(strict)) cols[[i]]$strict = strict
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
     if (!is.null(copyable)) cols[[i]]$copyable = copyable
     if (!is.null(default)) cols[[i]]$default = default
-    if (!is.null(language)) cols[[i]]$language = language
+
+    if (!is.null(format) || !is.null(language)) cols[[i]]$numericFormat = list()
+    if (!is.null(format)) cols[[i]]$numericFormat$pattern = format
+    if (!is.null(language)) cols[[i]]$numericFormat$culture = language
 
     if (!is.null(validator)) cols[[i]]$validator = JS(validator)
     if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid
