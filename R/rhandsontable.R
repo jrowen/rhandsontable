@@ -396,7 +396,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  column types
 #' @param strict logical specifying whether values not in the \code{source}
 #'  vector will be accepted
-#' @param readOnly logical making the table read-only
+#' @param readOnly logical making the column read-only
 #' @param validator character defining a Javascript function to be used
 #'  to validate user input. See \code{hot_validate_numeric} and
 #'  \code{hot_validate_character} for pre-build validators.
@@ -491,7 +491,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #'              letters[1:5]))
 #'
 #' rhandsontable(MAT, width = 300, height = 150) %>%
-#' hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
+#'   hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
 #'   hot_rows(rowHeights = 50, fixedRowsTop = 1)
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
 #' @export
@@ -503,13 +503,41 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 
 #' Handsontable widget
 #'
+#' Configure a row.  See
+#' \href{http://handsontable.com}{Handsontable.js} for details.
+#'
+#' @param hot rhandsontable object
+#' @param readOnly logical making the row read-only
+#' @examples
+#' library(rhandsontable)
+#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+#'              letters[1:5]))
+#'
+#' rhandsontable(MAT, width = 300, height = 150) %>%
+#'   hot_row(1, readOnly = TRUE)
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
+#' @export
+hot_row = function(hot, row, readOnly = NULL) {
+  ct = hot$x$rDataDim[1]
+  for (i in seq_len(ct)) {
+    if (!is.null(readOnly)) {
+      hot =  hot %>% hot_cell(row, i, readOnly = readOnly)
+    }
+  }
+
+  hot
+}
+
+#' Handsontable widget
+#'
 #' Configure single cell.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
 #' @param row numeric row index
-#' @param col numeric column index
+#' @param col column name or index
 #' @param comment character comment to add to cell
+#' @param readOnly logical making the cell read-only
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -517,23 +545,23 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
 #'                 stringsAsFactors = FALSE)
 #'
-#' rhandsontable(DF, readOnly = TRUE) %>%
-#'   hot_cell(1, 1, "Test comment")
+#' rhandsontable(DF) %>%
+#'   hot_cell(1, 1, comment = "Test comment") %>%
+#'   hot_cell(2, 3, readOnly = TRUE)
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
 #' @export
-hot_cell = function(hot, row, col, comment = NULL) {
-  cell = list(row = row - 1, col = col - 1, comment = list(value = comment))
+hot_cell = function(hot, row, col, comment = NULL, readOnly = NULL) {
+  # TODO: consider moving comment functionality to hot_comment
+  if (is.character(col)) col = which(hot$x$colHeaders == col)
+
+  cell = list(row = row - 1, col = col - 1)
+
+  if (!is.null(comment)) cell$comment = list(value = comment)
+  if (!is.null(readOnly)) cell$readOnly = readOnly
 
   hot$x$cell = c(hot$x$cell, list(cell))
 
-  hot = hot %>% hot_table(enableComments = TRUE)
-#   if (is.null(hot$x$rComments)) {
-#     cmts = matrix(nrow = hot$x$rDataDim[1], ncol = hot$x$rDataDim[2])
-#   } else {
-#     cmts = jsonlite::fromJSON(hot$x$rComments)
-#   }
-#   cmts[row, col] = comment
-#   hot$x$rComments = jsonlite::toJSON(cmts)
+  if (!is.null(comment)) hot = hot %>% hot_table(enableComments = TRUE)
 
   hot
 }

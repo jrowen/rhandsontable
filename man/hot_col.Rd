@@ -29,7 +29,7 @@ column types}
 \item{strict}{logical specifying whether values not in the \code{source}
 vector will be accepted}
 
-\item{readOnly}{logical making the table read-only}
+\item{readOnly}{logical making the column read-only}
 
 \item{validator}{character defining a Javascript function to be used
 to validate user input. See \code{hot_validate_numeric} and

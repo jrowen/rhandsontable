@@ -141,11 +141,12 @@ HTMLWidgets.widget({
               console.log("afterChange: Shiny.onInputChange: " + this.rootElement.id);
             }
           }
-          //Shiny.onInputChange(this.rootElement.id, {
-          //  data: this.getData(),
-          //  changes: { event: "afterChange", changes: null },
-          //  params: this.params
-          //});
+          // push input change to shiny so input$hot and output$hot are in sync (see #137)
+          Shiny.onInputChange(this.rootElement.id, {
+            data: this.getData(),
+            changes: { event: "afterChange", changes: null },
+            params: this.params
+          });
         }
       }
 

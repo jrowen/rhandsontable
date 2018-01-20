@@ -365,7 +365,7 @@ rhandsontable(DF * 1000, width = 550, height = 300) %>%
 
 ## Read-Only
 
-The whole table and individual columns can to set to `readOnly` to prevent the user from making changes.
+The whole table can be set to `readOnly` to prevent the user from making changes.
 
 ```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -373,8 +373,21 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF, readOnly = TRUE, width = 550, height = 300) %>%
-  hot_col("val", readOnly = FALSE)
+rhandsontable(DF, readOnly = TRUE, width = 550, height = 300)
+```
+
+The individual columns, rows and cells can also be set to `readOnly`
+
+```{r}
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF, width = 550, height = 300) %>%
+  hot_col("val", readOnly = TRUE) %>%
+  hot_row(4, readOnly = TRUE) %>%
+  hot_cell(7, "dt", readOnly = TRUE)
 ```
 
 ## Sorting
