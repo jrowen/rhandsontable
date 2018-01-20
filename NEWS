@@ -5,6 +5,8 @@ rhandsontable 0.3.6
 
 * Updated numeric formatting to support handsontable changes (#213)
 
+* Fix sync issue in shiny when table first loads (#216)
+
 rhandsontable 0.3.5
 -------------------------
 
