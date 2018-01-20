@@ -9,6 +9,8 @@ hot_row(hot, row, readOnly = NULL)
 \arguments{
 \item{hot}{rhandsontable object}
 
+\item{row}{numeric row index}
+
 \item{readOnly}{logical making the row read-only}
 }
 \description{

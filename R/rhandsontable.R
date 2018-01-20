@@ -507,6 +507,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
+#' @param row numeric row index
 #' @param readOnly logical making the row read-only
 #' @examples
 #' library(rhandsontable)
