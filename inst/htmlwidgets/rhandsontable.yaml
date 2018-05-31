@@ -1,7 +1,7 @@
 # (uncomment to add a dependency)
 dependencies:
  - name: handsontable
-   version: 0.35.0
+   version: 3.0.0
    src: "htmlwidgets/lib/handsontable"
    script: handsontable.full.min.js
    stylesheet: handsontable.full.min.css
@@ -22,6 +22,6 @@ dependencies:
    src: "htmlwidgets/lib/sparkline"
    script: jquery.sparkline.min.js
  - name: rhandsontable
-   version: 0.3.6
+   version: 0.3.6.1
    src: "htmlwidgets"
    stylesheet: rhandsontable.css
