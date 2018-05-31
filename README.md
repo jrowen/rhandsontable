@@ -5,7 +5,7 @@
 
 **See the [project website](http://jrowen.github.io/rhandsontable/) for more details and live examples, and see below for important details on use in shiny apps.**
 
-An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](http://http://handsontable.com/).  Per the website:
+An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](https://handsontable.com).  Per the website:
 
 *Handsontable is a minimalist Excel-like data grid editor for HTML & JavaScript*
 
