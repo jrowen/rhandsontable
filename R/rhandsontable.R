@@ -519,13 +519,14 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
 #' @export
 hot_row = function(hot, row, readOnly = NULL) {
-  ct = hot$x$rDataDim[2]
-  for (i in seq_len(ct)) {
-    if (!is.null(readOnly)) {
-      hot =  hot %>% hot_cell(row, i, readOnly = readOnly)
-    }
-  }
-
+	if ( !is.null(readOnly) ) {
+		colDim = hot$x$rDataDim[2]
+		for ( i in row ) { 
+			for ( j in seq_len(colDim)){
+				hot = hot %>% hot_cell(i, j, readOnly = readOnly)
+			}
+		}
+	}
   hot
 }
 
