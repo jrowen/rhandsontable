@@ -522,7 +522,7 @@ hot_row = function(hot, row, readOnly = NULL) {
 	if ( !is.null(readOnly) ) {
 		colDim = hot$x$rDataDim[2]
 		for ( i in row ) { 
-			for ( j in seq_len(colDim)){
+			for ( j in seq_len(colDim) ) {
 				hot = hot %>% hot_cell(i, j, readOnly = readOnly)
 			}
 		}
