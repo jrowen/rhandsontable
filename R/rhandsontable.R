@@ -478,7 +478,8 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
 #' Handsontable widget
 #'
-#' Configure rows.  See
+#' Configure row settings that pertain to the entire table. 
+#' Note that hot_rows is not to be confused with \code{\link{hot_row}}. See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
@@ -503,29 +504,31 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 
 #' Handsontable widget
 #'
-#' Configure a row.  See
+#' Configure properties of all cells in a given row(s). 
+#' Note that hot_row is not to be confused with \code{\link{hot_rows}}.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
-#' @param row numeric row index
-#' @param readOnly logical making the row read-only
+#' @param row numeric vector of row indexes
+#' @param readOnly logical making the row(s) read-only
 #' @examples
 #' library(rhandsontable)
 #' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
 #'              letters[1:5]))
 #'
 #' rhandsontable(MAT, width = 300, height = 150) %>%
-#'   hot_row(1, readOnly = TRUE)
-#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
+#'   hot_row(c(1,3:5), readOnly = TRUE)
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}, \code{\link{hot_rows}}
 #' @export
 hot_row = function(hot, row, readOnly = NULL) {
-  ct = hot$x$rDataDim[2]
-  for (i in seq_len(ct)) {
-    if (!is.null(readOnly)) {
-      hot =  hot %>% hot_cell(row, i, readOnly = readOnly)
-    }
-  }
-
+	if ( !is.null(readOnly) ) {
+		colDim = hot$x$rDataDim[2]
+		for ( i in row ) { 
+			for ( j in seq_len(colDim) ) {
+				hot = hot %>% hot_cell(i, j, readOnly = readOnly)
+			}
+		}
+	}
   hot
 }
 

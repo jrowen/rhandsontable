@@ -386,7 +386,7 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 
 rhandsontable(DF, width = 550, height = 300) %>%
   hot_col("val", readOnly = TRUE) %>%
-  hot_row(4, readOnly = TRUE) %>%
+  hot_row(c(4,6,10), readOnly = TRUE) %>%
   hot_cell(7, "dt", readOnly = TRUE)
 ```
 
