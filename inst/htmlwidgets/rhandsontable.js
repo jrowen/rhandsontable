@@ -198,13 +198,19 @@ HTMLWidgets.widget({
   },
 
   afterSelectCallback: function(x) {
-
+    
     x.afterSelectionEnd = function(r, c, r2, c2) {
 
+      var r_all = [];
+      var c_all = [];
       if (HTMLWidgets.shinyMode) {
-        if (this.sortIndex && this.sortIndex.length !== 0) {
-          r = this.sortIndex[r][0];
-          r2 = this.sortIndex[r2][0];
+        if ( r2 < r ) { r2 = [r, r = r2][0]; }
+        for ( var i=r; i <= r2; i++ ) {
+          r_all.push( this.toPhysicalRow(i) + 1 );
+        }
+        if ( c2 < c ) { c2 = [c, c = c2][0]; }
+        for ( var i=c; i <= c2; i++ ) {
+          c_all.push( this.toPhysicalColumn(i) + 1 );
         }
 
         if (this.params && this.params.debug) {
@@ -212,9 +218,14 @@ HTMLWidgets.widget({
             console.log("afterSelectionEnd: Shiny.onInputChange: " + this.rootElement.id);
           }
         }
-        Shiny.onInputChange(this.rootElement.id + "_select", {
+        Shiny.onInputChange(this.rootElement.id + "_select:rhandsontable.customSelectDeserializer", {
           data: this.getData(),
-          select: { r: r + 1, c: c + 1, r2: r2 + 1, c2: c2 + 1},
+          select: { r: r + 1, 
+                    c: c + 1, 
+                    r2: r2 + 1, 
+                    c2: c2 + 1,
+                    rAll: r_all,
+                    cAll: c_all },
           params: this.params
         });
       }
