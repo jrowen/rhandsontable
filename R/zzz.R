@@ -1,11 +1,14 @@
 .onLoad <- function(...) {
 
-  shiny::registerInputHandler("rhandsontable.customSelectDeserializer", 
-                              function(x, session, inputName) {
-                                result <- x
-                                result$select$rAll <- unlist(x$select$rAll)
-                                result$select$cAll <- unlist(x$select$cAll)
-                                result}, 
-                              force = TRUE )
-    
+  if ( "shiny" %in% rownames(installed.packages()) ) {
+    shiny::registerInputHandler("rhandsontable.customSelectDeserializer",
+                                function(x, session, inputName) {
+                                  result <- x
+                                  result$select$rAll <- unlist(x$select$rAll)
+                                  result$select$cAll <- unlist(x$select$cAll)
+                                  result},
+                                force = TRUE )
+  } else {
+    warning("For use with shiny, you will need to reload rhandsontable after installing shiny.")
+  }
 }
