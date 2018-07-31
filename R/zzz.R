@@ -8,7 +8,5 @@
                                   result$select$cAll <- unlist(x$select$cAll)
                                   result},
                                 force = TRUE )
-  } else {
-    warning("For use with shiny, you will need to reload rhandsontable after installing shiny.")
   }
 }
