@@ -1,6 +1,6 @@
 .onLoad <- function(...) {
 
-  if ( "shiny" %in% rownames(installed.packages()) ) {
+  tryCatch( {
     shiny::registerInputHandler("rhandsontable.customSelectDeserializer",
                                 function(x, session, inputName) {
                                   result <- x
@@ -8,5 +8,5 @@
                                   result$select$cAll <- unlist(x$select$cAll)
                                   result},
                                 force = TRUE )
-  }
+  }, error = function(err) {}
 }
