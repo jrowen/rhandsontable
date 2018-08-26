@@ -8,5 +8,5 @@
                                   result$select$cAll <- unlist(x$select$cAll)
                                   result},
                                 force = TRUE )
-  }, error = function(err) {}
+  }, error = function(err) {})
 }
