@@ -6,7 +6,8 @@
 \usage{
 hot_table(hot, contextMenu = TRUE, stretchH = "none",
   customBorders = NULL, highlightRow = NULL, highlightCol = NULL,
-  enableComments = FALSE, overflow = NULL, rowHeaderWidth = NULL, ...)
+  enableComments = FALSE, overflow = NULL, rowHeaderWidth = NULL,
+  ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
