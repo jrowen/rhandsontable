@@ -3,6 +3,8 @@ rhandsontable 0.3.7
 
 * Updated to handsontable 3.0.0
 
+* Modified the select callback to return all indices of multi-row/col selections (#257)
+
 
 rhandsontable 0.3.6
 -------------------------
