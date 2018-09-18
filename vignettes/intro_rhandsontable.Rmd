@@ -46,7 +46,7 @@ rhandsontable(DF, width = 600, height = 300) %>%
   hot_col("factor_allow", allowInvalid = TRUE)
 ```
 
-To improve readability, `NA` values will be displayed as blank cells.  This requires converting columns containing `NA` to characters, and in the case of factors and Dates, may not display the data in the desired format.  It may be beneficial to concert these type of columns to character before passing to `rhandsontable`.
+To improve readability, `NA` values will be displayed as blank cells.  This requires converting columns containing `NA` to characters, and in the case of factors and Dates, may not display the data in the desired format.  It may be beneficial to convert these type of columns to character before passing to `rhandsontable`.
 
 ```{r}
 DF_na = data.frame(integer = c(NA, 2:10), 
