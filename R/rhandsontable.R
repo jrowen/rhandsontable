@@ -599,16 +599,26 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
                                 allowInvalid = FALSE) {
   f = "function (value, callback) {
-         setTimeout(function(){
-           if (isNaN(parseFloat(value))) {
-             callback(false);
-           }
-           %exclude
-           %min
-           %max
-           %choices
-           return callback(true);
-         }, 500)
+          if (value === null || value === void 0) {
+            value = '';
+          }
+          if (this.allowEmpty && value === '') {
+            return callback(true);
+          } else if (value === '') {
+            return callback(false);
+          }
+          let isNumber = /^-?\\d*(\\.|,)?\\d*$/.test(value);
+          if (!isNumber) {
+            return callback(false);
+          }
+          if (isNaN(parseFloat(value))) {
+            return callback(false);
+          }
+          %exclude
+          %min
+          %max
+          %choices
+          return callback(true);
        }"
 
   if (!is.null(exclude))
