@@ -70,7 +70,7 @@ HTMLWidgets.widget({
       instance.hot.updateSettings(x);
 
       var searchField = document.getElementById('searchField');
-      if (typeof(searchField) != 'undefined' && searchField != null) {
+      if (typeof(searchField) != 'undefined' && searchField !== null) {
         Handsontable.dom.addEvent(searchField, 'keyup', function (event) {
           var queryResult = instance.hot.search.query(this.value);
           instance.hot.render();
@@ -198,7 +198,7 @@ HTMLWidgets.widget({
   },
 
   afterSelectCallback: function(x) {
-    
+
     x.afterSelectionEnd = function(r, c, r2, c2) {
 
       var r_all = [];
@@ -209,8 +209,8 @@ HTMLWidgets.widget({
           r_all.push( this.toPhysicalRow(i) + 1 );
         }
         if ( c2 < c ) { c2 = [c, c = c2][0]; }
-        for ( var i=c; i <= c2; i++ ) {
-          c_all.push( this.toPhysicalColumn(i) + 1 );
+        for ( var ii=c; ii <= c2; ii++ ) {
+          c_all.push( this.toPhysicalColumn(ii) + 1 );
         }
 
         if (this.params && this.params.debug) {
@@ -220,9 +220,9 @@ HTMLWidgets.widget({
         }
         Shiny.onInputChange(this.rootElement.id + "_select:rhandsontable.customSelectDeserializer", {
           data: this.getData(),
-          select: { r: r + 1, 
-                    c: c + 1, 
-                    r2: r2 + 1, 
+          select: { r: r + 1,
+                    c: c + 1,
+                    r2: r2 + 1,
                     c2: c2 + 1,
                     rAll: r_all,
                     cAll: c_all },

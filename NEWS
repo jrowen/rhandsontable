@@ -1,7 +1,7 @@
 rhandsontable 0.3.7
 -------------------------
 
-* Updated to handsontable 5.0.1
+* Updated to handsontable 6.1.1; fixed language support
 
 * Modified the select callback to return all indices of multi-row/col selections (#257)
 
