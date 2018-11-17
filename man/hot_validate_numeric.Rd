@@ -4,8 +4,8 @@
 \alias{hot_validate_numeric}
 \title{Handsontable widget}
 \usage{
-hot_validate_numeric(hot, cols, min = NULL, max = NULL, choices = NULL,
-  exclude = NULL, allowInvalid = FALSE)
+hot_validate_numeric(hot, cols, min = NULL, max = NULL,
+  choices = NULL, exclude = NULL, allowInvalid = FALSE)
 }
 \arguments{
 \item{hot}{rhandsontable object}

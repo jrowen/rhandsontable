@@ -3,7 +3,10 @@ title: "rhandsontable"
 output:
   html_document:
     toc: true
-    toc_float: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
     self_contained: false
     lib_dir: libs
     include:
@@ -357,7 +360,7 @@ The `language` parameter for `hot_col` can be used to change the locale.  See th
 ```{r}
 DF = data.frame(dollar = rnorm(10), euro = rnorm(10), yen = rnorm(10))
 
-rhandsontable(DF * 1000, width = 550, height = 300) %>%
+rhandsontable(DF * 1000, width = 550, height = 300, language = "pl-PL") %>%
   hot_col("dollar", format = "$0,000.00", language = "en-US") %>%
   hot_col("euro", format = "0,000.00 $", language = "de-DE") %>%
   hot_col("yen", format = "$0,000.00", language = "ja-JP")
