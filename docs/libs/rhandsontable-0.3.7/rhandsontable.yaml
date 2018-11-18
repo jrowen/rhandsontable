@@ -24,6 +24,6 @@ dependencies:
    src: "htmlwidgets/lib/sparkline"
    script: jquery.sparkline.min.js
  - name: rhandsontable
-   version: 0.3.6.2
+   version: 0.3.7
    src: "htmlwidgets"
    stylesheet: rhandsontable.css
