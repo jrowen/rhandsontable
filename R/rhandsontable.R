@@ -173,9 +173,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param hot rhandsontable object
 #' @param contextMenu logical enabling the right-click menu
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
-#'  and 'none'. See \href{http://docs.handsontable.com/0.16.1/demo-stretching.html}{Column stretching} for details.
-#' @param customBorders json object. See
-#'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
+#'  and 'none'
+#' @param customBorders json object
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
@@ -230,10 +229,7 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 
 #' Handsontable widget
 #'
-#' Configure the options for the right-click context menu.  See
-#'  \href{http://docs.handsontable.com/0.16.1/demo-context-menu.html}{Context Menu} and
-#'  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
-#'  for details.
+#' Configure the options for the right-click context menu
 #'
 #' @param hot rhandsontable object
 #' @param allowRowEdit logical enabling row editing
@@ -478,7 +474,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
 #' Handsontable widget
 #'
-#' Configure row settings that pertain to the entire table. 
+#' Configure row settings that pertain to the entire table.
 #' Note that hot_rows is not to be confused with \code{\link{hot_row}}. See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
@@ -504,7 +500,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 
 #' Handsontable widget
 #'
-#' Configure properties of all cells in a given row(s). 
+#' Configure properties of all cells in a given row(s).
 #' Note that hot_row is not to be confused with \code{\link{hot_rows}}.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
@@ -523,7 +519,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 hot_row = function(hot, row, readOnly = NULL) {
 	if ( !is.null(readOnly) ) {
 		colDim = hot$x$rDataDim[2]
-		for ( i in row ) { 
+		for ( i in row ) {
 			for ( j in seq_len(colDim) ) {
 				hot = hot %>% hot_cell(i, j, readOnly = readOnly)
 			}
@@ -703,9 +699,7 @@ hot_validate_character = function(hot, cols, choices,
 
 #' Handsontable widget
 #'
-#' Add heatmap to table.  See
-#' \href{http://docs.handsontable.com/0.16.1/demo-chromajs.html}{Heatmaps for values in a column}
-#' for details.
+#' Add heatmap to table.
 #'
 #' @param hot rhandsontable object
 #' @param cols numeric vector of columns to include in the heatmap. If missing
