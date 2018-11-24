@@ -14,7 +14,7 @@ hot_row(hot, row, readOnly = NULL)
 \item{readOnly}{logical making the row(s) read-only}
 }
 \description{
-Configure properties of all cells in a given row(s). 
+Configure properties of all cells in a given row(s).
 Note that hot_row is not to be confused with \code{\link{hot_rows}}.  See
 \href{http://handsontable.com}{Handsontable.js} for details.
 }
