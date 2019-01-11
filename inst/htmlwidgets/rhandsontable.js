@@ -68,6 +68,7 @@ HTMLWidgets.widget({
 
       instance.hot.params = x;
       instance.hot.updateSettings(x);
+      instance.hot.is_hot = true;
 
       var searchField = document.getElementById('searchField');
       if (typeof(searchField) != 'undefined' && searchField !== null) {
@@ -142,11 +143,14 @@ HTMLWidgets.widget({
             }
           }
           // push input change to shiny so input$hot and output$hot are in sync (see #137)
-          Shiny.onInputChange(this.rootElement.id, {
-            data: this.getData(),
-            changes: { event: "afterChange", changes: null },
-            params: this.params
-          });
+          if(!(this.is_hot)){
+            Shiny.onInputChange(this.rootElement.id, {
+              data: this.getData(),
+              changes: { event: "afterChange", changes: null },
+              params: this.params
+            });
+          }
+          
         }
       }
 
