@@ -31,17 +31,17 @@ shinyServer(function(input, output, session) {
     MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
     rhandsontable(MAT, readOnly = TRUE, selectCallback = TRUE) %>%
       hot_cols(renderer = "function (instance, td, row, col, prop, value, cellProperties) {
-               Handsontable.renderers.TextRenderer.apply(this, arguments);
-               if (row == col) {
-               td.style.background = 'lightgrey';
-               } else if (col > row) {
-               td.style.background = 'grey';
-               td.style.color = 'grey';
-               } else if (value < -0.75) {
-               td.style.background = 'pink';
-               } else if (value > 0.75) {
-               td.style.background = 'lightgreen';
-               }
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
+      if (row == col) {
+        td.style.background = 'lightgrey';
+      } else if (col > row) {
+        td.style.background = 'grey';
+        td.style.color = 'grey';
+      } else if (value < -0.5) {
+        td.style.background = 'pink';
+      } else if (value > 0.5) {
+        td.style.background = 'lightgreen';
+      }
   }")
   })
 

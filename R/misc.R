@@ -46,14 +46,19 @@ toR = function(data, changes, params, ...) {
   # }
 
   # pre-conversion updates; afterCreateCol moved to end of function
-  if (changes$event == "afterCreateRow") {
-    # rename to numeric index
-    rowHeaders = genRowHeaders(length(out))
-  } else if (changes$event == "afterRemoveRow") {
-    inds = seq(changes$ind + 1, length.out = changes$ct)
-    rowHeaders = rowHeaders[-inds]
-  } else if (changes$event == "afterRemoveCol") {
-    # colHeaders already reflects removal
+  # if (changes$event == "afterCreateRow") {
+  #   inds = seq(changes$ind + 1, length.out = changes$ct)
+  #   # prevent duplicates
+  #   nm = 1
+  #   while (nm %in% rowHeaders) {
+  #     nm = nm + 1
+  #   }
+  #   rowHeaders = c(head(rowHeaders, inds - 1), nm,
+  #                  tail(rowHeaders, length(rowHeaders) - inds + 1))
+  # } else if (changes$event == "afterRemoveRow") {
+  #   inds = seq(changes$ind + 1, length.out = changes$ct)
+  #   rowHeaders = rowHeaders[-inds]
+  if (changes$event == "afterRemoveCol") {
     if (!("matrix" %in% rClass)) {
       inds = seq(changes$ind + 1, 1, length.out = changes$ct)
       rColClasses = rColClasses[-inds]
@@ -66,19 +71,36 @@ toR = function(data, changes, params, ...) {
     out = unlist(out, recursive = FALSE)
     # replace NULL with NA
     out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
-    out = matrix(out, nrow = nr, byrow = TRUE)
+
+    # If there is no data create empty matrix
+    if (length(out) == 0) {
+      out = matrix(nrow = 0, ncol = length(colHeaders))
+    } else {
+      out = matrix(out, nrow = nr, byrow = TRUE)
+    }
+
     class(out) = params$rColClasses
+
   } else if ("data.frame" %in% rClass) {
     nr = length(out)
+
     out = unlist(out, recursive = FALSE)
     # replace NULL with NA
     out = unlist(lapply(out, function(x) if (is.null(x)) NA else x))
-    out = matrix(out, nrow = nr, byrow = TRUE)
+
+    # If there is no data create empty matrix
+    if (length(out) == 0) {
+      out = matrix(nrow = 0, ncol = length(colHeaders))
+    } else {
+      out = matrix(out, nrow = nr, byrow = TRUE)
+    }
+
     out = colClasses(as.data.frame(out, stringsAsFactors = FALSE),
                      rColClasses, params$columns, ...)
   } else {
     stop("Conversion not implemented: ", rClass)
   }
+
 
   # post-conversion updates
   if (changes$event == "afterCreateRow") {
@@ -90,10 +112,11 @@ toR = function(data, changes, params, ...) {
     }
   }
 
-  # copy/paste may add cols without firing an afterCreateCol event so check
-  #   header length;
   if (ncol(out) != length(colHeaders))
     colHeaders = genColHeaders(changes, colHeaders)
+
+  if (nrow(out) != length(rowHeaders) && !is.null(rowHeaders))
+    rowHeaders = genRowHeaders(changes, rowHeaders)
 
   colnames(out) = colHeaders
   rownames(out) = rowHeaders
@@ -120,19 +143,38 @@ colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
                                  unique(d[[i]][!(d[[i]] %in% unlist(cols[[i]]$source))])),
                       ordered = TRUE),
       json = jsonlite::toJSON(d[[i]]),
-      as(d[[i]], colClasses[i]))
+      suppressWarnings(as(d[[i]], colClasses[i])))
   d
 }
 
 genColHeaders <- function(changes, colHeaders) {
   ind_ct = length(which(grepl("V[0-9]{1,}", colHeaders)))
-  # create new column names
-  new_cols = paste0("V", changes$ct + ind_ct)
-  # insert into vector
-  inds = seq(changes$ind + 1, 1, length.out = changes$ct)
-  c(colHeaders, new_cols)[order(c(seq_along(colHeaders), inds - 0.5))]
+
+  if (changes$event == "afterRemoveCol") {
+    colHeaders[-(seq(changes$ind, length = changes$ct) + 1)]
+  } else if (changes$event == "afterCreateCol") {
+    # create new column names
+    new_cols = paste0("V", changes$ct + ind_ct)
+    # insert into vector
+    inds = seq(changes$ind + 1, 1, length.out = changes$ct)
+    c(colHeaders, new_cols)[order(c(seq_along(colHeaders), inds - 0.5))]
+  } else {
+    stop("Change no recognized:", changes$event)
+  }
 }
 
-genRowHeaders <- function(ct) {
-  seq_len(ct)
+genRowHeaders <- function(changes, rowHeaders) {
+  inds = seq(changes$ind + 1, length.out = changes$ct)
+
+  if (changes$event == "afterCreateRow") {
+    # prevent duplicates
+    nm = 1
+    while (nm %in% rowHeaders) {
+      nm = nm + 1
+    }
+    c(head(rowHeaders, inds - 1), nm,
+      tail(rowHeaders, length(rowHeaders) - inds + 1))
+  } else if (changes$event == "afterRemoveRow") {
+    rowHeaders[-inds]
+  }
 }

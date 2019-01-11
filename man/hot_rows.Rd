@@ -11,11 +11,12 @@ hot_rows(hot, rowHeights = NULL, fixedRowsTop = NULL)
 
 \item{rowHeights}{a scalar or numeric vector of row heights}
 
-\item{fixedRowsTop}{a numeric vector indicating which rows should be
-frozen on the top}
+\item{fixedRowsTop}{a scaler indicating the number of rows to
+freeze on the top}
 }
 \description{
-Configure rows.  See
+Configure row settings that pertain to the entire table. 
+Note that hot_rows is not to be confused with \code{\link{hot_row}}. See
 \href{http://handsontable.com}{Handsontable.js} for details.
 }
 \examples{
@@ -24,10 +25,9 @@ MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
              letters[1:5]))
 
 rhandsontable(MAT, width = 300, height = 150) \%>\%
-hot_cols(colWidths = 100, fixedColumnsLeft = 1) \%>\%
+  hot_cols(colWidths = 100, fixedColumnsLeft = 1) \%>\%
   hot_rows(rowHeights = 50, fixedRowsTop = 1)
 }
 \seealso{
 \code{\link{hot_cols}}, \code{\link{hot_cell}}
 }
-

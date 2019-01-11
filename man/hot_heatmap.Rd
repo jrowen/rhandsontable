@@ -32,4 +32,3 @@ MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
 rhandsontable(MAT) \%>\%
  hot_heatmap()
 }
-

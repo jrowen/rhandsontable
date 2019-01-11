@@ -20,7 +20,7 @@ opts_knit$set(warning = FALSE, error = FALSE, message = FALSE, cache = FALSE,
 ## Introduction
 
   rhandsontable is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
-
+f
 > Handsontable is a data grid component with an Excel-like appearance. Built in JavaScript, it integrates with any data source with peak efficiency. It comes with powerful features like data validation, sorting, grouping, data binding, formula support or column ordering.
 ([via](https://www.handsontable.com))
 
@@ -46,7 +46,7 @@ rhandsontable(DF, width = 600, height = 300) %>%
   hot_col("factor_allow", allowInvalid = TRUE)
 ```
 
-To improve readability, `NA` values will be displayed as blank cells.  This requires converting columns containing `NA` to characters, and in the case of factors and Dates, may not display the data in the desired format.  It may be beneficial to concert these type of columns to character before passing to `rhandsontable`.
+To improve readability, `NA` values will be displayed as blank cells.  This requires converting columns containing `NA` to characters, and in the case of factors and Dates, may not display the data in the desired format.  It may be beneficial to convert these type of columns to character before passing to `rhandsontable`.
 
 ```{r}
 DF_na = data.frame(integer = c(NA, 2:10), 
@@ -159,11 +159,11 @@ rhandsontable(DF, allowedTags = "<em><b><strong><a><big>",
         img = document.createElement('IMG');
         img.src = value;
   
-        Handsontable.Dom.addEvent(img, 'mousedown', function (e){
+        Handsontable.dom.addEvent(img, 'mousedown', function (e){
           e.preventDefault(); // prevent selection quirk
         });
   
-        Handsontable.Dom.empty(td);
+        Handsontable.dsom.empty(td);
         td.appendChild(img);
       }
       else {
@@ -195,7 +195,7 @@ rhandsontable(DF, col_highlight = col_highlight,
               width = 550, height = 300) %>%
   hot_cols(renderer = "
     function(instance, td, row, col, prop, value, cellProperties) {
-      Handsontable.TextCell.renderer.apply(this, arguments);
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
       
       tbl = this.HTMLWidgets.widgets[0]
 
@@ -307,7 +307,7 @@ Future enhancements will look to expand export options.
 
 ## Numeric Formatting
 
-Numeric columns are formatted using the [numeral.js](http://numeraljs.com/) library.
+Numeric columns are formatted using the [numbro.js](http://numbrojs.com/) library.
 
 ```{r}
 DF = data.frame(int = 1:10, float = rnorm(10), cur = rnorm(10) * 1E5,

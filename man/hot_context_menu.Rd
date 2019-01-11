@@ -43,4 +43,3 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
 rhandsontable(DF) \%>\%
   hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
 }
-

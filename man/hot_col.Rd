@@ -5,9 +5,10 @@
 \title{Handsontable widget}
 \usage{
 hot_col(hot, col, type = NULL, format = NULL, source = NULL,
-  strict = NULL, readOnly = NULL, validator = NULL, allowInvalid = NULL,
-  halign = NULL, valign = NULL, renderer = NULL, copyable = NULL,
-  dateFormat = NULL, default = NULL, language = NULL, ...)
+  strict = NULL, readOnly = NULL, validator = NULL,
+  allowInvalid = NULL, halign = NULL, valign = NULL,
+  renderer = NULL, copyable = NULL, dateFormat = NULL,
+  default = NULL, language = NULL, ...)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -21,7 +22,7 @@ and handsontable (not implemented yet)}
 \item{format}{characer specifying column format. See Cell Types at
 \href{http://handsontable.com}{Handsontable.js} for the formatting
 options for each data type. Numeric columns are formatted using
-\href{http://numeraljs.com}{Numeral.js}.}
+\href{http://numbrojs.com}{Numbro.js}.}
 
 \item{source}{a vector of choices for select, dropdown and autocomplete
 column types}
@@ -29,7 +30,7 @@ column types}
 \item{strict}{logical specifying whether values not in the \code{source}
 vector will be accepted}
 
-\item{readOnly}{logical making the table read-only}
+\item{readOnly}{logical making the column read-only}
 
 \item{validator}{character defining a Javascript function to be used
 to validate user input. See \code{hot_validate_numeric} and
@@ -78,4 +79,3 @@ rhandsontable(DF, rowHeaders = NULL) \%>\%
 \seealso{
 \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 }
-

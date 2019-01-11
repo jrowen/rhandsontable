@@ -21,8 +21,8 @@ The sorting will be done when a user click on column name}
 
 \item{manualColumnResize}{logical enabline column width resizing}
 
-\item{fixedColumnsLeft}{a numeric vector indicating which columns should be
-frozen on the left}
+\item{fixedColumnsLeft}{a scalar indicating the number of columns to
+freeze on the left}
 
 \item{...}{passed to hot_col}
 }
@@ -42,4 +42,3 @@ rhandsontable(DF) \%>\%
 \seealso{
 \code{\link{hot_col}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 }
-

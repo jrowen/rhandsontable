@@ -2,15 +2,15 @@
 title: "rhandsontable"
 output:
   html_document:
-    #css: custom.css
     toc: true
-    toc_float: true
-    #toc_depth: 3
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
     self_contained: false
     lib_dir: libs
-    #theme: default
-    includes:
-      before_body: include/before_body.html
+    include:
+      after_body: include/footer.html
 ---
 
 ```{r echo = FALSE}
@@ -23,12 +23,12 @@ opts_knit$set(warning = FALSE, error = FALSE, message = FALSE, cache = FALSE,
 
 ## Introduction
 
-  rhandsontable is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
+rhandsontable is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
 
 > Handsontable is a data grid component with an Excel-like appearance. Built in JavaScript, it integrates with any data source with peak efficiency. It comes with powerful features like data validation, sorting, grouping, data binding, formula support or column ordering.
 ([via](https://www.handsontable.com))
 
-## Column Types
+## Types
 
 The table includes support for numeric, logical, character and Date types.  Logical values will appear as check boxes, and the [pikaday.js](https://github.com/dbushell/Pikaday) library is used to specify Date values.
 
@@ -163,11 +163,11 @@ rhandsontable(DF, allowedTags = "<em><b><strong><a><big>",
         img = document.createElement('IMG');
         img.src = value;
   
-        Handsontable.Dom.addEvent(img, 'mousedown', function (e){
+        Handsontable.dom.addEvent(img, 'mousedown', function (e){
           e.preventDefault(); // prevent selection quirk
         });
   
-        Handsontable.Dom.empty(td);
+        Handsontable.dom.empty(td);
         td.appendChild(img);
       }
       else {
@@ -199,7 +199,7 @@ rhandsontable(DF, col_highlight = col_highlight,
               width = 550, height = 300) %>%
   hot_cols(renderer = "
     function(instance, td, row, col, prop, value, cellProperties) {
-      Handsontable.TextCell.renderer.apply(this, arguments);
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
       
       tbl = this.HTMLWidgets.widgets[0]
 
@@ -231,7 +231,7 @@ HTMLWidgets.widgets.filter(function(widget) {
 })[0];
 ```
 
-## Right-Click Menu
+## Right-Click
 
 Right-clicking in a cell will enable a context menu that includes customizable table actions via the `hot_context_menu` function.  For shiny apps, formatting and comment updates made via the context menu are not currently retained.
 
@@ -269,7 +269,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
       csv = list(name = "Download to CSV",
                     callback = htmlwidgets::JS(
                       "function (key, options) {
-                         var csv = csvString(this);
+                         var csv = csvString(this, sep=',', dec='.');
 
                          var link = document.createElement('a');
                          link.setAttribute('href', 'data:text/plain;charset=utf-8,' +
@@ -309,9 +309,9 @@ rhandsontable(DF, search = TRUE, width = 550, height = 300) %>%
 
 Future enhancements will look to expand export options.
 
-## Numeric Formatting
+## Formatting
 
-Numeric columns are formatted using the [numeral.js](http://numeraljs.com/) library.
+Numeric columns are formatted using the [numebro.js](http://numbrojs.com/) library.
 
 ```{r}
 DF = data.frame(int = 1:10, float = rnorm(10), cur = rnorm(10) * 1E5,
@@ -324,22 +324,51 @@ rhandsontable(DF, width = 550, height = 300) %>%
   hot_col("pct", format = "0%")
 ```
 
+### Conditional Formatting
+
+Conditional formatting can also be specified via custom JavaScript function.  Future enhancements will look to simplify this interface.
+
+```{r, fig.width = 8}
+MAT = matrix(runif(100, -1, 1), nrow = 10,
+             dimnames = list(LETTERS[1:10], LETTERS[1:10]))
+diag(MAT) = 1
+MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
+rhandsontable(MAT, readOnly = TRUE, width = 750, height = 300) %>%
+  hot_cols(renderer = "
+           function (instance, td, row, col, prop, value, cellProperties) {
+             Handsontable.renderers.NumericRenderer.apply(this, arguments);
+             if (row == col) {
+              td.style.background = 'lightgrey';
+             } else if (col > row) {
+              td.style.background = 'grey';
+              td.style.color = 'grey';
+             } else if (value < -0.75) {
+              td.style.background = 'pink';
+             } else if (value > 0.75) {
+              td.style.background = 'lightgreen';
+             }
+           }")
+```
+
+See [Custom Renderer using an R Parameter](#custom_renderer_using_r) for anotehr example.
+
+
 ### Specify Locale
 
-The `language` parameter for `hot_col` can be used to change the locale.  See the [numeral.js](http://numeraljs.com/) library for language options.
+The `language` parameter for `hot_col` can be used to change the locale.  See the [numbro.js](http://numbrojs.com/) library for language options.
 
 ```{r}
 DF = data.frame(dollar = rnorm(10), euro = rnorm(10), yen = rnorm(10))
 
-rhandsontable(DF * 1000, width = 550, height = 300) %>%
+rhandsontable(DF * 1000, width = 550, height = 300, language = "pl-PL") %>%
   hot_col("dollar", format = "$0,000.00", language = "en-US") %>%
   hot_col("euro", format = "0,000.00 $", language = "de-DE") %>%
   hot_col("yen", format = "$0,000.00", language = "ja-JP")
 ```
 
-## Read Only
+## Read-Only
 
-The whole table and individual columns can to set to `readOnly` to prevent the user from making changes.
+The whole table can be set to `readOnly` to prevent the user from making changes.
 
 ```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -347,8 +376,21 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF, readOnly = TRUE, width = 550, height = 300) %>%
-  hot_col("val", readOnly = FALSE)
+rhandsontable(DF, readOnly = TRUE, width = 550, height = 300)
+```
+
+The individual columns, rows and cells can also be set to `readOnly`
+
+```{r}
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF, width = 550, height = 300) %>%
+  hot_col("val", readOnly = TRUE) %>%
+  hot_row(c(4,6,10), readOnly = TRUE) %>%
+  hot_cell(7, "dt", readOnly = TRUE)
 ```
 
 ## Sorting
@@ -365,7 +407,7 @@ rhandsontable(DF, width = 550, height = 300) %>%
   hot_cols(columnSorting = TRUE)
 ```
 
-## Highlight Rows & Columns
+## Highlight
 
 With larger tables it my be desirable to highlight the row and column for a selected cell.  
 
@@ -414,7 +456,7 @@ MAT = matrix(rnorm(30), nrow = 10, dimnames = list(LETTERS[1:10],
 rhandsontable(MAT, width = 600, height = 300, stretchH = "all")
 ```
 
-## Fixed Rows / Columns
+## Fixed
 
 For larger data sets, (multiple) top rows and left columns can be frozen.
 
@@ -427,7 +469,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
   hot_rows(fixedRowsTop = 1)
 ```
 
-## Cell Comments
+## Comments
 
 Comments (hover) can also be added to individual cells and will appear as red flags in the upper right of the cell. 
 
@@ -524,34 +566,6 @@ rhandsontable(MAT * 10, width = 550, height = 300) %>%
            allowInvalid = FALSE)
 ```
 
-## Conditional Formatting
-
-Conditional formatting can also be specified via custom JavaScript function.  Future enhancements will look to simplify this interface.
-
-```{r, fig.width = 8}
-MAT = matrix(runif(100, -1, 1), nrow = 10,
-             dimnames = list(LETTERS[1:10], LETTERS[1:10]))
-diag(MAT) = 1
-MAT[upper.tri(MAT)] = MAT[lower.tri(MAT)]
-rhandsontable(MAT, readOnly = TRUE, width = 750, height = 300) %>%
-  hot_cols(renderer = "
-           function (instance, td, row, col, prop, value, cellProperties) {
-             Handsontable.renderers.NumericRenderer.apply(this, arguments);
-             if (row == col) {
-              td.style.background = 'lightgrey';
-             } else if (col > row) {
-              td.style.background = 'grey';
-              td.style.color = 'grey';
-             } else if (value < -0.75) {
-              td.style.background = 'pink';
-             } else if (value > 0.75) {
-              td.style.background = 'lightgreen';
-             }
-           }")
-```
-
-See [Custom Renderer using an R Parameter](#custom_renderer_using_r) for anotehr example.
-
 ## Heatmap
 
 The [chroma.js](http://old.driven-by-data.net/about/chromajs/) library can be used to turn the table into a heatmap.
@@ -614,11 +628,18 @@ shiny::runGitHub("rhandsontable", "jrowen",
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir="inst/examples/rhandsontable_dash")
 ```
+* [Table with Search](https://ginberg.shinyapps.io/rhandsontable_search/)
+```
+shiny::runGitHub("rhandsontable", "jrowen", 
+                 subdir="inst/examples/rhandsontable_search")
+```
 
 ### Bookmarks
 
-Version 0.14 of `shiny` includes new bookmarking functionality.  This willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
+Shiny bookmarks willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
 
-## Suggestions & Contributions
+## Feedback
 
-Please file a issue if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
+Please [file a issue](https://github.com/jrowen/rhandsontable/issues) if you experience any problems with the widget or have feature requests.  Pull requests are also welcome.
+
+
