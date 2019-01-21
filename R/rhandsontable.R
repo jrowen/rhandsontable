@@ -738,7 +738,7 @@ renderer_heatmap = function(color_scale) {
   renderer = gsub("\n", "", "
       function (instance, td, row, col, prop, value, cellProperties) {
 
-        Handsontable.renderers.TextRenderer.apply(this, arguments);
+        Handsontable.renderers.NumericRenderer.apply(this, arguments);
         heatmapScale  = chroma.scale(['%s1', '%s2']);
 
         if (instance.heatmap[col]) {

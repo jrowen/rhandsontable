@@ -1,5 +1,7 @@
-rhandsontable 0.3.702
+rhandsontable 0.3.703
 -------------------------
+
+* Fixed heatmap formating (#250)
 
 rhandsontable 0.3.7
 -------------------------
