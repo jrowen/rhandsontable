@@ -1,7 +1,9 @@
-rhandsontable 0.3.703
+rhandsontable 0.3.704
 -------------------------
 
 * Fixed heatmap formating (#250)
+
+* Fix shiny search example to use new plugin (#2)
 
 rhandsontable 0.3.7
 -------------------------
