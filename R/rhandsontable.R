@@ -464,7 +464,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
     className = c(halign, valign)
     if (!is.null(className)) {
-      cols[[i]]$className = className
+      cols[[i]]$className = paste0(className, collapse = " ")
     }
   }
 
