@@ -7,6 +7,8 @@ rhandsontable 0.3.705
 
 * Fix valign (#231)
 
+* Fix decimal values (#256)
+
 rhandsontable 0.3.7
 -------------------------
 
