@@ -9,7 +9,6 @@ rhandsontable 0.3.705
 
 * Fix decimal values (#256)
 
-rhandsontable 0.3.7
 -------------------------
 
 * Updated to handsontable 6.1.1; fixed language support
