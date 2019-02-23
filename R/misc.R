@@ -134,6 +134,7 @@ colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
   for(i in seq_along(d))
     d[[i]] = switch(
       colClasses[i],
+      numeric = as.numeric(d[[i]]),
       Date = as.Date(d[[i]], origin='1970-01-01',
                      format = date_fmt),
       POSIXct = as.POSIXct(d[[i]], origin='1970-01-01',

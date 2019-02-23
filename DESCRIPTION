@@ -1,7 +1,7 @@
 Package: rhandsontable
 Type: Package
 Title: Interface to the 'Handsontable.js' Library
-Version: 0.3.705
+Version: 0.3.706
 Authors@R: c(
   person("Jonathan", "Owen", email = "jonathanro@gmail.com",
          role = c("aut", "cre", "cph")),
