@@ -1,5 +1,6 @@
 rhandsontable 0.3.7
 -------------------------
+* Added the set_data function to wrap handsontable.setDataAtCell (#279)
 
 * Updated to handsontable 6.1.1; fixed language support
 
