@@ -795,3 +795,47 @@ hot_to_r = function(...) {
   if (is.null(list(...)[[1]])) return(NULL)
   do.call(toR, ...)
 }
+
+
+
+#' Handsontable widget
+#'
+#' Set data inside a Handsontable instance without recreating the widget. Send the new values as a vector of rows, a vector of columns, and a vector of values. If different length vectors are supplied then the shorter ones are recycled to match the length of the longest.
+#'
+#' @param id The id of the table to interact with.
+#' @param row Integer vector of row indexes.
+#' @param col Integer vector the column indexes.
+#' @param val Vector of values to set at each row-col pair.
+#' @param session The session that is associated with your shiny server function. The table is only interactive when used in shiny so we only use set_data when the table is in shiny.
+#' @param zero_indexed Default FALSE. Set to TRUE if you are supplying row and col indexes that are already 0-based.
+#' @export
+set_data = function(id, row, col, val, session, zero_indexed=F) {
+  # make sure rows and cols are integers
+  row <- as.integer(row)
+  col <- as.integer(col)
+
+  # javacript is zero-based indexed while R is 1-based
+  # we assume the R user is using 1-based so we subtract 1 from rows and cols
+  # if the user provides positions that are 0-based then we skip this
+  if( !zero_indexed ){
+    row <- row - 1
+    col <- col - 1
+  }
+
+  # make sure the provided rows and cols are finite, non-negative values
+  stopifnot(exprs = { all(c(row,col) >= 0, is.finite(c(row, col))) } )
+
+  # use recycling to ensure equal length vectors
+  vec_length <- max(length(row), length(col), length(val))
+  row <- rep(row, length.out=vec_length)
+  col <- rep(col, length.out=vec_length)
+  val <- rep(val, length.out=vec_length)
+
+  # send the list of data out to the message handler
+  session$sendCustomMessage('handler_setDataAtCell',
+                            list('id' = id,
+                                 'size'= length(val),
+                                 'row' = row,
+                                 'col' = col,
+                                 'val' = val))
+}
