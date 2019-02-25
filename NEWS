@@ -1,4 +1,14 @@
-rhandsontable 0.3.7
+rhandsontable 0.3.705
+-------------------------
+
+* Fixed heatmap formating (#250)
+
+* Fix shiny search example to use new plugin (#285)
+
+* Fix valign (#231)
+
+* Fix decimal values (#256)
+
 -------------------------
 * Added the set_data function to wrap handsontable.setDataAtCell (#279)
 

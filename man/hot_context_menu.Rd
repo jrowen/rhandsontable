@@ -28,10 +28,7 @@ are defined (i.e. useTypes == TRUE in rhandsontable).}
 \item{...}{ignored}
 }
 \description{
-Configure the options for the right-click context menu.  See
- \href{http://docs.handsontable.com/0.16.1/demo-context-menu.html}{Context Menu} and
- \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
- for details.
+Configure the options for the right-click context menu
 }
 \examples{
 library(rhandsontable)
