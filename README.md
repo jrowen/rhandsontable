@@ -36,7 +36,7 @@ DF = data.frame(int = 1:10,
 
 # add a sparkline chart
 DF$chart = sapply(1:10, function(x) jsonlite::toJSON(list(values=rnorm(10))))
-                                                    
+
 rhandsontable(DF, rowHeaders = NULL) %>%
   hot_col("chart", renderer = htmlwidgets::JS("renderSparkline"))
 ```
@@ -54,3 +54,61 @@ Since the widget is not currently able to use the standard shiny input binding f
 Two additional inputs are also enabled, `input$hot_select` and `input$hot_comment`, which will fire when a cell selection or a comment changes, respectively (if you would like to see more options, please post an issue or create a PR).
 
 This functionality is still evolving, so please don't hesitate to share suggestions and PRs.
+
+## License
+
+This wrapper is released under [the MIT license](//github.com/jrowen/rhandsontable/blob/master/LICENSE) but under the hood it uses [Handsontable](//github.com/handsontable/handsontable), which is dual-licensed. You can either use it for free in all your non-commercial projects or purchase a commercial license.
+
+<table>
+  <thead align="center">
+    <tr>
+      <th width="50%">Free license</th>
+      <th width="50%">Paid license</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td>For non-commercial purposes such as teaching, academic research, personal experimentation, and evaluating  on development and testing servers.</td>
+      <td>For all commercial purposes</td>
+    </tr>
+    <tr>
+      <td>All features are available</td>
+      <td>All features are available</td>
+    </tr>
+    <tr>
+      <td>Community support</td>
+      <td>Dedicated support</td>
+    </tr>
+    <tr>
+      <td><a href="//github.com/handsontable/handsontable/blob/master/handsontable-non-commercial-license.pdf">Read the license</a></td>
+      <td><a href="//handsontable.com/pricing">See plans</a></td>
+    </tr>
+  </tbody>
+</table>
+
+### License key
+
+**The license key is obligatory since [Handsontable 7.0.0](//github.com/handsontable/handsontable/releases/tag/7.0.0) (released in March 2019).**
+
+If you use Handsontable for purposes not intended toward monetary compensation such as, but not limited to, teaching, academic research, evaluation, testing and experimentation, pass a phrase `'non-commercial-and-evaluation'`, as presented below.
+
+You can pass it in the `rhandsontable` function:
+
+```R
+rhandsontable(
+  data = data,
+  colHeaders = colHeaders,
+  rowHeaders = rowHeaders,
+  licenseKey = 'non-commercial-and-evaluation'
+)
+```
+
+### Using a previous version.
+
+If you would like to continue to use handsontable `6.1.1`, which is released under MIT license, please install rhandsontable using instructions from [github install](https://cran.r-project.org/web/packages/githubinstall/vignettes/githubinstall.html).
+
+```R
+library(devtools)
+install_github("jrowen/rhandsontable", ref = "v0.3.7")
+library(rhandsontable)
+```

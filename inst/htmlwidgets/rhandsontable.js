@@ -42,6 +42,13 @@ HTMLWidgets.widget({
 
     //this.afterRender(x);
 
+    if (x.height == null) {
+      x.height = 'auto';
+    }
+    if (x.width == null) {
+      x.width = 'auto';
+    }
+
     this.params = x;
 
     if (instance.hot) { // update existing instance
