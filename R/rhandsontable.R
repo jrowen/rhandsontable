@@ -8,6 +8,7 @@
 #'  will be used. Setting to \code{NULL} will omit.
 #' @param rowHeaders a vector of row names. If missing \code{rownames}
 #'  will be used. Setting to \code{NULL} will omit.
+#' @param licenseKey the license key to pass to Handsontable
 #' @param comments matrix or data.frame of comments; NA values are ignored
 #' @param useTypes logical specifying whether column classes should be mapped to
 #'  equivalent Javascript types.  Note that
@@ -34,7 +35,7 @@
 #' rhandsontable(DF, rowHeaders = NULL)
 #' @seealso \code{\link{hot_table}}, \code{\link{hot_cols}}, \code{\link{hot_rows}}, \code{\link{hot_cell}}
 #' @export
-rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
+rhandsontable <- function(data, colHeaders, rowHeaders, licenseKey = NULL, comments = NULL,
                           useTypes = TRUE, readOnly = NULL,
                           selectCallback = FALSE,
                           width = NULL, height = NULL, digits = 4,
@@ -128,6 +129,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     columns = cols,
     width = width,
     height = height,
+    licenseKey = licenseKey,
     debug = ifelse(is.null(debug) || is.na(debug) || !is.numeric(debug), 0, debug),
     search = search
   )

@@ -4,7 +4,7 @@
 \alias{rhandsontable}
 \title{Handsontable widget}
 \usage{
-rhandsontable(data, colHeaders, rowHeaders, comments = NULL,
+rhandsontable(data, colHeaders, rowHeaders, licenseKey = NULL, comments = NULL,
   useTypes = TRUE, readOnly = NULL, selectCallback = FALSE,
   width = NULL, height = NULL, digits = 4, debug = NULL,
   search = FALSE, ...)
@@ -17,6 +17,8 @@ will be used. Setting to \code{NULL} will omit.}
 
 \item{rowHeaders}{a vector of row names. If missing \code{rownames}
 will be used. Setting to \code{NULL} will omit.}
+
+\item{licenseKey}{the license key to pass to Handsontable}
 
 \item{comments}{matrix or data.frame of comments; NA values are ignored}
 
