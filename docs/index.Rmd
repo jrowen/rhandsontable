@@ -3,7 +3,10 @@ title: "rhandsontable"
 output:
   html_document:
     toc: true
-    toc_float: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
     self_contained: false
     lib_dir: libs
     include:
@@ -266,7 +269,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
       csv = list(name = "Download to CSV",
                     callback = htmlwidgets::JS(
                       "function (key, options) {
-                         var csv = csvString(this);
+                         var csv = csvString(this, sep=',', dec='.');
 
                          var link = document.createElement('a');
                          link.setAttribute('href', 'data:text/plain;charset=utf-8,' +
@@ -357,7 +360,7 @@ The `language` parameter for `hot_col` can be used to change the locale.  See th
 ```{r}
 DF = data.frame(dollar = rnorm(10), euro = rnorm(10), yen = rnorm(10))
 
-rhandsontable(DF * 1000, width = 550, height = 300) %>%
+rhandsontable(DF * 1000, width = 550, height = 300, language = "pl-PL") %>%
   hot_col("dollar", format = "$0,000.00", language = "en-US") %>%
   hot_col("euro", format = "0,000.00 $", language = "de-DE") %>%
   hot_col("yen", format = "$0,000.00", language = "ja-JP")
@@ -365,7 +368,7 @@ rhandsontable(DF * 1000, width = 550, height = 300) %>%
 
 ## Read-Only
 
-The whole table and individual columns can to set to `readOnly` to prevent the user from making changes.
+The whole table can be set to `readOnly` to prevent the user from making changes.
 
 ```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -373,8 +376,21 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF, readOnly = TRUE, width = 550, height = 300) %>%
-  hot_col("val", readOnly = FALSE)
+rhandsontable(DF, readOnly = TRUE, width = 550, height = 300)
+```
+
+The individual columns, rows and cells can also be set to `readOnly`
+
+```{r}
+DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
+                small = letters[1:10],
+                dt = seq(from = Sys.Date(), by = "days", length.out = 10),
+                stringsAsFactors = FALSE)
+
+rhandsontable(DF, width = 550, height = 300) %>%
+  hot_col("val", readOnly = TRUE) %>%
+  hot_row(c(4,6,10), readOnly = TRUE) %>%
+  hot_cell(7, "dt", readOnly = TRUE)
 ```
 
 ## Sorting
@@ -612,10 +628,15 @@ shiny::runGitHub("rhandsontable", "jrowen",
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir="inst/examples/rhandsontable_dash")
 ```
+* [Table with Search](https://ginberg.shinyapps.io/rhandsontable_search/)
+```
+shiny::runGitHub("rhandsontable", "jrowen", 
+                 subdir="inst/examples/rhandsontable_search")
+```
 
 ### Bookmarks
 
-Version 0.14 of `shiny` includes new bookmarking functionality.  This willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
+Shiny bookmarks willl work for `rhandsontable` with some special handling.  See [this issue](https://github.com/rstudio/shiny/issues/1378) for more details.
 
 ## Feedback
 

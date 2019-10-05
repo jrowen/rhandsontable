@@ -68,9 +68,9 @@ HTMLWidgets.widget({
 
       instance.hot.params = x;
       instance.hot.updateSettings(x);
-      
+
       var searchField = document.getElementById('searchField');
-      if (typeof(searchField) != 'undefined' && searchField != null) {
+      if (typeof(searchField) != 'undefined' && searchField !== null) {
         Handsontable.dom.addEvent(searchField, 'keyup', function (event) {
           var queryResult = instance.hot.search.query(this.value);
           instance.hot.render();
@@ -141,11 +141,12 @@ HTMLWidgets.widget({
               console.log("afterChange: Shiny.onInputChange: " + this.rootElement.id);
             }
           }
-          //Shiny.onInputChange(this.rootElement.id, {
-          //  data: this.getData(),
-          //  changes: { event: "afterChange", changes: null },
-          //  params: this.params
-          //});
+          // push input change to shiny so input$hot and output$hot are in sync (see #137)
+          Shiny.onInputChange(this.rootElement.id, {
+            data: this.getData(),
+            changes: { event: "afterChange", changes: null },
+            params: this.params
+          });
         }
       }
 
@@ -200,10 +201,16 @@ HTMLWidgets.widget({
 
     x.afterSelectionEnd = function(r, c, r2, c2) {
 
+      var r_all = [];
+      var c_all = [];
       if (HTMLWidgets.shinyMode) {
-        if (this.sortIndex && this.sortIndex.length !== 0) {
-          r = this.sortIndex[r][0];
-          r2 = this.sortIndex[r2][0];
+        if ( r2 < r ) { r2 = [r, r = r2][0]; }
+        for ( var i=r; i <= r2; i++ ) {
+          r_all.push( this.toPhysicalRow(i) + 1 );
+        }
+        if ( c2 < c ) { c2 = [c, c = c2][0]; }
+        for ( var ii=c; ii <= c2; ii++ ) {
+          c_all.push( this.toPhysicalColumn(ii) + 1 );
         }
 
         if (this.params && this.params.debug) {
@@ -211,9 +218,14 @@ HTMLWidgets.widget({
             console.log("afterSelectionEnd: Shiny.onInputChange: " + this.rootElement.id);
           }
         }
-        Shiny.onInputChange(this.rootElement.id + "_select", {
+        Shiny.onInputChange(this.rootElement.id + "_select:rhandsontable.customSelectDeserializer", {
           data: this.getData(),
-          select: { r: r + 1, c: c + 1, r2: r2 + 1, c2: c2 + 1},
+          select: { r: r + 1,
+                    c: c + 1,
+                    r2: r2 + 1,
+                    c2: c2 + 1,
+                    rAll: r_all,
+                    cAll: c_all },
           params: this.params
         });
       }
@@ -329,21 +341,24 @@ function toArray(input) {
 }
 
 // csv logic adapted from https://github.com/juantascon/jquery-handsontable-csv
-function csvString(instance) {
+function csvString(instance, sep, dec) {
 
   var headers = instance.getColHeader();
 
-  var csv = headers.join(",") + "\n";
+  var csv = headers.join(sep) + "\n";
 
   for (var i = 0; i < instance.countRows(); i++) {
       var row = [];
       for (var h in headers) {
           var col = instance.propToCol(h);
           var value = instance.getDataAtRowProp(i, col);
+          if ( !isNaN(value) ) {
+            value = value.toString().replace(".", dec);
+          }
           row.push(value);
       }
 
-      csv += row.join(",");
+      csv += row.join(sep);
       csv += "\n";
   }
 
@@ -351,17 +366,12 @@ function csvString(instance) {
 }
 
 function customRenderer(instance, TD, row, col, prop, value, cellProperties) {
-  if (value === 'NA') {
-    value = '';
-    Handsontable.renderers.getRenderer('text')(instance, TD, row, col, prop, value, cellProperties);
-  } else {
     if (['date', 'handsontable', 'dropdown'].indexOf(cellProperties.type) > -1) {
       type = 'autocomplete';
     } else {
       type = cellProperties.type;
     }
     Handsontable.renderers.getRenderer(type)(instance, TD, row, col, prop, value, cellProperties);
-  }
 }
 
 function renderSparkline(instance, td, row, col, prop, value, cellProperties) {

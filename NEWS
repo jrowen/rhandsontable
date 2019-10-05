@@ -1,9 +1,35 @@
+rhandsontable 0.3.7
+-------------------------
+
+* Updated to handsontable 6.1.1; fixed language support
+
+* Modified the select callback to return all indices of multi-row/col selections (#257)
+
+rhandsontable 0.3.6
+-------------------------
+
+* Adjust JavaScript to support RStudio viewer
+
+* Updated numeric formatting to support handsontable changes (#213)
+
+* Fix sync issue in shiny when table first loads (#216)
+
+* Added readOnly option for rows and cells (#214)
+
 rhandsontable 0.3.5
 -------------------------
 
-* Made some changes to prevent double table loading in shiny (#188, #137)
+* Improved data.table and tibble handing (#115, #186)
 
-* Added encoding to DESCRIPTION
+* Improved NA handling (#189, thanks to marciz for submitting)
+
+* Added search functionality to Shiny (#203, thanks to Ger Inburg for submitting)
+
+* Updated csvString to support additional file formats (#209, thanks to camold for submitting)
+
+* Made some changes to prevent double table loading in shiny (#188, #137, thanks to marciz for suggesting)
+
+* Added encoding to DESCRIPTION and updated LICENSE files
 
 * Updated to handsontable 0.35.0, numbro 1.10.1, chroma 1.3.3 and jquery 3.2.1 (see https://github.com/handsontable/handsontable/releases).
 

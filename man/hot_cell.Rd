@@ -4,16 +4,18 @@
 \alias{hot_cell}
 \title{Handsontable widget}
 \usage{
-hot_cell(hot, row, col, comment = NULL)
+hot_cell(hot, row, col, comment = NULL, readOnly = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}
 
 \item{row}{numeric row index}
 
-\item{col}{numeric column index}
+\item{col}{column name or index}
 
 \item{comment}{character comment to add to cell}
+
+\item{readOnly}{logical making the cell read-only}
 }
 \description{
 Configure single cell.  See
@@ -26,8 +28,9 @@ DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
                 stringsAsFactors = FALSE)
 
-rhandsontable(DF, readOnly = TRUE) \%>\%
-  hot_cell(1, 1, "Test comment")
+rhandsontable(DF) \%>\%
+  hot_cell(1, 1, comment = "Test comment") \%>\%
+  hot_cell(2, 3, readOnly = TRUE)
 }
 \seealso{
 \code{\link{hot_cols}}, \code{\link{hot_rows}}

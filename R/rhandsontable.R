@@ -20,7 +20,9 @@
 #' @param height numeric table height
 #' @param digits numeric passed to \code{jsonlite::toJSON}
 #' @param debug numeric Javascript log level
-#' @param search logical specifying if the data can be searched
+#' @param search logical specifying if the data can be searched (see
+#'   \url{file:///home/jonathan/Documents/git/rhandsontable/docs/index.html#customizing}
+#'   and Shiny example in inst/examples/rhandsontable_search)
 #' @param ... passed to \code{hot_table} and to the \code{params} property of the widget
 #' @examples
 #' library(rhandsontable)
@@ -56,6 +58,14 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     rColClasses[grepl("factor", rColClasses)] = "factor"
   }
 
+  if ("tbl_df" %in% rClass) {
+    # temp fix for tibbles
+    data = as.data.frame(data)
+  } else if ("data.table" %in% rClass) {
+    # temp fix for data.table with S3 class
+    data = as.data.frame(data)
+  }
+
   if (!useTypes) {
     data = do.call(cbind, lapply(data, function(x) {
       if (class(x) == "Date")
@@ -85,10 +95,10 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
         )
       } else if (type == "numeric") {
         res = list(type = "numeric",
-                   format = "0.00")
+                   numericFormat = list(pattern = "0.00"))
       } else if (type == "integer") {
         res = list(type = "numeric",
-                   format = "0")
+                   numericFormat = list(pattern = "0"))
       } else if (type == "date") {
         res = list(type = "date",
                    correctFormat = TRUE,
@@ -163,9 +173,8 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param hot rhandsontable object
 #' @param contextMenu logical enabling the right-click menu
 #' @param stretchH character describing column stretching. Options are 'all', 'right',
-#'  and 'none'. See \href{http://docs.handsontable.com/0.16.1/demo-stretching.html}{Column stretching} for details.
-#' @param customBorders json object. See
-#'  \href{http://handsontable.com/demo/custom_borders.html}{Custom borders} for details.
+#'  and 'none'
+#' @param customBorders json object
 #' @param highlightRow logical enabling row highlighting for the selected
 #'  cell
 #' @param highlightCol logical enabling column highlighting for the
@@ -174,6 +183,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param overflow character setting the css overflow behavior. Options are
 #'  auto (default), hidden and visible
 #' @param rowHeaderWidth numeric width (in px) for the rowHeader column
+#' @param maxRows integer setting the maximum number of rows. If set to a value lower than the initial row count, the data will be trimmed to the provided value as the number of rows
 #' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
 #' @examples
 #' library(rhandsontable)
@@ -220,10 +230,7 @@ hot_table = function(hot, contextMenu = TRUE, stretchH = "none",
 
 #' Handsontable widget
 #'
-#' Configure the options for the right-click context menu.  See
-#'  \href{http://docs.handsontable.com/0.16.1/demo-context-menu.html}{Context Menu} and
-#'  \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
-#'  for details.
+#' Configure the options for the right-click context menu
 #'
 #' @param hot rhandsontable object
 #' @param allowRowEdit logical enabling row editing
@@ -386,7 +393,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  column types
 #' @param strict logical specifying whether values not in the \code{source}
 #'  vector will be accepted
-#' @param readOnly logical making the table read-only
+#' @param readOnly logical making the column read-only
 #' @param validator character defining a Javascript function to be used
 #'  to validate user input. See \code{hot_validate_numeric} and
 #'  \code{hot_validate_character} for pre-build validators.
@@ -438,14 +445,16 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
     if (is.character(i)) i = which(hot$x$colHeaders == i)
 
     if (!is.null(type)) cols[[i]]$type = type
-    if (!is.null(format)) cols[[i]]$format = format
     if (!is.null(dateFormat)) cols[[i]]$dateFormat = dateFormat
     if (!is.null(source)) cols[[i]]$source = source
     if (!is.null(strict)) cols[[i]]$strict = strict
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
     if (!is.null(copyable)) cols[[i]]$copyable = copyable
     if (!is.null(default)) cols[[i]]$default = default
-    if (!is.null(language)) cols[[i]]$language = language
+
+    if (!is.null(format) || !is.null(language)) cols[[i]]$numericFormat = list()
+    if (!is.null(format)) cols[[i]]$numericFormat$pattern = format
+    if (!is.null(language)) cols[[i]]$numericFormat$culture = language
 
     if (!is.null(validator)) cols[[i]]$validator = JS(validator)
     if (!is.null(allowInvalid)) cols[[i]]$allowInvalid = allowInvalid
@@ -466,7 +475,8 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
 #' Handsontable widget
 #'
-#' Configure rows.  See
+#' Configure row settings that pertain to the entire table.
+#' Note that hot_rows is not to be confused with \code{\link{hot_row}}. See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
@@ -479,7 +489,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #'              letters[1:5]))
 #'
 #' rhandsontable(MAT, width = 300, height = 150) %>%
-#' hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
+#'   hot_cols(colWidths = 100, fixedColumnsLeft = 1) %>%
 #'   hot_rows(rowHeights = 50, fixedRowsTop = 1)
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}
 #' @export
@@ -491,13 +501,44 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 
 #' Handsontable widget
 #'
+#' Configure properties of all cells in a given row(s).
+#' Note that hot_row is not to be confused with \code{\link{hot_rows}}.  See
+#' \href{http://handsontable.com}{Handsontable.js} for details.
+#'
+#' @param hot rhandsontable object
+#' @param row numeric vector of row indexes
+#' @param readOnly logical making the row(s) read-only
+#' @examples
+#' library(rhandsontable)
+#' MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
+#'              letters[1:5]))
+#'
+#' rhandsontable(MAT, width = 300, height = 150) %>%
+#'   hot_row(c(1,3:5), readOnly = TRUE)
+#' @seealso \code{\link{hot_cols}}, \code{\link{hot_cell}}, \code{\link{hot_rows}}
+#' @export
+hot_row = function(hot, row, readOnly = NULL) {
+	if ( !is.null(readOnly) ) {
+		colDim = hot$x$rDataDim[2]
+		for ( i in row ) {
+			for ( j in seq_len(colDim) ) {
+				hot = hot %>% hot_cell(i, j, readOnly = readOnly)
+			}
+		}
+	}
+  hot
+}
+
+#' Handsontable widget
+#'
 #' Configure single cell.  See
 #' \href{http://handsontable.com}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
 #' @param row numeric row index
-#' @param col numeric column index
+#' @param col column name or index
 #' @param comment character comment to add to cell
+#' @param readOnly logical making the cell read-only
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -505,23 +546,23 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #'                 dt = seq(from = Sys.Date(), by = "days", length.out = 10),
 #'                 stringsAsFactors = FALSE)
 #'
-#' rhandsontable(DF, readOnly = TRUE) %>%
-#'   hot_cell(1, 1, "Test comment")
+#' rhandsontable(DF) %>%
+#'   hot_cell(1, 1, comment = "Test comment") %>%
+#'   hot_cell(2, 3, readOnly = TRUE)
 #' @seealso \code{\link{hot_cols}}, \code{\link{hot_rows}}
 #' @export
-hot_cell = function(hot, row, col, comment = NULL) {
-  cell = list(row = row - 1, col = col - 1, comment = list(value = comment))
+hot_cell = function(hot, row, col, comment = NULL, readOnly = NULL) {
+  # TODO: consider moving comment functionality to hot_comment
+  if (is.character(col)) col = which(hot$x$colHeaders == col)
+
+  cell = list(row = row - 1, col = col - 1)
+
+  if (!is.null(comment)) cell$comment = list(value = comment)
+  if (!is.null(readOnly)) cell$readOnly = readOnly
 
   hot$x$cell = c(hot$x$cell, list(cell))
 
-  hot = hot %>% hot_table(enableComments = TRUE)
-#   if (is.null(hot$x$rComments)) {
-#     cmts = matrix(nrow = hot$x$rDataDim[1], ncol = hot$x$rDataDim[2])
-#   } else {
-#     cmts = jsonlite::fromJSON(hot$x$rComments)
-#   }
-#   cmts[row, col] = comment
-#   hot$x$rComments = jsonlite::toJSON(cmts)
+  if (!is.null(comment)) hot = hot %>% hot_table(enableComments = TRUE)
 
   hot
 }
@@ -555,16 +596,26 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
                                 choices = NULL, exclude = NULL,
                                 allowInvalid = FALSE) {
   f = "function (value, callback) {
-         setTimeout(function(){
-           if (isNaN(parseFloat(value))) {
-             callback(false);
-           }
-           %exclude
-           %min
-           %max
-           %choices
-           return callback(true);
-         }, 500)
+          if (value === null || value === void 0) {
+            value = '';
+          }
+          if (this.allowEmpty && value === '') {
+            return callback(true);
+          } else if (value === '') {
+            return callback(false);
+          }
+          let isNumber = /^-?\\d*(\\.|,)?\\d*$/.test(value);
+          if (!isNumber) {
+            return callback(false);
+          }
+          if (isNaN(parseFloat(value))) {
+            return callback(false);
+          }
+          %exclude
+          %min
+          %max
+          %choices
+          return callback(true);
        }"
 
   if (!is.null(exclude))
@@ -649,9 +700,7 @@ hot_validate_character = function(hot, cols, choices,
 
 #' Handsontable widget
 #'
-#' Add heatmap to table.  See
-#' \href{http://docs.handsontable.com/0.16.1/demo-chromajs.html}{Heatmaps for values in a column}
-#' for details.
+#' Add heatmap to table.
 #'
 #' @param hot rhandsontable object
 #' @param cols numeric vector of columns to include in the heatmap. If missing

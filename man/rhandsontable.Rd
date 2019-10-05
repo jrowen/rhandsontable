@@ -6,7 +6,8 @@
 \usage{
 rhandsontable(data, colHeaders, rowHeaders, comments = NULL,
   useTypes = TRUE, readOnly = NULL, selectCallback = FALSE,
-  width = NULL, height = NULL, digits = 4, debug = NULL, search = FALSE, ...)
+  width = NULL, height = NULL, digits = 4, debug = NULL,
+  search = FALSE, ...)
 }
 \arguments{
 \item{data}{a \code{data.table}, \code{data.frame} or \code{matrix}}
@@ -37,7 +38,13 @@ This can be used with shiny to tie updates to a selected table cell.}
 
 \item{debug}{numeric Javascript log level}
 
+<<<<<<< HEAD
 \item{search}{logical specifying if the data can be searched}
+=======
+\item{search}{logical specifying if the data can be searched (see
+\url{file:///home/jonathan/Documents/git/rhandsontable/docs/index.html#customizing}
+and Shiny example in inst/examples/rhandsontable_search)}
+>>>>>>> upstream/master
 
 \item{...}{passed to \code{hot_table} and to the \code{params} property of the widget}
 }
