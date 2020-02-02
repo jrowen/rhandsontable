@@ -1,7 +1,7 @@
 Package: rhandsontable
 Type: Package
 Title: Interface to the 'Handsontable.js' Library
-Version: 0.3.7
+Version: 0.3.707
 Authors@R: c(
   person("Jonathan", "Owen", email = "jonathanro@gmail.com",
          role = c("aut", "cre", "cph")),
@@ -43,5 +43,5 @@ Suggests:
     rstudioapi (>= 0.6),
     htmltools
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Encoding: UTF-8

@@ -4,9 +4,16 @@
 \alias{hot_context_menu}
 \title{Handsontable widget}
 \usage{
-hot_context_menu(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
-  allowReadOnly = FALSE, allowComments = FALSE,
-  allowCustomBorders = FALSE, customOpts = NULL, ...)
+hot_context_menu(
+  hot,
+  allowRowEdit = TRUE,
+  allowColEdit = TRUE,
+  allowReadOnly = FALSE,
+  allowComments = FALSE,
+  allowCustomBorders = FALSE,
+  customOpts = NULL,
+  ...
+)
 }
 \arguments{
 \item{hot}{rhandsontable object}
@@ -28,10 +35,7 @@ are defined (i.e. useTypes == TRUE in rhandsontable).}
 \item{...}{ignored}
 }
 \description{
-Configure the options for the right-click context menu.  See
- \href{http://docs.handsontable.com/0.16.1/demo-context-menu.html}{Context Menu} and
- \href{http://swisnl.github.io/jQuery-contextMenu/docs.html}{jquery contextMenu}
- for details.
+Configure the options for the right-click context menu
 }
 \examples{
 library(rhandsontable)

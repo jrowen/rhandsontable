@@ -15,7 +15,7 @@ hot_rows(hot, rowHeights = NULL, fixedRowsTop = NULL)
 freeze on the top}
 }
 \description{
-Configure row settings that pertain to the entire table. 
+Configure row settings that pertain to the entire table.
 Note that hot_rows is not to be confused with \code{\link{hot_row}}. See
 \href{http://handsontable.com}{Handsontable.js} for details.
 }
