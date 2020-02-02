@@ -792,5 +792,6 @@ renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @seealso \code{\link{rHandsontableOutput}}
 #' @export
 hot_to_r = function(...) {
+  if (is.null(list(...)[[1]])) return(NULL)
   do.call(toR, ...)
 }
