@@ -4,11 +4,25 @@
 \alias{hot_col}
 \title{Handsontable widget}
 \usage{
-hot_col(hot, col, type = NULL, format = NULL, source = NULL,
-  strict = NULL, readOnly = NULL, validator = NULL,
-  allowInvalid = NULL, halign = NULL, valign = NULL,
-  renderer = NULL, copyable = NULL, dateFormat = NULL,
-  default = NULL, language = NULL, ...)
+hot_col(
+  hot,
+  col,
+  type = NULL,
+  format = NULL,
+  source = NULL,
+  strict = NULL,
+  readOnly = NULL,
+  validator = NULL,
+  allowInvalid = NULL,
+  halign = NULL,
+  valign = NULL,
+  renderer = NULL,
+  copyable = NULL,
+  dateFormat = NULL,
+  default = NULL,
+  language = NULL,
+  ...
+)
 }
 \arguments{
 \item{hot}{rhandsontable object}

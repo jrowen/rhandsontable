@@ -183,7 +183,6 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param overflow character setting the css overflow behavior. Options are
 #'  auto (default), hidden and visible
 #' @param rowHeaderWidth numeric width (in px) for the rowHeader column
-#' @param maxRows integer setting the maximum number of rows. If set to a value lower than the initial row count, the data will be trimmed to the provided value as the number of rows
 #' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
 #' @examples
 #' library(rhandsontable)
@@ -465,7 +464,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
     className = c(halign, valign)
     if (!is.null(className)) {
-      cols[[i]]$className = className
+      cols[[i]]$className = paste0(className, collapse = " ")
     }
   }
 
@@ -738,7 +737,7 @@ renderer_heatmap = function(color_scale) {
   renderer = gsub("\n", "", "
       function (instance, td, row, col, prop, value, cellProperties) {
 
-        Handsontable.renderers.TextRenderer.apply(this, arguments);
+        Handsontable.renderers.NumericRenderer.apply(this, arguments);
         heatmapScale  = chroma.scale(['%s1', '%s2']);
 
         if (instance.heatmap[col]) {
@@ -793,5 +792,6 @@ renderRHandsontable <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @seealso \code{\link{rHandsontableOutput}}
 #' @export
 hot_to_r = function(...) {
+  if (is.null(list(...)[[1]])) return(NULL)
   do.call(toR, ...)
 }

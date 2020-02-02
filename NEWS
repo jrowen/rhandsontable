@@ -1,7 +1,14 @@
 rhandsontable 0.3.7
 -------------------------
+* Updated to handsontable 6.2.2; fixed language support
 
-* Updated to handsontable 6.1.1; fixed language support
+* Fixed heatmap formating (#250)
+
+* Fix shiny search example to use new plugin (#285)
+
+* Fix valign (#231)
+
+* Fix decimal values (#256)
 
 * Modified the select callback to return all indices of multi-row/col selections (#257)
 
