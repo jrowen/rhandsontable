@@ -261,7 +261,7 @@ HTMLWidgets.widget({
 
     x.afterRemoveRow = function(ind, ct) {
 
-      if (HTMLWidgets.shinyMode)
+      if (HTMLWidgets.shinyMode) {
         if (this.params && this.params.debug) {
           if (this.params.debug > 0) {
             console.log("afterRemoveRow: Shiny.onInputChange: " + this.rootElement.id);
@@ -272,11 +272,12 @@ HTMLWidgets.widget({
           changes: { event: "afterRemoveRow", ind: ind, ct: ct },
           params: this.params
         });
+      }
     };
 
     x.afterCreateCol = function(ind, ct) {
 
-      if (HTMLWidgets.shinyMode)
+      if (HTMLWidgets.shinyMode) {
         if (this.params && this.params.debug) {
           if (this.params.debug > 0) {
             console.log("afterCreateCol: Shiny.onInputChange: " + this.rootElement.id);
@@ -287,6 +288,7 @@ HTMLWidgets.widget({
           changes: { event: "afterCreateCol", ind: ind, ct: ct },
           params: this.params
         });
+      }
     };
 
     x.afterRemoveCol = function(ind, ct) {
