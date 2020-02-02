@@ -4,9 +4,15 @@
 \alias{hot_cols}
 \title{Handsontable widget}
 \usage{
-hot_cols(hot, colWidths = NULL, columnSorting = NULL,
-  manualColumnMove = NULL, manualColumnResize = NULL,
-  fixedColumnsLeft = NULL, ...)
+hot_cols(
+  hot,
+  colWidths = NULL,
+  columnSorting = NULL,
+  manualColumnMove = NULL,
+  manualColumnResize = NULL,
+  fixedColumnsLeft = NULL,
+  ...
+)
 }
 \arguments{
 \item{hot}{rhandsontable object}

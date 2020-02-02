@@ -4,8 +4,7 @@
 \alias{hot_heatmap}
 \title{Handsontable widget}
 \usage{
-hot_heatmap(hot, cols, color_scale = c("#ED6D47", "#17F556"),
-  renderer = NULL)
+hot_heatmap(hot, cols, color_scale = c("#ED6D47", "#17F556"), renderer = NULL)
 }
 \arguments{
 \item{hot}{rhandsontable object}

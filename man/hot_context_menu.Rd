@@ -4,9 +4,16 @@
 \alias{hot_context_menu}
 \title{Handsontable widget}
 \usage{
-hot_context_menu(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
-  allowReadOnly = FALSE, allowComments = FALSE,
-  allowCustomBorders = FALSE, customOpts = NULL, ...)
+hot_context_menu(
+  hot,
+  allowRowEdit = TRUE,
+  allowColEdit = TRUE,
+  allowReadOnly = FALSE,
+  allowComments = FALSE,
+  allowCustomBorders = FALSE,
+  customOpts = NULL,
+  ...
+)
 }
 \arguments{
 \item{hot}{rhandsontable object}

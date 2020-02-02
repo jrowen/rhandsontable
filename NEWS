@@ -1,5 +1,6 @@
-rhandsontable 0.3.705
+rhandsontable 0.3.7
 -------------------------
+* Updated to handsontable 6.2.2; fixed language support
 
 * Fixed heatmap formating (#250)
 
@@ -8,10 +9,6 @@ rhandsontable 0.3.705
 * Fix valign (#231)
 
 * Fix decimal values (#256)
-
--------------------------
-
-* Updated to handsontable 6.1.1; fixed language support
 
 * Modified the select callback to return all indices of multi-row/col selections (#257)
 

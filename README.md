@@ -11,6 +11,8 @@ An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.
 
 This library was inspired by the [`shinyTable`](https://github.com/trestletech/shinyTable) package.  Most of the original functionality was preserved, and the `htmlwidgets` framework made it possible to leverage even more of the Handsontable.js functionality.
 
+Note: With v7, `handsontable` went to a more [restrictive license for commercial use](https://github.com/handsontable/handsontable#license-key).  To avoid license violations for existing users, `rhandsontable` will not update `handsontable` beyond v6.2.2.  This may change in the future if a way is found to manage multiple `handsontable` versions.
+
 **See the [vignette](http://rpubs.com/jrowen/intro_rhandsontable) for detailed examples and links to shiny apps.**
 
 To install from CRAN use
