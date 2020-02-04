@@ -1,3 +1,5 @@
+* Add a callback for afterRowMove event (#289)
+
 rhandsontable 0.3.7
 -------------------------
 
