@@ -306,6 +306,21 @@ HTMLWidgets.widget({
         });
     };
 
+    x.afterRowMove = function(ind, ct) {
+
+      if (HTMLWidgets.shinyMode)
+        if (this.params && this.params.debug) {
+          if (this.params.debug > 0) {
+            console.log("afterRowMove: Shiny.onInputChange: " + this.rootElement.id);
+          }
+        }
+        Shiny.onInputChange(this.rootElement.id, {
+          data: this.getData(),
+          changes: { event: "afterRowMove", ind: ind, ct: ct },
+          params: this.params
+        });
+    };
+
   },
 
   // see http://handsontable.com/demo/heatmaps.html
