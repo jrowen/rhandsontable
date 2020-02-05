@@ -1,5 +1,3 @@
-* Add a callback for afterRowMove event (#289)
-
 rhandsontable 0.3.7
 -------------------------
 * Updated to handsontable 6.2.2; fixed language support
@@ -13,6 +11,8 @@ rhandsontable 0.3.7
 * Fix decimal values (#256)
 
 * Modified the select callback to return all indices of multi-row/col selections (#257)
+
+* Add a callback for afterRowMove event (#289)
 
 rhandsontable 0.3.6
 -------------------------
