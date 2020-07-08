@@ -259,7 +259,7 @@ hot_context_menu = function(hot, allowRowEdit = TRUE, allowColEdit = TRUE,
       !hot$x$contextMenu)
     warning("The context menu was disabled but will be re-enabled (hot_context_menu)")
 
-  if (!is.null(hot$x$colums) && allowColEdit)
+  if (!is.null(hot$x$columns) && allowColEdit)
     warning("Handsontable.js does not support column add/delete when column types ",
             "are defined.  Set useTypes = FALSE in rhandsontable to enable column ",
             "edits.")
