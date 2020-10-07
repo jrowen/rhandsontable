@@ -107,7 +107,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
         res = list(type = type)
       }
       res$readOnly = readOnly
-      res$renderer = JS("customRenderer")
+      res$renderer = htmlwidgets::JS("customRenderer")
       res$default = NA
       res
     })
