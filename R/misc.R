@@ -165,17 +165,18 @@ genColHeaders <- function(changes, colHeaders) {
 }
 
 genRowHeaders <- function(changes, rowHeaders) {
-  inds = seq(changes$ind + 1, length.out = changes$ct)
-
-  if (changes$event == "afterCreateRow") {
-    # prevent duplicates
-    nm = 1
-    while (nm %in% rowHeaders) {
-      nm = nm + 1
+  if(changes$event %in% c("afterCreateRow", "afterRemoveRow")) {
+    inds = seq(changes$ind + 1, length.out = changes$ct)
+    if (changes$event == "afterCreateRow") {
+      # prevent duplicates
+      nm = 1
+      while (nm %in% rowHeaders) {
+        nm = nm + 1
+      }
+      c(head(rowHeaders, inds - 1), nm,
+        tail(rowHeaders, length(rowHeaders) - inds + 1))
+    } else if (changes$event == "afterRemoveRow") {
+      rowHeaders[-inds]
     }
-    c(head(rowHeaders, inds - 1), nm,
-      tail(rowHeaders, length(rowHeaders) - inds + 1))
-  } else if (changes$event == "afterRemoveRow") {
-    rowHeaders[-inds]
   }
 }
