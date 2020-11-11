@@ -658,8 +658,7 @@ hot_validate_numeric = function(hot, cols, min = NULL, max = NULL,
 #'
 #' @param hot rhandsontable object
 #' @param cols vector of column names or indices
-#' @param choices a vector of acceptable numeric choices. It will be evaluated
-#'  after min and max if specified.
+#' @param choices a vector of acceptable choices.
 #' @param allowInvalid logical specifying whether invalid data will be
 #'  accepted. Invalid data cells will be color red.
 #' @examples
