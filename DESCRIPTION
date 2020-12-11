@@ -34,7 +34,8 @@ Imports:
     jsonlite,
     htmlwidgets (>= 0.3.3),
     magrittr,
-    methods
+    methods, 
+    utils
 Suggests:
     knitr,
     rmarkdown,
@@ -43,5 +44,5 @@ Suggests:
     rstudioapi (>= 0.6),
     htmltools
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Encoding: UTF-8

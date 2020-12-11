@@ -144,6 +144,7 @@ colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
                                  unique(d[[i]][!(d[[i]] %in% unlist(cols[[i]]$source))])),
                       ordered = TRUE),
       json = jsonlite::toJSON(d[[i]]),
+      logical = type.convert(d[[i]], as.is = TRUE), # new columns - character/numeric
       suppressWarnings(as(d[[i]], colClasses[i])))
   d
 }
