@@ -108,7 +108,10 @@ toR = function(data, changes, params, ...) {
     if (!("matrix" %in% rClass)) {
       inds_logical = which(rColClasses == "logical")
       for (i in inds_logical)
-        out[[i]] = ifelse(is.na(out[[i]]), FALSE, out[[i]])
+        # bypass empty columns
+        if(!all(is.na(out[[i]]))) {
+          out[[i]] = ifelse(is.na(out[[i]]), FALSE, out[[i]])
+        }
     }
   }
 
