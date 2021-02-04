@@ -242,7 +242,11 @@ HTMLWidgets.widget({
 
         if (this.params && this.params.columns) {
           for(var i = 0, colCount = this.countCols(); i < colCount ; i++) {
-            this.setDataAtCell(ind, i, this.params.columns[i].default);
+            // added to prevent phantom change event - change will still fire
+            // if default values are provided
+            if (this.params.columns[1].default !== null) {
+              this.setDataAtCell(ind, i, this.params.columns[i].default);
+            }
           }
         }
 
