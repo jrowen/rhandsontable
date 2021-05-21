@@ -13,7 +13,7 @@ output:
       after_body: include/footer.html
 ---
 
-```{r echo = FALSE}
+```{r echo = FALSE, warning = FALSE}
 library(rhandsontable)
 library(knitr)
 
@@ -259,7 +259,7 @@ The `customOpts` parameter of `hot_context_menu` can be used to add custom funct
 
 This example illustrates how to add an option to export the table to a csv file.
 
-```{r}
+```{r, warning = FALSE}
 MAT = matrix(rnorm(50), nrow = 10, dimnames = list(LETTERS[1:10],
                                                    letters[1:5]))
 
@@ -286,7 +286,7 @@ rhandsontable(MAT, width = 550, height = 300) %>%
 
 This example illustrates how to enable the search functionality in Handsontable.
 
-```{r}
+```{r, warning = FALSE}
 DF = data.frame(val = 1:10,
                 bool = TRUE,
                 big = LETTERS[1:10],
