@@ -1,8 +1,8 @@
 #' rhandsontable
 #'
-#' R interface for creating tables using Handsontable, url{http://http://handsontable.com/}
+#' R interface for creating tables using Handsontable, url{https://handsontable.com/}
 #'
-#' For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
+#' For full documentation on the package, visit \url{https://jrowen.github.io/rhandsontable/}
 #' @name rhandsontable-package
 #' @docType package
 #' @import htmlwidgets jsonlite

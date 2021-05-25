@@ -3,17 +3,18 @@
 #' Interactively edit a \code{data.frame} or \code{data.table}. The resulting
 #' code will be emitted as a call to reload the data from a temp RDS file.
 #'
-#' This addin can be used to interactively edit.
-#' The intended way to use this is as follows:
+#' This addin can be used to interactively edit. The intended way to use this is
+#' as follows:
 #'
-#' 1. Highlight a symbol naming a \code{data.frame} or \code{data.table}
-#'    in your R session, e.g. \code{mtcars}.
-#' 2. Execute this addin, to interactively edit it.
+#' 1. Highlight a symbol naming a \code{data.frame} or \code{data.table} in your
+#' R session, e.g. \code{mtcars}. 2. Execute this addin, to interactively edit
+#' it.
 #'
-#' When you're done, the code performing this operation will be emitted
-#' at the cursor position.
+#' When you're done, the code performing this operation will be emitted at the
+#' cursor position.
 #'
-#' This function borrows heavily from \href{rstudio/addinexamples/subsetAddin}{https://github.com/rstudio/addinexamples/blob/master/R/subsetAddin.R}
+#' This function borrows heavily from
+#' \href{https://github.com/rstudio/addinexamples/blob/master/R/subsetAddin.R}{rstudio/addinexamples/subsetAddin}
 #'
 #' @export
 editAddin <- function() {

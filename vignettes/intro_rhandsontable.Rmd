@@ -19,8 +19,8 @@ opts_knit$set(warning = FALSE, error = FALSE, message = FALSE, cache = FALSE,
 
 ## Introduction
 
-rhandsontable is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
-f
+**rhandsontable** is a htmlwidget based on the [handsontable.js](https://www.handsontable.com) library.
+
 > Handsontable is a data grid component with an Excel-like appearance. Built in JavaScript, it integrates with any data source with peak efficiency. It comes with powerful features like data validation, sorting, grouping, data binding, formula support or column ordering.
 ([via](https://www.handsontable.com))
 
@@ -97,7 +97,7 @@ rhandsontable(DF, width = 550, height = 300) %>%
 
 ### Sparkline
 
-New in version 0.2, [sparkline.js](http://omnipotent.net/jquery.sparkline/) charts can be added to the table.  Thanks to the sparkline package and Ramnath Vaidyanathan for inspiration.
+New in version 0.2, [sparkline.js](https://omnipotent.net/jquery.sparkline/) charts can be added to the table.  Thanks to the sparkline package and Ramnath Vaidyanathan for inspiration.
 
 ```{r}
 DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -163,7 +163,7 @@ rhandsontable(DF, allowedTags = "<em><b><strong><a><big>",
           e.preventDefault(); // prevent selection quirk
         });
   
-        Handsontable.dsom.empty(td);
+        Handsontable.dom.empty(td);
         td.appendChild(img);
       }
       else {
@@ -307,7 +307,7 @@ Future enhancements will look to expand export options.
 
 ## Numeric Formatting
 
-Numeric columns are formatted using the [numbro.js](http://numbrojs.com/) library.
+Numeric columns are formatted using the [numbro.js](https://numbrojs.com/) library.
 
 ```{r}
 DF = data.frame(int = 1:10, float = rnorm(10), cur = rnorm(10) * 1E5,
@@ -546,7 +546,7 @@ rhandsontable(MAT, readOnly = TRUE, width = 750, height = 300) %>%
            }")
 ```
 
-See [Custom Renderer using an R Parameter](#custom_renderer_using_r) for anotehr example.
+See [Custom Renderer using an R Parameter](#custom_renderer_using_r) for another example.
 
 ## Heatmap
 

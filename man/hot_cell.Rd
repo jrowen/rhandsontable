@@ -19,7 +19,7 @@ hot_cell(hot, row, col, comment = NULL, readOnly = NULL)
 }
 \description{
 Configure single cell.  See
-\href{http://handsontable.com}{Handsontable.js} for details.
+\href{https://handsontable.com/}{Handsontable.js} for details.
 }
 \examples{
 library(rhandsontable)

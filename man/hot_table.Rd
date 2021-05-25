@@ -40,11 +40,11 @@ auto (default), hidden and visible}
 
 \item{rowHeaderWidth}{numeric width (in px) for the rowHeader column}
 
-\item{...}{passed to \href{http://handsontable.com}{Handsontable.js} constructor}
+\item{...}{passed to \href{https://handsontable.com/}{Handsontable.js} constructor}
 }
 \description{
 Configure table.  See
-\href{http://handsontable.com}{Handsontable.js} for details.
+\href{https://handsontable.com/}{Handsontable.js} for details.
 }
 \examples{
 library(rhandsontable)

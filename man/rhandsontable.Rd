@@ -50,16 +50,16 @@ This can be used with shiny to tie updates to a selected table cell.}
 \item{debug}{numeric Javascript log level}
 
 \item{search}{logical specifying if the data can be searched (see
-\url{file:///home/jonathan/Documents/git/rhandsontable/docs/index.html#customizing}
+\url{https://jrowen.github.io/rhandsontable/#Customizing}
 and Shiny example in inst/examples/rhandsontable_search)}
 
 \item{...}{passed to \code{hot_table} and to the \code{params} property of the widget}
 }
 \description{
-Create a \href{http://handsontable.com}{Handsontable.js} widget.
+Create a \href{https://handsontable.com/}{Handsontable.js} widget.
 }
 \details{
-For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
+For full documentation on the package, visit \url{https://jrowen.github.io/rhandsontable/}
 }
 \examples{
 library(rhandsontable)

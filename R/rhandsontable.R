@@ -1,8 +1,8 @@
 #' Handsontable widget
 #'
-#' Create a \href{http://handsontable.com}{Handsontable.js} widget.
+#' Create a \href{https://handsontable.com/}{Handsontable.js} widget.
 #'
-#' For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
+#' For full documentation on the package, visit \url{https://jrowen.github.io/rhandsontable/}
 #' @param data a \code{data.table}, \code{data.frame} or \code{matrix}
 #' @param colHeaders a vector of column names. If missing \code{colnames}
 #'  will be used. Setting to \code{NULL} will omit.
@@ -21,7 +21,7 @@
 #' @param digits numeric passed to \code{jsonlite::toJSON}
 #' @param debug numeric Javascript log level
 #' @param search logical specifying if the data can be searched (see
-#'   \url{file:///home/jonathan/Documents/git/rhandsontable/docs/index.html#customizing}
+#'   \url{https://jrowen.github.io/rhandsontable/#Customizing}
 #'   and Shiny example in inst/examples/rhandsontable_search)
 #' @param ... passed to \code{hot_table} and to the \code{params} property of the widget
 #' @examples
@@ -168,7 +168,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' Handsontable widget
 #'
 #' Configure table.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
+#' \href{https://handsontable.com/}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
 #' @param contextMenu logical enabling the right-click menu
@@ -183,7 +183,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
 #' @param overflow character setting the css overflow behavior. Options are
 #'  auto (default), hidden and visible
 #' @param rowHeaderWidth numeric width (in px) for the rowHeader column
-#' @param ... passed to \href{http://handsontable.com}{Handsontable.js} constructor
+#' @param ... passed to \href{https://handsontable.com/}{Handsontable.js} constructor
 #' @examples
 #' library(rhandsontable)
 #' DF = data.frame(val = 1:10, bool = TRUE, big = LETTERS[1:10],
@@ -385,9 +385,9 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #'  numeric, date, checkbox, select, dropdown, autocomplete, password,
 #'  and handsontable (not implemented yet)
 #' @param format characer specifying column format. See Cell Types at
-#'  \href{http://handsontable.com}{Handsontable.js} for the formatting
+#'  \href{https://handsontable.com/}{Handsontable.js} for the formatting
 #'  options for each data type. Numeric columns are formatted using
-#'  \href{http://numbrojs.com}{Numbro.js}.
+#'  \href{https://numbrojs.com}{Numbro.js}.
 #' @param source a vector of choices for select, dropdown and autocomplete
 #'  column types
 #' @param strict logical specifying whether values not in the \code{source}
@@ -409,7 +409,7 @@ hot_cols = function(hot, colWidths = NULL, columnSorting = NULL,
 #' @param dateFormat character defining the date format. See
 #'  \href{https://github.com/moment/moment}{Moment.js} for details.
 #' @param default default column value for new rows (NA if not specified; shiny only)
-#' @param language locale passed to \href{http://numbrojs.com}{Numbro.js};
+#' @param language locale passed to \href{https://numbrojs.com}{Numbro.js};
 #'  default is 'en-US'.
 #' @param ... passed to handsontable
 #' @examples
@@ -476,7 +476,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 #'
 #' Configure row settings that pertain to the entire table.
 #' Note that hot_rows is not to be confused with \code{\link{hot_row}}. See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
+#' \href{https://handsontable.com/}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
 #' @param rowHeights a scalar or numeric vector of row heights
@@ -502,7 +502,7 @@ hot_rows = function(hot, rowHeights = NULL, fixedRowsTop = NULL) {
 #'
 #' Configure properties of all cells in a given row(s).
 #' Note that hot_row is not to be confused with \code{\link{hot_rows}}.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
+#' \href{https://handsontable.com/}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
 #' @param row numeric vector of row indexes
@@ -531,7 +531,7 @@ hot_row = function(hot, row, readOnly = NULL) {
 #' Handsontable widget
 #'
 #' Configure single cell.  See
-#' \href{http://handsontable.com}{Handsontable.js} for details.
+#' \href{https://handsontable.com/}{Handsontable.js} for details.
 #'
 #' @param hot rhandsontable object
 #' @param row numeric row index

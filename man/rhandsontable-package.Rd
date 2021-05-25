@@ -5,8 +5,8 @@
 \alias{rhandsontable-package}
 \title{rhandsontable}
 \description{
-R interface for creating tables using Handsontable, url{http://http://handsontable.com/}
+R interface for creating tables using Handsontable, url{https://handsontable.com/}
 }
 \details{
-For full documentation on the package, visit \url{http://jrowen.github.io/rhandsontable/}
+For full documentation on the package, visit \url{https://jrowen.github.io/rhandsontable/}
 }

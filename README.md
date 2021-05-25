@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/jrowen/rhandsontable.svg?branch=master)](https://travis-ci.org/jrowen/rhandsontable)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jrowen/rhandsontable?branch=master&svg=true)](https://ci.appveyor.com/project/jrowen/rhandsontable)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
-[![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/grand-total/rhandsontable)](http://cran.r-project.org/package=rhandsontable)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rhandsontable)](https://cran.r-project.org/package=rhandsontable)
+[![CRAN_Download_Badge](https://cranlogs.r-pkg.org/badges/grand-total/rhandsontable)](https://cran.r-project.org/package=rhandsontable)
 
-**See the [project website](http://jrowen.github.io/rhandsontable/) for more details and live examples, and see below for important details on use in shiny apps.**
+**See the [project website](https://jrowen.github.io/rhandsontable/) for more details and live examples, and see below for important details on use in shiny apps.**
 
-An [`htmlwidgets`](http://www.htmlwidgets.org/) implementation of [Handsontable.js](https://handsontable.com).  Per the website:
+An [`htmlwidgets`](https://www.htmlwidgets.org/) implementation of [Handsontable.js](https://handsontable.com).  Per the website:
 
 *Handsontable is a minimalist Excel-like data grid editor for HTML & JavaScript*
 
@@ -13,7 +13,7 @@ This library was inspired by the [`shinyTable`](https://github.com/trestletech/s
 
 Note: With v7, `handsontable` went to a more [restrictive license for commercial use](https://github.com/handsontable/handsontable#license-key).  To avoid license violations for existing users, `rhandsontable` will not update `handsontable` beyond v6.2.2.  This may change in the future if a way is found to manage multiple `handsontable` versions.
 
-**See the [vignette](http://rpubs.com/jrowen/intro_rhandsontable) for detailed examples and links to shiny apps.**
+**See the [vignette](https://rpubs.com/jrowen/intro_rhandsontable) for detailed examples and links to shiny apps.**
 
 To install from CRAN use
 ```R

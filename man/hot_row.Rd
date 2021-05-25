@@ -16,7 +16,7 @@ hot_row(hot, row, readOnly = NULL)
 \description{
 Configure properties of all cells in a given row(s).
 Note that hot_row is not to be confused with \code{\link{hot_rows}}.  See
-\href{http://handsontable.com}{Handsontable.js} for details.
+\href{https://handsontable.com/}{Handsontable.js} for details.
 }
 \examples{
 library(rhandsontable)
