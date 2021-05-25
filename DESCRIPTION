@@ -1,7 +1,7 @@
 Package: rhandsontable
 Type: Package
 Title: Interface to the 'Handsontable.js' Library
-Version: 0.3.707
+Version: 0.3.8
 Authors@R: c(
   person("Jonathan", "Owen", email = "jonathanro@gmail.com",
          role = c("aut", "cre", "cph")),
@@ -23,7 +23,8 @@ Authors@R: c(
   person("Splunk Inc", role = c("ctb", "cph"), comment = "Sparkline.js library"),
   person("Russell", "Kent", role = c("ctb", "cph"), comment = "Sparkline.js library"),
   person("Rohan", "Jon", role = c("ctb", "cph"), comment = "ZeroClipboard library"),
-  person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"))
+  person("Greene", "James", role = c("ctb", "cph"), comment = "ZeroClipboard library"),
+  person("Hammill", "Dillon", role = c("ctb")))
 Maintainer: Jonathan Owen <jonathanro@gmail.com>
 Description: An R interface to the 'Handsontable' JavaScript library, which is a
     minimalist Excel-like data grid editor.  See <https://handsontable.com/> for details.
@@ -34,7 +35,8 @@ Imports:
     jsonlite,
     htmlwidgets (>= 0.3.3),
     magrittr,
-    methods
+    methods, 
+    utils
 Suggests:
     knitr,
     rmarkdown,
@@ -43,5 +45,5 @@ Suggests:
     rstudioapi (>= 0.6),
     htmltools
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Encoding: UTF-8

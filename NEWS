@@ -1,3 +1,14 @@
+rhandsontable 0.3.8
+-------------------------
+
+* Fix typo in `hot_context_menu()` to throw warning when `useTypes = TRUE` and `allowColEdit = TRUE` (#360)
+
+* Make sure `genRowHeaders` code is only called after a `afterCreateRow` or `afterRemoveRow` event (#360)
+
+* Use `utils::type_convert()` to handle type conversion of column initiated with logical class (#360)
+
+* Bypass NA to FALSE conversion when rows are added to empty columns (#360)
+
 rhandsontable 0.3.7
 -------------------------
 

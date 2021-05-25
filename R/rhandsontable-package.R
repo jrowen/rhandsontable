@@ -6,7 +6,7 @@
 #' @name rhandsontable-package
 #' @docType package
 #' @import htmlwidgets jsonlite
-#' @importFrom utils modifyList capture.output head tail
+#' @importFrom utils modifyList capture.output head tail type.convert
 #' @importFrom methods as
 NULL
 

@@ -108,7 +108,10 @@ toR = function(data, changes, params, ...) {
     if (!("matrix" %in% rClass)) {
       inds_logical = which(rColClasses == "logical")
       for (i in inds_logical)
-        out[[i]] = ifelse(is.na(out[[i]]), FALSE, out[[i]])
+        # bypass empty columns
+        if(!all(is.na(out[[i]]))) {
+          out[[i]] = ifelse(is.na(out[[i]]), FALSE, out[[i]])
+        }
     }
   }
 
@@ -144,6 +147,7 @@ colClasses <- function(d, colClasses, cols, date_fmt = "%m/%d/%Y", ...) {
                                  unique(d[[i]][!(d[[i]] %in% unlist(cols[[i]]$source))])),
                       ordered = TRUE),
       json = jsonlite::toJSON(d[[i]]),
+      logical = type.convert(d[[i]], as.is = TRUE), # new columns - character/numeric
       suppressWarnings(as(d[[i]], colClasses[i])))
   d
 }
@@ -165,17 +169,18 @@ genColHeaders <- function(changes, colHeaders) {
 }
 
 genRowHeaders <- function(changes, rowHeaders) {
-  inds = seq(changes$ind + 1, length.out = changes$ct)
-
-  if (changes$event == "afterCreateRow") {
-    # prevent duplicates
-    nm = 1
-    while (nm %in% rowHeaders) {
-      nm = nm + 1
+  if(changes$event %in% c("afterCreateRow", "afterRemoveRow")) {
+    inds = seq(changes$ind + 1, length.out = changes$ct)
+    if (changes$event == "afterCreateRow") {
+      # prevent duplicates
+      nm = 1
+      while (nm %in% rowHeaders) {
+        nm = nm + 1
+      }
+      c(head(rowHeaders, inds - 1), nm,
+        tail(rowHeaders, length(rowHeaders) - inds + 1))
+    } else if (changes$event == "afterRemoveRow") {
+      rowHeaders[-inds]
     }
-    c(head(rowHeaders, inds - 1), nm,
-      tail(rowHeaders, length(rowHeaders) - inds + 1))
-  } else if (changes$event == "afterRemoveRow") {
-    rowHeaders[-inds]
   }
 }
