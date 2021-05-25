@@ -580,32 +580,32 @@ This functionality is still evolving, so please don't hesitate to share suggesti
 
 The data grid will be editable by default and can be used as input to a `shiny` app.  A few `shiny` and `shinydashboard` example links are listed below.  Note that the shinyapps.io links may not work if the has hit the monthly usage limit.
 
-* [Output only](https://jrowen.shinyapps.io/rhandsontable_output)
+* **Output only**
 ```
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir = "inst/examples/rhandsontable_output")
 ```
-* [Date file editor](https://jrowen.shinyapps.io/rhandsontable_datafile)
+* **Date file editor**
 ```
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir = "inst/examples/rhandsontable_datafile")
 ```
-* [Calculation input](https://jrowen.shinyapps.io/rhandsontable_portfolio)
+* **Calculation input**
 ```
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir = "inst/examples/rhandsontable_portfolio")
 ```
-* [Table callback linked to chart](https://jrowen.shinyapps.io/rhandsontable_corr)
+* **Table callback linked to chart**
 ```
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir = "inst/examples/rhandsontable_corr")
 ```
-* [Multiple input tables](https://jrowen.shinyapps.io/rhandsontable_frontier)
+* **Multiple input tables**
 ```
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir = "inst/examples/rhandsontable_frontier")
 ```
-* [A shinydashboard app](https://jrowen.shinyapps.io/rhandsontable_dash)
+* **A shinydashboard app**
 ```
 shiny::runGitHub("rhandsontable", "jrowen", 
                  subdir="inst/examples/rhandsontable_dash")
