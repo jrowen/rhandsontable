@@ -18,7 +18,7 @@
 
 /* fix for shiny datepicker */
 .datepicker {
-  z-index: 1000 !important;
+  z-index: 9999 !important;
 }
 
 .handsontable table thead th {
