@@ -445,7 +445,7 @@ hot_col = function(hot, col, type = NULL, format = NULL, source = NULL,
 
     if (!is.null(type)) cols[[i]]$type = type
     if (!is.null(dateFormat)) cols[[i]]$dateFormat = dateFormat
-    if (!is.null(source)) cols[[i]]$source = source
+    if (!is.null(source)) cols[[i]]$source = as.list(source)
     if (!is.null(strict)) cols[[i]]$strict = strict
     if (!is.null(readOnly)) cols[[i]]$readOnly = readOnly
     if (!is.null(copyable)) cols[[i]]$copyable = copyable
