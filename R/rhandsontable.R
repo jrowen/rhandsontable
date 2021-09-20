@@ -67,12 +67,19 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
   }
 
   if (!useTypes) {
-    data = do.call(cbind, lapply(data, function(x) {
-      if (class(x) == "Date")
-        as.character(x, format = "%m/%d/%Y")
-      else
-        as.character(x)
-    }))
+    data = do.call(
+      "cbind",
+      structure(
+        lapply(seq_len(ncol(data)), function(x){
+          if(class(data[, x]) == "Date") {
+            as.character(data[, x], format = "%m/%d/%Y")
+          } else {
+            as.character(data[, x])
+          }
+        }),
+        names = colnames(data)
+      )
+    )
     data = as.matrix(data, rownames.force = TRUE)
     cols = NULL
   } else {
