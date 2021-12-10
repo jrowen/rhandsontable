@@ -118,7 +118,7 @@ rhandsontable(DF, rowHeaders = NULL, width = 550, height = 300) %>%
 
 ### Custom Renderer
 
-It's also possible to define a custom column renderer function.  For example, it may be desirable to include html in a cell.  The example below mimics [Custom renderers](https://handsontable.com/docs/1.16.0/demo-custom-renderers.html).
+It's also possible to define a custom column renderer function.  For example, it may be desirable to include html in a cell.  The example below mimics [Custom renderers](https://handsontable.com/docs/4.0.0/demo-custom-renderers.html).
 
 ```{r fig.height = 5, fig.width = 8}
 DF = data.frame(
