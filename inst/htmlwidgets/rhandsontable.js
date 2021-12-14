@@ -81,7 +81,11 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, instance) {
-
+    if(instance)
+      instance.hot.updateSettings({
+        width: width,
+        height: height,
+      });
   },
 
   afterRender: function(x) {
