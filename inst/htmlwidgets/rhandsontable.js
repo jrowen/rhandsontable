@@ -50,6 +50,10 @@ HTMLWidgets.widget({
       }
 
       instance.hot.params = x;
+      // Workaround: Reset CustomBorders at redraw
+      // See https://github.com/jrowen/rhandsontable/issues/336
+      // and also https://github.com/handsontable/handsontable/issues/2002
+      instance.hot.getPlugin('CustomBorders').clearBorders();
       instance.hot.updateSettings(x);
     } else {  // create new instance
       if (x.debug && x.debug > 0) {
