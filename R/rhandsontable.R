@@ -72,7 +72,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
       structure(
         lapply(seq_len(ncol(data)), function(x){
           if(class(data[, x]) == "Date") {
-            as.character(data[, x], format = "%m/%d/%Y")
+            format(data[, x], format = "%m/%d/%Y")
           } else {
             as.character(data[, x])
           }
@@ -90,7 +90,7 @@ rhandsontable <- function(data, colHeaders, rowHeaders, comments = NULL,
     dt_inds = which(col_typs == "date")
     if (length(dt_inds) > 0L) {
       for (i in dt_inds)
-        data[, i] = as.character(data[, i], format = "%m/%d/%Y")
+        data[, i] = format(data[, i], format = "%m/%d/%Y")
     }
 
     cols = lapply(seq_along(col_typs), function(i) {
