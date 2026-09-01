@@ -45,5 +45,5 @@ Suggests:
     rstudioapi (>= 0.6),
     htmltools
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
 Encoding: UTF-8
+Config/roxygen2/version: 8.0.0
