@@ -5,8 +5,48 @@
 \alias{rhandsontable-package}
 \title{rhandsontable}
 \description{
-R interface for creating tables using Handsontable, url{https://handsontable.com/}
+R interface for creating tables using Handsontable, \url{https://handsontable.com/}
 }
 \details{
 For full documentation on the package, visit \url{https://jrowen.github.io/rhandsontable/}
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://jrowen.github.io/rhandsontable/}
+  \item Report bugs at \url{https://github.com/jrowen/rhandsontable/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Jonathan Owen \email{jonathanro@gmail.com} [copyright holder]
+
+Authors:
+\itemize{
+  \item Jonathan Owen \email{jonathanro@gmail.com} [copyright holder]
+}
+
+Other contributors:
+\itemize{
+  \item Jeff Allen [contributor]
+  \item Yihui Xie [contributor]
+  \item Enzo Martoglio \email{enzo@smartinsightsfromdata.com} [contributor]
+  \item Inberg Ger [contributor]
+  \item Warpechowski Marcin (Handsontable.js library) [contributor, copyright holder]
+  \item Handsoncode sp. z o.o. (Handsontable.js library) [contributor, copyright holder]
+  \item Aisch Gregor (Chroma.js library) [contributor, copyright holder]
+  \item Företagsplatsen (Numbro.js library) [contributor, copyright holder]
+  \item Draper Adam (Numeral.js library) [contributor, copyright holder]
+  \item Wood Tim (Moment.js library) [contributor, copyright holder]
+  \item Chernev Iskren (Moment.js library) [contributor, copyright holder]
+  \item Moment.js contributors (Moment.js library) [contributor, copyright holder]
+  \item Bushell David (Pikaday.js library) [contributor, copyright holder]
+  \item jQuery Foundation (jQuery.js library) [contributor, copyright holder]
+  \item Splunk Inc (Sparkline.js library) [contributor, copyright holder]
+  \item Russell Kent (Sparkline.js library) [contributor, copyright holder]
+  \item Rohan Jon (ZeroClipboard library) [contributor, copyright holder]
+  \item Greene James (ZeroClipboard library) [contributor, copyright holder]
+  \item Hammill Dillon [contributor]
+}
+
 }
